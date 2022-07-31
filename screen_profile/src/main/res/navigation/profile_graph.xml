@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_graph"
+    app:startDestination="@id/myFeedFragment">
+
+    <fragment
+        android:id="@+id/myFeedFragment"
+        android:name="com.sarang.profile.MyFeedFragment"
+        android:label="fragment_my_feed"
+        tools:layout="@layout/fragment_my_feed" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.sarang.profile.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
+</navigation>

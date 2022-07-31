@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="testRunner" value="GRADLE" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/../../../Core/TorangCore/torang_core" />
+            <option value="$PROJECT_DIR$/../../../Repository/TorangRepository" />
+            <option value="$PROJECT_DIR$/../../BaseFeed/base_feed" />
+            <option value="$PROJECT_DIR$/../../BottomSheetDialog2/bagle_bottom_sheet_dialog" />
+            <option value="$PROJECT_DIR$/../../Login/login" />
+            <option value="$PROJECT_DIR$/../../Picture/screen_pictures" />
+            <option value="$PROJECT_DIR$/../screen_profile" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/../../Report/screen_report" />
+            <option value="$PROJECT_DIR$/../../Settings/screen_settings" />
+            <option value="$PROJECT_DIR$/../../Term/screen_terms" />
+            <option value="$PROJECT_DIR$/../../VideoView" />
+            <option value="$PROJECT_DIR$/../../../Utils/InstagramGallery/InstagramGalleryModule" />
+            <option value="$PROJECT_DIR$/../../../Utils/MediaContentResolver/MediaContentResolverLibrary" />
+            <option value="$PROJECT_DIR$/../../../Utils/TorangImageLoader/torangimageloader" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
