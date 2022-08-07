@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.torang_core.navigation.*
-import com.example.torang_core.util.Logger
-import com.sarang.base_feed.ReportProcessor
 import com.sarang.profile.databinding.FragmentProfile1Binding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -64,7 +62,7 @@ class Profile1Fragment : Fragment() {
         binding.icProfile.rvReview.adapter =
             ProfileRvAdt(mViewModel, mViewModel.getFeed(userId), viewLifecycleOwner)
 
-        viewLifecycleOwner.lifecycle.addObserver(
+        /*viewLifecycleOwner.lifecycle.addObserver(
             ReportProcessor(
                 mViewModel,
                 menuBottomSheetNavigation,
@@ -73,7 +71,7 @@ class Profile1Fragment : Fragment() {
                 reportNavigation,
                 requireContext()
             )
-        )
+        )*/
 
         mViewModel.nothingProfile.observe(viewLifecycleOwner) {
             if(it == null)

@@ -2,25 +2,19 @@ package com.sarang.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
 import com.example.torang_core.data.model.Feed
-import com.example.torang_core.data.model.FeedData
 import com.example.torang_core.data.model.LoggedInUserData
 import com.example.torang_core.data.model.UserData
 import com.example.torang_core.repository.ProfileRepository
-import com.example.torang_core.util.Event
-import com.example.torang_core.util.EventObserver
 import com.example.torang_core.util.Logger
-import com.sarang.base_feed.BaseFeedViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val repository: ProfileRepository) :
-    BaseFeedViewModel(repository) {
+    ViewModel() {
 
     private val userId = MutableLiveData<Int>()
 

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sarang.profile.databinding.FragmentNonLoginProfileBinding
-import com.sarang.toringlogin.login.LoginActivity
 
 class NonLoginProfileFragment : Fragment() {
 
@@ -18,7 +17,7 @@ class NonLoginProfileFragment : Fragment() {
         val binding = FragmentNonLoginProfileBinding.inflate(layoutInflater, container, false)
 
         binding.btnLogin.setOnClickListener {
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            //startActivity(Intent(requireContext(), LoginActivity::class.java))
         }
 
         return binding.root

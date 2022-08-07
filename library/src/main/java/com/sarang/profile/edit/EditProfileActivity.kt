@@ -6,10 +6,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.sarang.instagralleryModule.InstagramGalleryContract
+import com.example.torang_core.util.Logger
 import com.sarang.profile.R
 import com.sarang.profile.databinding.ActivityEditProfileBinding
-import com.example.torang_core.util.Logger
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,16 +33,16 @@ class EditProfileActivity : AppCompatActivity() {
         binding.btnCancel.setOnClickListener { finish() }
         binding.btnConfirm.setOnClickListener { editProfileViewModel.saveProfile() }
 
-        val getContent = registerForActivityResult(InstagramGalleryContract()) {
+        /*val getContent = registerForActivityResult(InstagramGalleryContract()) {
             it?.getStringArrayListExtra("pictures")?.also {
                 Logger.d(it.toString())
                 editProfileViewModel.setNewProfileImage(it[0])
             }
-        }
+        }*/
 
-        binding.btnEditPicture.setOnClickListener {
+        /*binding.btnEditPicture.setOnClickListener {
             getContent.launch("a")
-        }
+        }*/
 
 
         subScribeUI(binding)

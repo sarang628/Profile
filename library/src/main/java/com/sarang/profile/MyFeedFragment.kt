@@ -10,7 +10,6 @@ import com.example.torang_core.navigation.MenuBottomSheetNavigation
 import com.example.torang_core.navigation.MyMenuBottomSheetNavigation
 import com.example.torang_core.navigation.NotLoggedInMenuBottomSheetNavigation
 import com.example.torang_core.navigation.ReportNavigation
-import com.sarang.base_feed.ReportProcessor
 import com.sarang.profile.databinding.FragmentMyFeedBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -41,7 +40,7 @@ class MyFeedFragment : Fragment() {
         binding.rvMyFeed.adapter =
             MyFeedRvAdt(mViewModel, childFragmentManager, viewLifecycleOwner)
 
-        viewLifecycleOwner.lifecycle.addObserver(
+        /*viewLifecycleOwner.lifecycle.addObserver(
             ReportProcessor(
                 mViewModel,
                 menuBottomSheetNavigation,
@@ -50,7 +49,7 @@ class MyFeedFragment : Fragment() {
                 reportNavigation,
                 requireContext()
             )
-        )
+        )*/
 
         return binding.root
     }

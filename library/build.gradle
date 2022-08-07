@@ -32,12 +32,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':TorangRepository')
-    implementation project(path: ':InstagramGalleryModule')
-    implementation project(path: ':login')
-    implementation project(path: ':torangimageloader')
-    implementation project(path: ':torang_core')
-    implementation project(path: ':base_feed')
+    implementation 'com.github.sarang628:TorangRepository:17d108d0e2'
+    implementation 'com.github.sarang628:TorangCore:5dd8950a5a'
+    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
+//    implementation project(path: ':InstagramGalleryModule')
+//    implementation project(path: ':login')
+//    implementation project(path: ':base_feed')
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"

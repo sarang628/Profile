@@ -1,11 +1,11 @@
 package com.sarang.profile
 
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.sarang.base_feed.FeedVH
-import com.sarang.base_feed.FeedVH.Companion.create
 import com.example.torang_core.data.model.Feed
 import kotlin.collections.ArrayList
 
@@ -26,16 +26,20 @@ internal class MyFavoriteRvAdt(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return create(parent, profileViewModel, lifecycleOwner)
+        return MyFavoriteViewHolder(TextView(parent.context))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is FeedVH) {
+        /*if (holder is FeedVH) {
             holder.setFeed(feeds[position]);
-        }
+        }*/
     }
 
     override fun getItemCount(): Int {
         return feeds.size
     }
+}
+
+class MyFavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
 }
