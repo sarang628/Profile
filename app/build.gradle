@@ -41,8 +41,8 @@ android {
 
 dependencies {
 
-    implementation 'com.github.sarang628:TorangCore:5dd8950a5a'
-    implementation 'com.github.sarang628:TorangRepository:17d108d0e2'
+    implementation "com.github.sarang628:TorangCore:$coreVersion"
+    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
     implementation project(path: ':library')
 //    implementation project(path: ':screen_report')
 //    implementation project(path: ':TorangScreenSettings')
