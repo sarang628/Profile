@@ -1,12 +1,12 @@
 package com.sryang.myapplication
 
-import com.example.torang_core.data.dao.LoggedInUserDao
-import com.example.torang_core.data.dao.UserDao
-import com.example.torang_core.data.model.LoggedInUserData
-import com.example.torang_core.data.model.UserData
-import com.example.torang_core.repository.EditProfileRepository
-import com.example.torang_core.repository.EditProfileResponse
-import com.example.torangrepository.RestaurantService
+import com.sryang.torang_repository.data.dao.LoggedInUserDao
+import com.sryang.torang_repository.data.dao.UserDao
+import com.sryang.torang_repository.data.entity.LoggedInUserEntity
+import com.sryang.torang_repository.data.entity.UserEntity
+import com.sryang.torang_repository.repository.EditProfileRepository
+import com.sryang.torang_repository.repository.EditProfileResponse
+import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
@@ -41,7 +41,7 @@ class ProfileTest {
 
     suspend fun changeUserId(userId: Int) {
         loggedInUserDao.insert(
-            LoggedInUserData(
+            LoggedInUserEntity(
                 userId = userId,
                 userName = "TORANG12"
             )
@@ -50,9 +50,9 @@ class ProfileTest {
 
     fun hiltTest1() {
         runBlocking {
-            userDao.insertAll(ArrayList<UserData>().apply {
+            userDao.insertAll(ArrayList<UserEntity>().apply {
                 add(
-                    UserData(
+                    UserEntity(
                         userId = 100
                     )
                 )

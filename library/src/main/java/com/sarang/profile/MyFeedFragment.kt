@@ -1,16 +1,16 @@
 package com.sarang.profile
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.torang_core.navigation.MenuBottomSheetNavigation
-import com.example.torang_core.navigation.MyMenuBottomSheetNavigation
-import com.example.torang_core.navigation.NotLoggedInMenuBottomSheetNavigation
-import com.example.torang_core.navigation.ReportNavigation
 import com.sarang.profile.databinding.FragmentMyFeedBinding
+import com.sryang.torang_core.navigation.MenuBottomSheetNavigation
+import com.sryang.torang_core.navigation.MyMenuBottomSheetNavigation
+import com.sryang.torang_core.navigation.NotLoggedInMenuBottomSheetNavigation
+import com.sryang.torang_core.navigation.ReportNavigation
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

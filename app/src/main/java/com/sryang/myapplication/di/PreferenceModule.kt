@@ -1,7 +1,7 @@
-package com.sarang.torang.di
+package com.sryang.myapplication.di
 
-import com.example.torang_core.data.LocationPreferences
-import com.example.torangrepository.LocationPreferencesImpl
+import com.sryang.torang_core.data.LocationPreferences
+import com.sryang.torang_repository.repository.impl.LocationPreferencesImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

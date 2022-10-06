@@ -1,14 +1,13 @@
-package com.sarang.torang.di
+package com.sryang.myapplication.di
 
 import android.content.Context
-import com.example.torang_core.data.AppDatabase
-import com.example.torang_core.repository.*
-import com.example.torangrepository.*
+import com.sryang.torang_repository.data.AppDatabase
+import com.sryang.torang_repository.repository.*
+import com.sryang.torang_repository.repository.impl.*
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton

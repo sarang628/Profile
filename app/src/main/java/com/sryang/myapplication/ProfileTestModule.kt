@@ -2,10 +2,10 @@ package com.sryang.myapplication
 
 import android.content.Context
 import androidx.fragment.app.FragmentManager
-import com.example.torang_core.navigation.MainNavigation
-import com.example.torang_core.navigation.PicturePageNavigation
-import com.example.torang_core.navigation.RestaurantDetailNavigation
-import com.example.torang_core.navigation.TimeLineDetailNavigation
+import com.sryang.torang_core.navigation.MainNavigation
+import com.sryang.torang_core.navigation.PicturePageNavigation
+import com.sryang.torang_core.navigation.RestaurantDetailNavigation
+import com.sryang.torang_core.navigation.TimeLineDetailNavigation
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

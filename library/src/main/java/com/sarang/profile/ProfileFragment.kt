@@ -9,10 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.torang_core.navigation.*
-import com.example.torang_core.util.Logger
 import com.sarang.profile.databinding.FragmentProfileBinding
 import com.sarang.profile.edit.EditProfileActivity
+import com.sryang.torang_core.navigation.LoginNavigation
+import com.sryang.torang_core.navigation.SettingsNavigation
+import com.sryang.torang_core.util.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject

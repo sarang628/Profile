@@ -6,15 +6,14 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.example.torang_core.data.model.Feed
-import kotlin.collections.ArrayList
+import com.sryang.torang_repository.data.entity.FeedEntity
 
 internal class MyFeedRvAdt(
     private val profileViewModel: ProfileViewModel,
     private val fragmentManager: FragmentManager,
     private val lifecycleOwner: LifecycleOwner
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var feeds = ArrayList<Feed>()
+    private var feeds = ArrayList<FeedEntity>()
 
     init {
         profileViewModel.myFeed.observe(lifecycleOwner) {

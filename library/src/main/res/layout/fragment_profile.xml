@@ -6,13 +6,13 @@
 
         <variable
             name="user"
-            type="com.example.torang_core.data.model.UserData" />
+            type="com.sryang.torang_repository.data.entity.UserEntity" />
 
         <import type="android.view.View" />
 
         <variable
             name="loginNavigation"
-            type="com.example.torang_core.navigation.LoginNavigation" />
+            type="com.sryang.torang_core.navigation.LoginNavigation" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

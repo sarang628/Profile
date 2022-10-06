@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.example.torang_core.util.Logger
 import com.sarang.profile.R
 import com.sarang.profile.databinding.ActivityEditProfileBinding
 import dagger.hilt.android.AndroidEntryPoint

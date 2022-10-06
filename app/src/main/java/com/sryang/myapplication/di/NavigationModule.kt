@@ -1,12 +1,12 @@
-package com.sryang.main.di
+package com.sryang.myapplication.di
 
 import android.content.Context
 import androidx.fragment.app.FragmentManager
-import com.example.torang_core.data.model.Feed
-import com.example.torang_core.dialog.FeedDialogEventAdapter
-import com.example.torang_core.dialog.FeedMyDialogEventAdapter
-import com.example.torang_core.dialog.NotLoggedInFeedDialogEventAdapter
-import com.example.torang_core.navigation.*
+import com.sryang.torang_core.data.entity.Feed
+import com.sryang.torang_core.dialog.FeedDialogEventAdapter
+import com.sryang.torang_core.dialog.FeedMyDialogEventAdapter
+import com.sryang.torang_core.dialog.NotLoggedInFeedDialogEventAdapter
+import com.sryang.torang_core.navigation.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

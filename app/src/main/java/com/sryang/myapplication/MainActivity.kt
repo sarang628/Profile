@@ -1,8 +1,7 @@
 package com.sryang.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.sarang.profile.ProfileActivity
+import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

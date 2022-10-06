@@ -2,11 +2,6 @@ package com.sryang.myapplication
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.torang_core.data.model.LoggedInUserData
-import com.example.torang_core.util.Logger
-import com.example.torangrepository.FeedRepositoryImpl
-import com.example.torangrepository.LoginRepositoryImpl
-import kotlinx.coroutines.runBlocking
 
 import org.junit.Test
 import org.junit.runner.RunWith
