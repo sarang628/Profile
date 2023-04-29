@@ -26,6 +26,6 @@ public class ProfileInfoHolder extends RecyclerView.ViewHolder {
     }
 
     public void setViewModel(ProfileViewModel profileViewModel) {
-        itemProfileInfoBinding.setViewModel(profileViewModel);
+//        itemProfileInfoBinding.setViewModel(profileViewModel);
     }
 }

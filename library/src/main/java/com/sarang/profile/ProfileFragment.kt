@@ -7,16 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.sarang.profile.databinding.FragmentProfileBinding
 import com.sarang.profile.edit.EditProfileActivity
-import com.sryang.torang_core.navigation.LoginNavigation
-import com.sryang.torang_core.navigation.SettingsNavigation
-import com.sryang.torang_core.util.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import javax.inject.Inject
 
 /**
  * [ProfileRvAdt]
@@ -28,11 +22,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
-    @Inject
-    lateinit var settingsNavigation: SettingsNavigation
-
-    @Inject
-    lateinit var loginNavigation: LoginNavigation
+//    @Inject
+//    lateinit var settingsNavigation: SettingsNavigation
+//
+//    @Inject
+//    lateinit var loginNavigation: LoginNavigation
 
     //프로필 뷰모델
     private val mViewModel: ProfileViewModel by viewModels()
@@ -48,23 +42,23 @@ class ProfileFragment : Fragment() {
 
         // 바인딩에 라이프싸이클 오너 설정
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.loginNavigation = loginNavigation
+//        binding.loginNavigation = loginNavigation
 
         binding.ivSettings.setOnClickListener {
-            settingsNavigation.goSettings(requireActivity())
+//            settingsNavigation.goSettings(requireActivity())
         }
 
-        binding.icProfile.icProfile.btnEditProfile.setOnClickListener {
-            startActivity(Intent(requireContext(), EditProfileActivity::class.java))
-        }
+//        binding.icProfile.icProfile.btnEditProfile.setOnClickListener {
+//            startActivity(Intent(requireContext(), EditProfileActivity::class.java))
+//        }
 
-        binding.user = null
+//        binding.user = null
 
         // Sets BottomNavigation
-        val navHostFragment =
-            childFragmentManager.findFragmentById(binding.icProfile.fc.id) as NavHostFragment
+//        val navHostFragment =
+//            childFragmentManager.findFragmentById(binding.icProfile.fc.id) as NavHostFragment
         //val navController = navHostFragment.navController
-        binding.icProfile.tlProfile.setupWithNavController(navHostFragment.navController)
+//        binding.icProfile.tlProfile.setupWithNavController(navHostFragment.navController)
 
         // UI 구독 실행
         subScribeUI(binding)
@@ -73,14 +67,12 @@ class ProfileFragment : Fragment() {
     }
 
     private fun subScribeUI(binding: FragmentProfileBinding) {
-        mViewModel.my.observe(viewLifecycleOwner) {
-            Logger.d("사용자 변경")
-            if (it != null) {
-                binding.user = it.toUserData()
-            } else {
-                Logger.d("사용자 초기화")
-                binding.user = null
-            }
-        }
+//        mViewModel.my.observe(viewLifecycleOwner) {
+//            if (it != null) {
+//                binding.user = it.toUserData()
+//            } else {
+//                binding.user = null
+//            }
+//        }
     }
 }

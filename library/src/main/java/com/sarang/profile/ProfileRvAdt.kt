@@ -4,25 +4,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.sryang.torang_repository.data.entity.FeedEntity
 
-internal class ProfileRvAdt(
+internal class ProfileRvAdt (
     private val profileViewModel: ProfileViewModel,
-    private val feedLiveData: LiveData<List<FeedEntity>>,
-    private val lifecycleOwner: LifecycleOwner
+//    private val feedLiveData: LiveData<List<FeedEntity>>,
+private val lifecycleOwner: LifecycleOwner
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var feeds = ArrayList<FeedEntity>()
+//    private var feeds = ArrayList<FeedEntity>()
 
-    init {
-        feedLiveData.observe(lifecycleOwner) {
-            it?.also {
-                this.feeds = ArrayList(it)
-                notifyDataSetChanged()
-            }
-        }
-    }
+//    init {
+//        feedLiveData.observe(lifecycleOwner) {
+//            it?.also {
+//                this.feeds = ArrayList(it)
+//                notifyDataSetChanged()
+//            }
+//        }
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ProfileViewHolder(TextView(parent.context))
@@ -35,7 +33,8 @@ internal class ProfileRvAdt(
     }
 
     override fun getItemCount(): Int {
-        return feeds.size
+//        return feeds.size
+        return 0;
     }
 }
 

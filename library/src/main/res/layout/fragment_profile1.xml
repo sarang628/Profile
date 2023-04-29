@@ -4,10 +4,6 @@
 
     <data>
 
-        <variable
-            name="user"
-            type="com.sryang.torang_repository.data.entity.UserEntity" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +22,6 @@
             <include
                 android:id="@+id/ic_profile"
                 layout="@layout/layout_profile1"
-                app:user="@{user}"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 

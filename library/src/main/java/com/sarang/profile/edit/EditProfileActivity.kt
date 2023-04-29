@@ -48,19 +48,19 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun subScribeUI(binding: ActivityEditProfileBinding) {
-        editProfileViewModel.userData.observe(this) {
-            it?.let {
-                it.userName?.let {
-                    editProfileViewModel.setUserName(it)
-                }
-                it.profile_pic_url?.let {
-                    editProfileViewModel.setProfileImage(it)
-                }
-                it.email?.let {
-                    editProfileViewModel.setEmail(it)
-                }
-            }
-        }
+//        editProfileViewModel.userData.observe(this) {
+//            it?.let {
+//                it.userName?.let {
+//                    editProfileViewModel.setUserName(it)
+//                }
+//                it.profile_pic_url?.let {
+//                    editProfileViewModel.setProfileImage(it)
+//                }
+//                it.email?.let {
+//                    editProfileViewModel.setEmail(it)
+//                }
+//            }
+//        }
 
         editProfileViewModel.completeEditProfile.observe(this) {
             if (it)

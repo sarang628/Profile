@@ -2,13 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="user"
-            type="com.sryang.torang_repository.data.entity.UserEntity" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -36,8 +29,7 @@
 
                     <include
                         android:id="@+id/ic_profile"
-                        layout="@layout/item_profile1"
-                        app:user="@{user}" />
+                        layout="@layout/item_profile1" />
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             </com.google.android.material.appbar.AppBarLayout>

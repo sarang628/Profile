@@ -3,16 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="user"
-            type="com.sryang.torang_repository.data.entity.UserEntity" />
-
         <import type="android.view.View" />
-
-        <variable
-            name="loginNavigation"
-            type="com.sryang.torang_core.navigation.LoginNavigation" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +14,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="@{user == null ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +22,6 @@
             <include
                 android:id="@+id/ic_profile"
                 layout="@layout/layout_profile"
-                app:user="@{user}"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 
@@ -42,7 +31,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{user == null ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,8 +38,7 @@
 
             <include
                 android:id="@+id/ic_non_logon_profile"
-                layout="@layout/fragment_non_login_profile"
-                tools:loginNavigation="@{loginNavigation}" />
+                layout="@layout/fragment_non_login_profile"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
@@ -60,7 +47,6 @@
             android:layout_height="45dp"
             android:padding="8dp"
             android:src="@drawable/ic_settings"
-            android:visibility="@{user != null ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

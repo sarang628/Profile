@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk rootProject.compileSdk
 
     defaultConfig {
         applicationId "com.example.torangscreenprofiletestapp"
-        minSdk 23
-        targetSdk 33
+        minSdk rootProject.minSdk
+        targetSdk rootProject.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner "com.sryang.myapplication.CustomTestRunner"
@@ -41,22 +41,6 @@ android {
 }
 
 dependencies {
-
-    implementation "com.github.sarang628:TorangCore:$coreVersion"
-    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
-    implementation project(path: ':library')
-//    implementation project(path: ':screen_report')
-//    implementation project(path: ':TorangScreenSettings')
-//    implementation project(path: ':login')
-//    implementation project(path: ':bagleBottomSheetDialog')
-//    implementation project(path: ':MediaContentProvider')
-//    implementation project(path: ':base_feed')
-//    implementation project(path: ':screen_pictures')
-//    implementation project(path: ':torangimageloader')
-//    implementation project(path: ':TorangVideoView')
-//    implementation project(path: ':InstagramGalleryModule')
-//    implementation project(path: ':screen_terms')
-
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
@@ -91,4 +75,6 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
     annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
+
+    implementation project(path: ':library')
 }

@@ -8,27 +8,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.sarang.profile.databinding.FragmentProfile1Binding
-import com.sryang.torang_core.navigation.*
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class Profile1Fragment : Fragment() {
 
-    @Inject
-    lateinit var loginNavigation: LoginNavigation
-
-    @Inject
-    lateinit var menuBottomSheetNavigation: MenuBottomSheetNavigation
-
-    @Inject
-    lateinit var myMenuBottomSheetNavigation: MyMenuBottomSheetNavigation
-
-    @Inject
-    lateinit var notLoggedInMenuBottomSheetNavigation: NotLoggedInMenuBottomSheetNavigation
-
-    @Inject
-    lateinit var reportNavigation: ReportNavigation
+//    @Inject
+//    lateinit var loginNavigation: LoginNavigation
+//
+//    @Inject
+//    lateinit var menuBottomSheetNavigation: MenuBottomSheetNavigation
+//
+//    @Inject
+//    lateinit var myMenuBottomSheetNavigation: MyMenuBottomSheetNavigation
+//
+//    @Inject
+//    lateinit var notLoggedInMenuBottomSheetNavigation: NotLoggedInMenuBottomSheetNavigation
+//
+//    @Inject
+//    lateinit var reportNavigation: ReportNavigation
 
     //프로필 뷰모델
     private val mViewModel: ProfileViewModel by viewModels()
@@ -44,7 +42,7 @@ class Profile1Fragment : Fragment() {
         // 바인딩에 라이프싸이클 오너 설정
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.user = null
+//        binding.user = null
 
         // UI 구독 실행
         subScribeUI(binding)
@@ -54,13 +52,13 @@ class Profile1Fragment : Fragment() {
 
     private fun subScribeUI(binding: FragmentProfile1Binding) {
         var userId = requireActivity().intent.getIntExtra("userId", 0)
-        mViewModel.getUser(userId).observe(viewLifecycleOwner) {
-            binding.user = it
-        }
+//        mViewModel.getUser(userId).observe(viewLifecycleOwner) {
+//            binding.user = it
+//        }
 
         // 리싸이클러뷰에 아답터 적용
-        binding.icProfile.rvReview.adapter =
-            ProfileRvAdt(mViewModel, mViewModel.getFeed(userId), viewLifecycleOwner)
+//        binding.icProfile.rvReview.adapter =
+//            ProfileRvAdt(mViewModel, mViewModel.getFeed(userId), viewLifecycleOwner)
 
         /*viewLifecycleOwner.lifecycle.addObserver(
             ReportProcessor(
@@ -73,10 +71,10 @@ class Profile1Fragment : Fragment() {
             )
         )*/
 
-        mViewModel.nothingProfile.observe(viewLifecycleOwner) {
-            if(it == null)
-                nothingProfile()
-        }
+//        mViewModel.nothingProfile.observe(viewLifecycleOwner) {
+//            if(it == null)
+//                nothingProfile()
+//        }
     }
 
     private fun nothingProfile() {
