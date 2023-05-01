@@ -2,6 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="profileUrl"
+            type="String" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -29,14 +35,15 @@
 
                     <include
                         android:id="@+id/ic_profile"
-                        layout="@layout/item_profile" />
+                        layout="@layout/item_profile"
+                        profileUrl="@{profileUrl}" />
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
 
                 <com.google.android.material.bottomnavigation.BottomNavigationView
                     android:id="@+id/tl_profile"
-                    android:background="@color/colorSecondaryLight"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:background="@color/colorSecondaryLight"
                     app:menu="@menu/menu_profile" />
 
             </com.google.android.material.appbar.AppBarLayout>
@@ -46,10 +53,10 @@
                 android:id="@+id/rv_review"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="invisible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_anchor="@+id/rv_review"
                 app:layout_anchorGravity="center"
-                android:visibility="invisible"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

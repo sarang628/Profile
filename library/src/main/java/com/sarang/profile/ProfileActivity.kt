@@ -25,7 +25,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, Profile1Fragment())
+            .replace(R.id.container, ProfileFragment())
             .commit()
 
     }

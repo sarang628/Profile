@@ -22,12 +22,6 @@ import java.util.*
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
-//    @Inject
-//    lateinit var settingsNavigation: SettingsNavigation
-//
-//    @Inject
-//    lateinit var loginNavigation: LoginNavigation
-
     //프로필 뷰모델
     private val mViewModel: ProfileViewModel by viewModels()
 

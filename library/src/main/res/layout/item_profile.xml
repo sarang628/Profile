@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="profileUrl"
+            type="String" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -32,6 +38,7 @@
 
                 <ImageView
                     android:id="@+id/si_profile"
+                    loadCircleImage="#{profileUrl}"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:layout_constraintStart_toStartOf="parent"

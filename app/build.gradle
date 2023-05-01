@@ -14,7 +14,6 @@ android {
         targetSdk rootProject.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunner "com.sryang.myapplication.CustomTestRunner"
     }
 
     buildTypes {
@@ -31,23 +30,24 @@ android {
         jvmTarget = '1.8'
     }
 
-    buildFeatures {
+    buildFeatures{
         dataBinding true
         viewBinding true
     }
     namespace 'com.sryang.myapplication'
-
-
 }
 
 dependencies {
+    /** common */
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
-
     /** HILT */
-    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    implementation "com.google.dagger:hilt-android:$hiltAndroidVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
     annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
 
     implementation project(path: ':library')
+    implementation "com.github.sarang628:Theme:$themeVersion"
 }

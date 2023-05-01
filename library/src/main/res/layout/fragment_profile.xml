@@ -4,6 +4,10 @@
 
     <data>
         <import type="android.view.View" />
+
+        <variable
+            name="profileUrl"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
