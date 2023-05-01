@@ -3,11 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
             name="profileUrl"
             type="String" />
+
+        <variable
+            name="feedCount"
+            type="Integer" />
+
+        <variable
+            name="following"
+            type="Integer" />
+
+        <variable
+            name="follower"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +39,10 @@
             <include
                 android:id="@+id/ic_profile"
                 layout="@layout/layout_profile"
+                app:feedCount="@{feedCount}"
+                app:follower="@{follower}"
+                app:following="@{following}"
+                app:profileUrl="@{profileUrl}"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 
@@ -42,7 +59,7 @@
 
             <include
                 android:id="@+id/ic_non_logon_profile"
-                layout="@layout/fragment_non_login_profile"/>
+                layout="@layout/fragment_non_login_profile" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView

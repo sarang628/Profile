@@ -4,9 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="profileUrl"
             type="String" />
+
+        <variable
+            name="feedCount"
+            type="Integer" />
+
+        <variable
+            name="following"
+            type="Integer" />
+
+        <variable
+            name="follower"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,7 +51,7 @@
 
                 <ImageView
                     android:id="@+id/si_profile"
-                    loadCircleImage="#{profileUrl}"
+                    loadCircleImage="@{profileUrl}"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -61,6 +74,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:text="@{String.valueOf(feedCount)}"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -102,6 +116,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:text="@{String.valueOf(follower)}"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -144,6 +159,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:text="@{String.valueOf(following)}"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"

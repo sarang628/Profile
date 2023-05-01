@@ -30,35 +30,18 @@ class ProfileFragment : Fragment() {
     //프로필 뷰모델
     private val mViewModel: ProfileViewModel by viewModels()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         // 바인딩 초기화
         val binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
 
         // 바인딩에 라이프싸이클 오너 설정
         binding.lifecycleOwner = viewLifecycleOwner
-//        binding.loginNavigation = loginNavigation
 
         binding.ivSettings.setOnClickListener {
-//            settingsNavigation.goSettings(requireActivity())
         }
-
-//        binding.icProfile.icProfile.btnEditProfile.setOnClickListener {
-//            startActivity(Intent(requireContext(), EditProfileActivity::class.java))
-//        }
-
-//        binding.user = null
-
-        // Sets BottomNavigation
-//        val navHostFragment =
-//            childFragmentManager.findFragmentById(binding.icProfile.fc.id) as NavHostFragment
-        //val navController = navHostFragment.navController
-//        binding.icProfile.tlProfile.setupWithNavController(navHostFragment.navController)
-
         // UI 구독 실행
         subScribeUI(testProfileUiState(), binding)
 
@@ -69,14 +52,10 @@ class ProfileFragment : Fragment() {
         lifecycleScope.launch {
             uiState.collect {
                 binding.profileUrl = it.profileUrl
+                binding.feedCount = it.feedCount
+                binding.follower = it.follower
+                binding.following = it.following
             }
         }
-//        mViewModel.my.observe(viewLifecycleOwner) {
-//            if (it != null) {
-//                binding.user = it.toUserData()
-//            } else {
-//                binding.user = null
-//            }
-//        }
     }
 }

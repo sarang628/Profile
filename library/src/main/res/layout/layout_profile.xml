@@ -3,9 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="profileUrl"
             type="String" />
+
+        <variable
+            name="feedCount"
+            type="Integer" />
+
+        <variable
+            name="following"
+            type="Integer" />
+
+        <variable
+            name="follower"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +49,10 @@
                     <include
                         android:id="@+id/ic_profile"
                         layout="@layout/item_profile"
-                        profileUrl="@{profileUrl}" />
+                        app:feedCount="@{feedCount}"
+                        app:follower="@{follower}"
+                        app:following="@{following}"
+                        app:profileUrl="@{profileUrl}" />
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
 
                 <com.google.android.material.bottomnavigation.BottomNavigationView
