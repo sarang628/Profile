@@ -7,9 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.sarang.profile.databinding.FragmentProfileBinding
 import com.sarang.profile.edit.EditProfileActivity
+import com.sarang.profile.uistate.ProfileUiState
+import com.sarang.profile.uistate.testProfileUiState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import java.util.*
 
 /**
@@ -55,12 +60,17 @@ class ProfileFragment : Fragment() {
 //        binding.icProfile.tlProfile.setupWithNavController(navHostFragment.navController)
 
         // UI 구독 실행
-        subScribeUI(binding)
+        subScribeUI(testProfileUiState(), binding)
 
         return binding.root
     }
 
-    private fun subScribeUI(binding: FragmentProfileBinding) {
+    private fun subScribeUI(uiState: StateFlow<ProfileUiState>, binding: FragmentProfileBinding) {
+        lifecycleScope.launch {
+            uiState.collect {
+                binding.profileUrl = it.profileUrl
+            }
+        }
 //        mViewModel.my.observe(viewLifecycleOwner) {
 //            if (it != null) {
 //                binding.user = it.toUserData()
