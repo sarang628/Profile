@@ -4,22 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="profileUrl"
-            type="String" />
-
-        <variable
-            name="feedCount"
-            type="Integer" />
-
-        <variable
-            name="following"
-            type="Integer" />
-
-        <variable
-            name="follower"
-            type="Integer" />
+        <variable name="profileUrl" type="String" />
+        <variable name="feedCount" type="Integer" />
+        <variable name="following" type="Integer" />
+        <variable name="follower" type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
