@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/myFeedFragment"
-        android:name="com.sarang.profile.MyFeedFragment"
+        android:name="com.sarang.profile.fragment.MyFeedFragment"
         android:label="fragment_my_feed"
         tools:layout="@layout/fragment_my_feed" />
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.sarang.profile.FavoriteFragment"
+        android:name="com.sarang.profile.fragment.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
 </navigation>

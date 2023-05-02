@@ -1,4 +1,4 @@
-package com.sarang.profile;
+package com.sarang.profile.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sarang.profile.viewmodel.ProfileViewModel;
 import com.sarang.profile.databinding.ItemProfileInfoBinding;
 
 public class ProfileInfoHolder extends RecyclerView.ViewHolder {

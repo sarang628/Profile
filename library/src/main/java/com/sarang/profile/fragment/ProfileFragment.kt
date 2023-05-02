@@ -1,6 +1,5 @@
-package com.sarang.profile
+package com.sarang.profile.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.sarang.profile.R
+import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sarang.profile.databinding.FragmentProfileBinding
-import com.sarang.profile.edit.EditProfileActivity
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.uistate.testProfileUiState
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +44,7 @@ class ProfileFragment : Fragment() {
         binding.ivSettings.setOnClickListener {
         }
         // UI 구독 실행
-        subScribeUI(testProfileUiState(), binding)
+        subScribeUI(testProfileUiState(viewLifecycleOwner), binding)
 
         return binding.root
     }
@@ -55,6 +56,10 @@ class ProfileFragment : Fragment() {
                 binding.feedCount = it.feedCount
                 binding.follower = it.follower
                 binding.following = it.following
+
+                if(!it.isLogin){
+                    findNavController().navigate(R.id.nonLoginProfileFragment)
+                }
             }
         }
     }

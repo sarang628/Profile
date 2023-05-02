@@ -3,12 +3,10 @@
 
     <item
         android:id="@+id/myFeedFragment"
-        android:icon="@android:drawable/ic_dialog_info"
         android:title="내 게시물" />
 
     <item
         android:id="@+id/favoriteFragment"
-        android:icon="@android:drawable/ic_menu_myplaces"
         android:title="즐겨찾기" />
 
 </menu>

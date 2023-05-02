@@ -6,25 +6,26 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import com.sarang.profile.viewmodel.ProfileViewModel
 
-internal class MyFavoriteRvAdt(
+internal class MyFeedRvAdt(
     private val profileViewModel: ProfileViewModel,
     private val fragmentManager: FragmentManager,
     private val lifecycleOwner: LifecycleOwner
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    //private var feeds = ArrayList<FeedEntity>()
+//    private var feeds = ArrayList<FeedEntity>()
 
-//    init {
-//        profileViewModel.myFavorite.observe(lifecycleOwner) {
-//            it?.also {
+    init {
+        /*profileViewModel.myFeed.observe(lifecycleOwner) {
+            it?.also {
 //                this.feeds = ArrayList(it)
-//                notifyDataSetChanged()
-//            }
-//        }
-//    }
+                notifyDataSetChanged()
+            }
+        }*/
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return MyFavoriteViewHolder(TextView(parent.context))
+        return MyFeedViewHolder(TextView(parent.context))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -39,6 +40,6 @@ internal class MyFavoriteRvAdt(
     }
 }
 
-class MyFavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class MyFeedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 }

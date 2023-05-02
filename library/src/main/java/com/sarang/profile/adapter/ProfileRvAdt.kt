@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import com.sarang.profile.viewmodel.ProfileViewModel
 
 internal class ProfileRvAdt (
     private val profileViewModel: ProfileViewModel,
 //    private val feedLiveData: LiveData<List<FeedEntity>>,
-private val lifecycleOwner: LifecycleOwner
+    private val lifecycleOwner: LifecycleOwner
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 //    private var feeds = ArrayList<FeedEntity>()
 

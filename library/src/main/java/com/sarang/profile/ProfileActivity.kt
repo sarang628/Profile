@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.sarang.profile.fragment.ProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,18 +45,3 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 }
-
-//class ProfileNavigationImpl @Inject constructor() : ProfileNavigation {
-//    override fun go(context: Context, userId: Int) {
-//        ProfileActivity.go(context, userId)
-//    }
-//}
-
-//@Module
-//@InstallIn(ActivityComponent::class)
-//abstract class ProfileNavigationInject {
-//    @Binds
-//    abstract fun bindProfileNavigation(
-//        profileNavigationImpl: ProfileNavigationImpl
-//    ): ProfileNavigation
-//}

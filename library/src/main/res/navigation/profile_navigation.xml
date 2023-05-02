@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_graph"
+    app:startDestination="@id/profileFragment2">
+
+
+    <fragment
+        android:id="@+id/profileFragment2"
+        android:name="com.sarang.profile.fragment.ProfileFragment"
+        android:label="ProfileFragment" />
+
+    <fragment
+        android:id="@+id/nonLoginProfileFragment"
+        android:name="com.sarang.profile.fragment.NonLoginProfileFragment"
+        android:label="layout_non_login_profile"
+        tools:layout="@layout/layout_non_login_profile" />
+</navigation>
