@@ -31,10 +31,11 @@ ext {
     constraintLayoutVersion = '2.1.4'
     espressoVersion = '3.4.0'
     swipeRefreshLayoutVersion = '1.1.0'
-    hiltVersion = '2.38.1'
-    hiltCompilerVersion = '2.38.1'
-    hiltTestVersion = '2.44.2'
-    hiltAndroidVersion = '2.38.1'
+    //hilt
+    hiltVersion = '2.45'
+    hiltCompilerVersion = '2.45'
+    hiltTestVersion = '2.45'
+    hiltAndroidVersion = '2.45'
     hiltViewModelVersion = '1.0.0-alpha03'
     //navigation
     navigationVersion = '2.4.0-alpha06'
@@ -43,8 +44,6 @@ ext {
     fragmentVersion = "1.5.6"
     kotlinVersion = '1.8.0'
 
-    torangRepositoryVersion = '303c641ab7'
-    coreVersion = '1a0e406fa3'
     themeVersion = '6f8e2a7a08'
 }
 
