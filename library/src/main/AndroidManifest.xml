@@ -5,9 +5,6 @@
 
     <application>
         <activity
-            android:name=".ProfileActivity"
-            android:exported="true" />
-        <activity
             android:name=".edit.EditProfileActivity"
             android:exported="false" />
     </application>

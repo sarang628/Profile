@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MyFeedFragment : Fragment() {
 
-    private val mViewModel: ProfileViewModel by viewModels()
+//    private val mViewModel: ProfileViewModel by viewModels()
 
 //    @Inject
 //    lateinit var menuBottomSheetNavigation: MenuBottomSheetNavigation
@@ -34,8 +34,8 @@ class MyFeedFragment : Fragment() {
     ): View {
         val binding = FragmentMyFeedBinding.inflate(layoutInflater, container, false)
 
-        binding.rvMyFeed.adapter =
-            MyFeedRvAdt(mViewModel, childFragmentManager, viewLifecycleOwner)
+//        binding.rvMyFeed.adapter =
+//            MyFeedRvAdt(mViewModel, childFragmentManager, viewLifecycleOwner)
 
         /*viewLifecycleOwner.lifecycle.addObserver(
             ReportProcessor(

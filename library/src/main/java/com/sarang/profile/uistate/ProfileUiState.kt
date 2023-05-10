@@ -21,11 +21,12 @@ fun testProfileUiState(lifecycleOwner: LifecycleOwner): StateFlow<ProfileUiState
 
     lifecycleOwner.lifecycleScope.launch {
         while (true) {
-            flow.emit(testProfileImageOn()); delay(delay); flow.emit(testProfileImageOff()); delay(delay);
-            flow.emit(testProfileFeedCountOn()); delay(delay); flow.emit(testProfileFeedCountOff()); delay(delay);
-            flow.emit(testProfileFollowerOn()); delay(delay); flow.emit(testProfileFollowerOff()); delay(delay);
-            flow.emit(testProfileFollowingOn()); delay(delay); flow.emit(testProfileFollowingOff()); delay(delay);
-            flow.emit(testloginOn()); delay(delay); flow.emit(testloginOff()); delay(delay);
+            flow.emit(testProfileImageOn()); delay(delay);
+//            flow.emit(testProfileImageOff()); delay(delay);
+//            flow.emit(testProfileFeedCountOn()); delay(delay); flow.emit(testProfileFeedCountOff()); delay(delay);
+//            flow.emit(testProfileFollowerOn()); delay(delay); flow.emit(testProfileFollowerOff()); delay(delay);
+//            flow.emit(testProfileFollowingOn()); delay(delay); flow.emit(testProfileFollowingOff()); delay(delay);
+//            flow.emit(testloginOn()); delay(delay); flow.emit(testloginOff()); delay(delay);
         }
     }
     return flow

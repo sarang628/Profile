@@ -30,6 +30,11 @@ android {
     buildFeatures {
         dataBinding true
         viewBinding true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.6"
     }
     namespace 'com.sarang.profile'
 }
@@ -37,19 +42,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     /** common */
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "androidx.core:core-ktx:$ktxVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation 'com.google.android.material:material:1.9.0'
-    testImplementation "junit:junit:$junitVersion"
-    androidTestImplementation "androidx.test.ext:junit:$junitTestVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$archLifecycleVersion"
-    implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
     implementation 'androidx.activity:activity-ktx:1.7.0'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -66,6 +63,18 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion"
     androidTestImplementation "androidx.navigation:navigation-testing:$navigationVersion"
     implementation "androidx.navigation:navigation-compose:$navigationVersion"
+
+    /** compose */
+    def composeBom = platform('androidx.compose:compose-bom:2023.04.01')
+    implementation composeBom
+    androidTestImplementation composeBom
+    //없으면 @Composable import 안됨
+    implementation 'androidx.compose.ui:ui'
+    //없으면 Text("Hello") 안됨
+    implementation 'androidx.compose.material:material'
+    // Android Studio Preview support
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
 
     implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
     implementation "com.github.sarang628:Theme:$themeVersion"

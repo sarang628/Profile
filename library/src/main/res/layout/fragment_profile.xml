@@ -1,49 +1,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-        <import type="android.view.View" />
-        <variable name="profileUrl" type="String" />
-        <variable name="feedCount" type="Integer" />
-        <variable name="following" type="Integer" />
-        <variable name="follower" type="Integer" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorSecondaryLight">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/cv_profile"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <include
-                android:id="@+id/ic_profile"
-                layout="@layout/layout_profile"
-                app:feedCount="@{feedCount}"
-                app:follower="@{follower}"
-                app:following="@{following}"
-                app:profileUrl="@{profileUrl}"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/iv_settings"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_settings"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

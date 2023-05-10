@@ -4,6 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -25,42 +43,69 @@ import java.util.*
  * [FragmentProfileBinding]
  */
 
-@AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class ProfileFragment  {
 
-    //프로필 뷰모델
-    private val mViewModel: ProfileViewModel by viewModels()
+}
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // 바인딩 초기화
-        val binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
+@Composable
+fun test() {
 
-        // 바인딩에 라이프싸이클 오너 설정
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        binding.ivSettings.setOnClickListener {
-        }
-        // UI 구독 실행
-        subScribeUI(testProfileUiState(viewLifecycleOwner), binding)
-
-        return binding.root
+    Row() {
+        Spacer(modifier = Modifier.weight(1f))
+        Image(painter = painterResource(id = R.drawable.ic_settings), contentDescription = "")
     }
 
-    private fun subScribeUI(uiState: StateFlow<ProfileUiState>, binding: FragmentProfileBinding) {
-        lifecycleScope.launch {
-            uiState.collect {
-                binding.profileUrl = it.profileUrl
-                binding.feedCount = it.feedCount
-                binding.follower = it.follower
-                binding.following = it.following
+    Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_settings),
+                contentDescription = "",
+                modifier = Modifier.size(100.dp)
+            )
 
-                if(!it.isLogin){
-                    findNavController().navigate(R.id.nonLoginProfileFragment)
+            Row(
+                Modifier
+                    .weight(1f)
+                    .padding(start = 16.dp)
+            ) {
+                Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally)
+                {
+                    Text(text = "0", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "게시물", fontSize = 18.sp)
                 }
+
+                Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally)
+                {
+                    Text(text = "0", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "팔로워", fontSize = 18.sp)
+                }
+
+                Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally)
+                {
+                    Text(text = "0", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "팔로잉", fontSize = 18.sp)
+                }
+            }
+
+        }
+        Spacer(modifier = Modifier.height(50.dp))
+        Row() {
+            Button(
+                onClick = { }, modifier = Modifier
+                    .weight(1f)
+                    .height(50.dp)
+            ) {
+                Text(text = "프로필 편집")
             }
         }
     }
+
+}
+
+@Preview
+@Composable
+fun previewTest() {
+    test()
 }

@@ -15,6 +15,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Torang"
+rootProject.name = "Profile"
 include ':app'
 include ':library'
