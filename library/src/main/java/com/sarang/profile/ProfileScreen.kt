@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.sarang.profile.R
 import com.sarang.profile.uistate.ProfileUiState
 
@@ -32,8 +33,8 @@ fun ProfileScreen(uiState: ProfileUiState) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_settings),
+            AsyncImage(
+                model = uiState.profileUrl,
                 contentDescription = "",
                 modifier = Modifier.size(100.dp)
             )
@@ -45,19 +46,19 @@ fun ProfileScreen(uiState: ProfileUiState) {
             ) {
                 Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally)
                 {
-                    Text(text = "0", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(text = uiState.feedCount.toString(), fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     Text(text = "게시물", fontSize = 18.sp)
                 }
 
                 Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally)
                 {
-                    Text(text = "0", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(text = uiState.follower.toString(), fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     Text(text = "팔로워", fontSize = 18.sp)
                 }
 
                 Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally)
                 {
-                    Text(text = "0", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(text = uiState.following.toString(), fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     Text(text = "팔로잉", fontSize = 18.sp)
                 }
             }
