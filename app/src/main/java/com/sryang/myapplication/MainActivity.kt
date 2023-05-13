@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
 import com.sarang.profile.ProfileScreen
+import com.sarang.profile.previewProfile
 import com.sarang.profile.uistate.testProfileUiState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             testProfileUiState(this@MainActivity).collect{
                 setContent {
-                    ProfileScreen(it)
+                    previewProfile(this@MainActivity)
                 }
             }
         }
