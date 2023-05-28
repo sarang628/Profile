@@ -3,10 +3,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <application>
-        <activity
-            android:name=".edit.EditProfileActivity"
-            android:exported="false" />
-    </application>
+    <application android:usesCleartextTraffic="true" />
 
 </manifest>
