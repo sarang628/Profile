@@ -41,28 +41,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    /** common */
-    implementation "androidx.core:core-ktx:$ktxVersion"
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation 'com.google.android.material:material:1.9.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.activity:activity-ktx:1.7.0'
-
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-
-
-    implementation 'com.google.code.gson:gson:2.10.1'
 
     /** HILT */
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
-    /** NAVIGATION COMPONENT */
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion" // Kotlin
-    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion" // Kotlin
-    implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion"
-    androidTestImplementation "androidx.navigation:navigation-testing:$navigationVersion"
-    implementation "androidx.navigation:navigation-compose:$navigationVersion"
 
     /** compose */
     def composeBom = platform('androidx.compose:compose-bom:2023.04.01')
@@ -75,6 +57,13 @@ dependencies {
     // Android Studio Preview support
     implementation 'androidx.compose.ui:ui-tooling-preview'
     debugImplementation 'androidx.compose.ui:ui-tooling'
+    //JetNews Main 따라하기
+    implementation 'androidx.compose.material3:material3'
+    implementation "androidx.compose.material3:material3-window-size-class"
+    implementation "androidx.lifecycle:lifecycle-runtime-compose"
+    def nav_version = "2.5.3"
+
+    implementation "androidx.navigation:navigation-compose:$nav_version"
 
     implementation("io.coil-kt:coil-compose:2.3.0")
 
