@@ -70,5 +70,5 @@ dependencies {
     implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
     implementation "com.github.sarang628:Theme:$themeVersion"
     implementation 'com.github.sarang628:JsonToObjectGenerator:ab416a13e2'
-    implementation 'com.github.sarang628:BaseFeed:cd301db930'
+    implementation "com.github.sarang628:BaseFeed:$baseFeedVersion"
 }
