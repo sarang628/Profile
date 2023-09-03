@@ -1,5 +1,7 @@
 package com.sarang.profile
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,7 +48,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 
 @Composable
-fun ProfileScreen(uiState: ProfileUiState) {
+fun ProfileScreen(
+    uiState: ProfileUiState,
+    onLogout: (Void?) -> Unit
+) {
+
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -57,7 +64,16 @@ fun ProfileScreen(uiState: ProfileUiState) {
 
         Row() {
             Spacer(modifier = Modifier.weight(1f))
-            Image(painter = painterResource(id = R.drawable.ic_settings), contentDescription = "")
+            Image(
+                painter = painterResource(id = R.drawable.ic_settings), contentDescription = "",
+                Modifier.clickable {
+                    AlertDialog.Builder(context)
+                        .setMessage("로그아웃 하시겠습니까?")
+                        .setPositiveButton("예") { _, _ -> onLogout.invoke(null) }
+                        .setNegativeButton("아니오") { _, _ -> }
+                        .show()
+                }
+            )
         }
 
         Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 20.dp)) {
@@ -258,5 +274,7 @@ fun PreviewProfile() {
         "profile.json",
         ProfileUiState::class.java
     )
-    ProfileScreen(uiState = uiState)
+    ProfileScreen(uiState = uiState, onLogout = {
+
+    })
 }
