@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id 'com.android.application' version '8.0.1' apply false
-    id 'com.android.library' version '8.0.1' apply false
+    id 'com.android.application' version '8.1.0' apply false
+    id 'com.android.library' version '8.1.0' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.20' apply false
     id 'com.google.dagger.hilt.android' version '2.44' apply false
 }
@@ -13,19 +13,20 @@ ext {
     targetSdk = 30
     buildToolsVersion = '30.0.3'
 
-    ktxVersion = '1.10.0'
-    appCompatVersion = '1.6.1'
-    constraintLayoutVersion = '2.1.4'
-    swipeRefreshLayoutVersion = '1.1.0'
-
     //hilt
-    hiltVersion = '2.46'
+    hiltVersion = '2.44'
+
+    room_version = "2.5.1"
+
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
+    mapVersion = 'f0bfeb81ec'
     themeVersion = '6f8e2a7a08'
-
-    feedService = "\"real\"" // real, local, test
-
-    baseFeedVersion = 'aa5b46f3e0'
+    cardInfoVersion = 'b34a034c20'
+    filterVersion = '40b6a6f290'
+    dataVersion = '5e905f6f1f'
+    roomVersion = '2.5.1'
+    workVersion = '2.8.1'
+    baseFeedVersion = '4d00a9591a'
 }

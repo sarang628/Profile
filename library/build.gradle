@@ -71,4 +71,5 @@ dependencies {
     implementation "com.github.sarang628:Theme:$themeVersion"
     implementation 'com.github.sarang628:JsonToObjectGenerator:ab416a13e2'
     implementation "com.github.sarang628:BaseFeed:$baseFeedVersion"
+    implementation 'com.github.sarang628:Design:973242b6ae'
 }

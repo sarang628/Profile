@@ -15,24 +15,6 @@ data class ProfileUiState(
     val isLogin: Boolean = false
 )
 
-fun testProfileUiState(lifecycleOwner: LifecycleOwner): StateFlow<ProfileUiState> {
-    val flow = MutableStateFlow(ProfileUiState())
-    val delay = 500L
-
-    lifecycleOwner.lifecycleScope.launch {
-        while (true) {
-            flow.emit(testProfileImageOn()); delay(delay);
-//            flow.emit(testProfileImageOff()); delay(delay);
-//            flow.emit(testProfileFeedCountOn()); delay(delay); flow.emit(testProfileFeedCountOff()); delay(delay);
-//            flow.emit(testProfileFollowerOn()); delay(delay); flow.emit(testProfileFollowerOff()); delay(delay);
-//            flow.emit(testProfileFollowingOn()); delay(delay); flow.emit(testProfileFollowingOff()); delay(delay);
-//            flow.emit(testloginOn()); delay(delay); flow.emit(testloginOff()); delay(delay);
-        }
-    }
-    return flow
-}
-
-
 //로그인 페이지에서 프로필 화면으로 이동 테스트
 fun testProfileUiState1(lifecycleOwner: LifecycleOwner): StateFlow<ProfileUiState> {
     val flow = MutableStateFlow(ProfileUiState())

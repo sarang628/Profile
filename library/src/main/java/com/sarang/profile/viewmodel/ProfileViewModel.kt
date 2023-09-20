@@ -1,17 +1,31 @@
 package com.sarang.profile.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.sarang.profile.uistate.ProfileUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    //private val repository: ProfileRepository
-    ) :
+    private val repository: ProfileRepository
+) :
     ViewModel() {
 
-    private val userId = MutableLiveData<Int>()
+    val uiState = MutableStateFlow(ProfileUiState())
+
+    fun loadProfile(id : Int) {
+        viewModelScope.launch {
+            val result = repository.loadProfile(id)
+            uiState.emit(
+                uiState.value.copy(
+                    profileUrl = result.profilePictureUrl
+                )
+            )
+        }
+    }
 
 //    val nothingProfile: LiveData<UserEntity> = userId.switchMap {
 //        Logger.d("received user id : $it")

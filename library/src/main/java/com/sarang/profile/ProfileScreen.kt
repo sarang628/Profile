@@ -44,16 +44,19 @@ import coil.compose.AsyncImage
 import com.example.library.JsonToObjectGenerator
 import com.example.screen_feed.ui.PreviewFeeds
 import com.sarang.profile.uistate.ProfileUiState
+import com.sarang.profile.viewmodel.ProfileViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 
 @Composable
 fun ProfileScreen(
-    uiState: ProfileUiState,
+    profileBaseUrl: String = "",
+    profileViewModel: ProfileViewModel,
     onLogout: (Void?) -> Unit
 ) {
 
     val context = LocalContext.current
+    val uiState by profileViewModel.uiState.collectAsState()
 
     Box(
         modifier = Modifier
@@ -78,6 +81,7 @@ fun ProfileScreen(
 
         Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 20.dp)) {
             ProfileSummary(
+                profileBaseUrl = profileBaseUrl,
                 profileUrl = uiState.profileUrl,
                 feedCount = uiState.feedCount,
                 follower = uiState.follower,
@@ -212,6 +216,7 @@ fun PreviewTabs(
 
 @Composable
 fun ProfileSummary(
+    profileBaseUrl: String = "",
     profileUrl: String?,
     feedCount: Int?,
     follower: Int?,
@@ -221,7 +226,7 @@ fun ProfileSummary(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         AsyncImage(
-            model = profileUrl ?: "",
+            model = if (profileUrl == null) "" else profileBaseUrl + profileUrl,
             contentDescription = "",
             modifier = Modifier.size(100.dp)
         )
@@ -274,7 +279,7 @@ fun PreviewProfile() {
         "profile.json",
         ProfileUiState::class.java
     )
-    ProfileScreen(uiState = uiState, onLogout = {
+    /*ProfileScreen(uiState = uiState, onLogout = {
 
-    })
+    })*/
 }
