@@ -15,18 +15,19 @@ ext {
 
     //hilt
     hiltVersion = '2.44'
-
     room_version = "2.5.1"
+
+    roomVersion = '2.5.1'
+    workVersion = '2.8.1'
 
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
-    mapVersion = 'f0bfeb81ec'
     themeVersion = '6f8e2a7a08'
-    cardInfoVersion = 'b34a034c20'
-    filterVersion = '40b6a6f290'
-    dataVersion = '5e905f6f1f'
-    roomVersion = '2.5.1'
-    workVersion = '2.8.1'
-    baseFeedVersion = '4d00a9591a'
+    baseFeedVersion = '7aa074ae18'
+    repositoryVersion = 'ab4217e851'
+    jsonToObjectGeneratorVersion = 'ab416a13e2'
+    designVersion = 'a7236c358c'
+
+
 }

@@ -67,9 +67,8 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.3.0")
 
-    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
     implementation "com.github.sarang628:Theme:$themeVersion"
-    implementation 'com.github.sarang628:JsonToObjectGenerator:ab416a13e2'
+    implementation "com.github.sarang628:JsonToObjectGenerator:$jsonToObjectGeneratorVersion"
     implementation "com.github.sarang628:BaseFeed:$baseFeedVersion"
-    implementation 'com.github.sarang628:Design:973242b6ae'
+    implementation "com.github.sarang628:Design:$designVersion"
 }

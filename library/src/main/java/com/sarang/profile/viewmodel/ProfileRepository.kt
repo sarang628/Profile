@@ -1,7 +1,7 @@
 package com.sarang.profile.viewmodel
 
-import com.sryang.library.entity.User
+import com.sryang.library.entity.user.UserProfile
 
 interface ProfileRepository {
-    suspend fun loadProfile(i: Int) : User
+    suspend fun loadProfile(i: Int) : UserProfile
 }

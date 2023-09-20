@@ -60,9 +60,6 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
     implementation project(path: ':library')
-    implementation "com.github.sarang628:Theme:$themeVersion"
-    implementation "com.github.sarang628:TorangRepository:910f9fb6cf"
-
     /** Room */
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
@@ -78,5 +75,8 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:$room_version"
-    implementation 'com.github.sarang628:Design:973242b6ae'
+
+    implementation "com.github.sarang628:Design:$designVersion"
+    implementation "com.github.sarang628:Theme:$themeVersion"
+    implementation "com.github.sarang628:TorangRepository:$repositoryVersion"
 }
