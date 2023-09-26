@@ -43,7 +43,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import com.example.screen_feed.ui.PreviewFeeds
 import com.sarang.profile.viewmodel.ProfileViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -138,13 +137,11 @@ fun FavoriteAndWantToGo() {
             Spacer(modifier = Modifier.height(2.dp))
             NavHost(navController = navController, startDestination = "profile") {
                 composable("profile") {
-                    PreviewFeeds()
                     LaunchedEffect(key1 = "1") {
                         state.emit(false)
                     }
                 }
                 composable("finding") {
-                    PreviewFeeds()
                     LaunchedEffect(key1 = "2") {
                         state.emit(true)
                     }
