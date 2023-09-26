@@ -1,7 +1,9 @@
 package com.sryang.torang_repository.di.room
 
 import com.sryang.torang_repository.data.AppDatabase
+import com.sryang.torang_repository.data.dao.FavoriteDao
 import com.sryang.torang_repository.data.dao.FeedDao
+import com.sryang.torang_repository.data.dao.LikeDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.PictureDao
 import com.sryang.torang_repository.data.dao.UserDao
@@ -19,7 +21,7 @@ class DaoModules {
     }
 
     @Provides
-    fun provideFeedDao(appDatabase: AppDatabase): FeedDao {
+    fun proviadeFeedDao(appDatabase: AppDatabase): FeedDao {
         return appDatabase.feedDao()
     }
 
@@ -31,5 +33,15 @@ class DaoModules {
     @Provides
     fun provideUserDao(appDatabase: AppDatabase): UserDao {
         return appDatabase.userDao()
+    }
+
+    @Provides
+    fun provideLikeDao(appDatabase: AppDatabase): LikeDao {
+        return appDatabase.likeDao()
+    }
+
+    @Provides
+    fun provideFavoriteDao(appDatabase: AppDatabase): FavoriteDao {
+        return appDatabase.favoriteDao()
     }
 }

@@ -76,7 +76,6 @@ dependencies {
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:$room_version"
 
-    implementation "com.github.sarang628:Design:$designVersion"
     implementation "com.github.sarang628:Theme:$themeVersion"
     implementation "com.github.sarang628:TorangRepository:$repositoryVersion"
 }

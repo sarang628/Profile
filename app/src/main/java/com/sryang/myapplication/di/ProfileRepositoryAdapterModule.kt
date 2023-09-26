@@ -1,6 +1,7 @@
 package com.sryang.myapplication.di
 
-import com.sryang.library.entity.user.UserProfile
+import com.sarang.profile.uistate.ProfileUiState
+import com.sarang.profile.viewmodel.ProfileService
 import com.sryang.torang_repository.repository.profile.ProfileRepositoryImpl
 import dagger.Module
 import dagger.Provides
@@ -13,10 +14,18 @@ class ProfileRepositoryAdapterModule {
     @Provides
     fun provideProfileAdapterRepository(
         profileRepository: ProfileRepositoryImpl
-    ): com.sarang.profile.viewmodel.ProfileRepository {
-        return object : com.sarang.profile.viewmodel.ProfileRepository {
-            override suspend fun loadProfile(i: Int): UserProfile {
-                return profileRepository.loadProfile(i)
+    ): ProfileService {
+        return object : ProfileService {
+            override suspend fun loadProfile(i: Int): ProfileUiState {
+                val result = profileRepository.loadProfile(i)
+                return ProfileUiState(
+                    profileUrl = result.profilePicUrl,
+                    feedCount = result.reviewCount,
+                    following = result.following,
+                    follower = result.followers,
+                    name = result.userName,
+                    isLogin = true
+                )
             }
         }
     }

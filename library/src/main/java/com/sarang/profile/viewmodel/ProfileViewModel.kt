@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val repository: ProfileRepository
+    private val repository: ProfileService
 ) : ViewModel() {
 
     val uiState = MutableStateFlow(
@@ -27,14 +27,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             val result = repository.loadProfile(id)
             uiState.emit(
-                uiState.value.copy(
-                    profileUrl = result.user.profilePictureUrl,
-                    name = result.user.name,
-                    feedCount = result.post,
-                    follower = result.follower,
-                    following = result.following
-
-                )
+                result
             )
         }
     }
