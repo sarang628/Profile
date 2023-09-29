@@ -24,8 +24,8 @@ ext {
     navigationVersion = '2.4.0-alpha06'
 
     themeVersion = '6f8e2a7a08'
-    baseFeedVersion = 'e09ebcb091'
-    repositoryVersion = '46db8bba15'
+    baseFeedVersion = '4cb13bb5fc'
+    repositoryVersion = 'e2aba4de6e'
     jsonToObjectGeneratorVersion = 'ab416a13e2'
 
 }
