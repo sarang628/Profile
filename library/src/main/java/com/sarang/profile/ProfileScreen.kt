@@ -48,7 +48,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 
 @Composable
-fun ProfileScreen(
+fun _ProfileScreen(
     profileBaseUrl: String = "",
     profileViewModel: ProfileViewModel,
     onLogout: (Void?) -> Unit,
