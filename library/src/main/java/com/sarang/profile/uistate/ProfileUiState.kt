@@ -6,5 +6,6 @@ data class ProfileUiState(
     val follower: Int,
     val following: Int,
     val name: String,
-    val isLogin: Boolean = false
+    val isLogin: Boolean = false,
+    val favoriteList : List<Feed>? = null
 )

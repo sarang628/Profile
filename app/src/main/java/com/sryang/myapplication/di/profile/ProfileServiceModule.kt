@@ -1,31 +1,35 @@
 package com.sryang.myapplication.di.profile
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NamedNavArgument
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDeepLink
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.ComposeNavigator
-import androidx.navigation.compose.composable
-import androidx.navigation.get
 import com.sarang.base_feed.ui.Feeds
+import com.sarang.base_feed.uistate.FeedBottomUIState
+import com.sarang.base_feed.uistate.FeedTopUIState
 import com.sarang.base_feed.uistate.FeedUiState
 import com.sarang.base_feed.uistate.testFeedUiState
 import com.sarang.profile._ProfileScreen
+import com.sarang.profile.uistate.Feed
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.viewmodel.ProfileService
 import com.sarang.profile.viewmodel.ProfileViewModel
+import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.repository.profile.ProfileRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import java.util.concurrent.Flow
+import kotlin.streams.toList
 
 @Module
 @InstallIn(SingletonComponent::class)
-class ProfileRepositoryAdapterModule {
+class ProfileServiceModule {
     @Provides
-    fun provideProfileAdapterRepository(
+    fun provideProfileService(
         profileRepository: ProfileRepositoryImpl
     ): ProfileService {
         return object : ProfileService {
@@ -40,17 +44,47 @@ class ProfileRepositoryAdapterModule {
                     isLogin = true
                 )
             }
+
+            override suspend fun getFavorites(): kotlinx.coroutines.flow.Flow<List<Feed>> {
+                val list = MutableStateFlow<List<Feed>>(ArrayList())
+
+                profileRepository.getMyFavorite(1).collect {
+                    list.emit(it.toFeeds())
+                }
+
+                return list.asStateFlow()
+            }
         }
     }
+}
+
+
+fun List<FeedEntity>.toFeeds(): List<Feed> {
+    return this.stream().map { it.toFeed() }.toList()
+}
+
+fun FeedEntity.toFeed(): Feed {
+    return Feed(
+        reviewId,
+        userId,
+        restaurantId,
+        userName,
+        restaurantName,
+        profilePicUrl,
+        contents,
+        rating,
+        likeAmount,
+        commentAmount,
+        createDate
+    )
 }
 
 
 @Composable
 fun ProfileScreen(profileViewModel: ProfileViewModel, navBackStackEntry: NavBackStackEntry) {
     val id = navBackStackEntry.arguments?.getString("id")?.toInt()
-
-
     profileViewModel.loadProfile(id!!)
+    val uiState by profileViewModel.uiState.collectAsState()
     _ProfileScreen(
         profileBaseUrl = "http://sarang628.iptime.org:89/profile_images/",
         profileViewModel = profileViewModel, onLogout = {
@@ -58,13 +92,7 @@ fun ProfileScreen(profileViewModel: ProfileViewModel, navBackStackEntry: NavBack
         },
         favorite = {
             Feeds(
-                list = ArrayList<FeedUiState>().apply {
-                    add(testFeedUiState())
-                    add(testFeedUiState())
-                    add(testFeedUiState())
-                    add(testFeedUiState())
-                    add(testFeedUiState())
-                },
+                list = uiState.favoriteList?.toFeedUiState() ?: ArrayList(),
                 onProfile = {},
                 onLike = {},
                 onComment = {},
@@ -100,5 +128,48 @@ fun ProfileScreen(profileViewModel: ProfileViewModel, navBackStackEntry: NavBack
                 isRefreshing = false
             )
         }
+    )
+}
+
+fun List<Feed>.toFeedUiState(): ArrayList<FeedUiState> {
+    return ArrayList(this.stream().map { it.toFeedUiState() }.toList())
+}
+
+fun Feed.toFeedUiState(): FeedUiState {
+    return FeedUiState(
+        reviewId = this.reviewId,
+        itemFeedTopUiState = this.toFeedTopUiState(),
+        itemFeedBottomUiState = this.toFeedBottomUiState(),
+        reviewImages = ArrayList(),
+    )
+}
+
+fun Feed.toFeedTopUiState(): FeedTopUIState {
+    return FeedTopUIState(
+        reviewId = this.reviewId,
+        userId = this.userId,
+        name = this.userName,
+        restaurantName = this.restaurantName,
+        profilePictureUrl = this.profilePicUrl,
+        rating = this.rating
+    )
+}
+
+fun Feed.toFeedBottomUiState(): FeedBottomUIState {
+    return FeedBottomUIState(
+        reviewId = this.reviewId,
+        author = "",
+        author2 = "",
+        author1 = "",
+        comment = "",
+        commentAmount = this.commentAmount,
+        comment2 = "",
+        comment1 = "",
+        contents = this.contents,
+        isFavorite = true,
+        isLike = true,
+        likeAmount = this.likeAmount,
+        visibleComment = false,
+        visibleLike = false
     )
 }
