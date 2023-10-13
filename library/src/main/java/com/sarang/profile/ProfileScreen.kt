@@ -53,7 +53,8 @@ fun _ProfileScreen(
     profileViewModel: ProfileViewModel,
     onLogout: (Void?) -> Unit,
     favorite: @Composable () -> Unit,
-    wantToGo: @Composable () -> Unit
+    wantToGo: @Composable () -> Unit,
+    onEditProfile: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -61,7 +62,7 @@ fun _ProfileScreen(
 
     Box(
         modifier = Modifier
-            .background(colorResource(id = R.color.colorSecondaryLight))
+            .background(colorResource(id = com.sarang.theme.R.color.colorSecondaryLight))
             .fillMaxHeight()
     )
     {
@@ -92,11 +93,13 @@ fun _ProfileScreen(
             Spacer(modifier = Modifier.height(30.dp))
             Row {
                 Button(
-                    onClick = { },
+                    onClick = {
+                        onEditProfile.invoke()
+                    },
                     modifier = Modifier
                         .weight(1f)
                         .height(40.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary))
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = com.sarang.theme.R.color.colorPrimary))
                 ) {
                     Text(
                         text = "프로필 편집",

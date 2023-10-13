@@ -90,7 +90,8 @@ fun ReviewAndImageEntity.toFeed(): Feed {
 fun ProfileScreen(
     profileViewModel: ProfileViewModel,
     profileImageUrl: String,
-    imageServerUrl: String
+    imageServerUrl: String,
+    onEditProfile: () -> Unit
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     _ProfileScreen(
@@ -98,6 +99,7 @@ fun ProfileScreen(
         profileViewModel = profileViewModel, onLogout = {
 
         },
+        onEditProfile = onEditProfile,
         favorite = {
             Feeds(
                 list = uiState.favoriteList?.toFeedUiState() ?: ArrayList(),

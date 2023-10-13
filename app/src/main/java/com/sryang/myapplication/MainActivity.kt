@@ -9,6 +9,7 @@ import androidx.compose.material3.Button
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sarang.profile.edit.EditProfileScreen
 import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sryang.myapplication.di.profile.ProfileScreen
 import com.sryang.torang_repository.api.ApiProfile
@@ -47,7 +48,20 @@ class MainActivity : ComponentActivity() {
                     ProfileScreen(
                         profileViewModel = profileViewModel,
                         profileImageUrl = "http://sarang628.iptime.org:89/profile_images/",
-                        imageServerUrl = "http://sarang628.iptime.org:89/review_images/"
+                        imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
+                        onEditProfile = {
+                            navHostController.navigate("profileEdit")
+                        }
+                    )
+                }
+                composable("profileEdit") {
+                    EditProfileScreen(
+                        onBack = {
+                            navHostController.popBackStack()
+                        },
+                        onEditImage = {
+
+                        }
                     )
                 }
             }
