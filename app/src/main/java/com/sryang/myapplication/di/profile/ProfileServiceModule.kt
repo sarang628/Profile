@@ -119,11 +119,6 @@ fun ProfileScreen(
         wantToGo = {
             Feeds(
                 list = ArrayList<FeedUiState>().apply {
-                    add(testFeedUiState())
-                    add(testFeedUiState())
-                    add(testFeedUiState())
-                    add(testFeedUiState())
-                    add(testFeedUiState())
                 },
                 onProfile = {},
                 onLike = {},
