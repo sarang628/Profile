@@ -11,5 +11,8 @@ data class Feed(
     val rating: Float,/* 8 */
     val likeAmount: Int,/* 9 */
     val commentAmount: Int,/* 10 */
-    val createDate: String/* 11 */
+    val createDate: String,/* 11 */
+    val reviewImage: List<String>,/* 12 */
+    val isLike: Boolean,/* 12 */
+    val isFavorite: Boolean/* 12 */
 )

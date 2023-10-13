@@ -12,6 +12,8 @@ import androidx.navigation.compose.rememberNavController
 import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sryang.myapplication.di.profile.ProfileScreen
 import com.sryang.torang_repository.api.ApiProfile
+import com.sryang.torang_repository.repository.feed.FeedRepository
+import com.sryang.torang_repository.repository.feed.FeedRepositoryTest
 import com.sryang.torang_repository.repository.profile.ProfileRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -26,6 +28,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var profileRepository: ProfileRepository
 
+    @Inject
+    lateinit var feedRepository: FeedRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -37,9 +42,17 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 composable("profile/{id}") {
-                    ProfileScreen(profileViewModel, it)
+                    val id = it.arguments?.getString("id")?.toInt()
+                    profileViewModel.loadProfile(id!!)
+                    ProfileScreen(
+                        profileViewModel = profileViewModel,
+                        profileImageUrl = "http://sarang628.iptime.org:89/profile_images/",
+                        imageServerUrl = "http://sarang628.iptime.org:89/review_images/"
+                    )
                 }
             }
+
+            //FeedRepositoryTest(feedRepository = feedRepository)
         }
     }
 }

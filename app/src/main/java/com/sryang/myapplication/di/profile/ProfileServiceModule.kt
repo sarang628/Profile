@@ -1,5 +1,6 @@
 package com.sryang.myapplication.di.profile
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,6 +16,7 @@ import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.viewmodel.ProfileService
 import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.repository.profile.ProfileRepositoryImpl
 import dagger.Module
 import dagger.Provides
@@ -22,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combineTransform
 import java.util.concurrent.Flow
 import kotlin.streams.toList
 
@@ -46,47 +49,52 @@ class ProfileServiceModule {
             }
 
             override suspend fun getFavorites(): kotlinx.coroutines.flow.Flow<List<Feed>> {
-                val list = MutableStateFlow<List<Feed>>(ArrayList())
-
-                profileRepository.getMyFavorite(1).collect {
-                    list.emit(it.toFeeds())
+                return MutableStateFlow<List<Feed>>(ArrayList()).combineTransform(
+                    profileRepository.getMyFavorite(
+                        1
+                    )
+                ) { feed, feedEntity ->
+                    emit(feedEntity.toFeeds())
                 }
-
-                return list.asStateFlow()
             }
         }
     }
 }
 
 
-fun List<FeedEntity>.toFeeds(): List<Feed> {
+fun List<ReviewAndImageEntity>.toFeeds(): List<Feed> {
     return this.stream().map { it.toFeed() }.toList()
 }
 
-fun FeedEntity.toFeed(): Feed {
+fun ReviewAndImageEntity.toFeed(): Feed {
     return Feed(
-        reviewId,
-        userId,
-        restaurantId,
-        userName,
-        restaurantName,
-        profilePicUrl,
-        contents,
-        rating,
-        likeAmount,
-        commentAmount,
-        createDate
+        this.review.reviewId,
+        this.review.userId,
+        this.review.restaurantId,
+        this.review.userName,
+        this.review.restaurantName,
+        this.review.profilePicUrl,
+        this.review.contents,
+        this.review.rating,
+        this.review.likeAmount,
+        this.review.commentAmount,
+        this.review.createDate,
+        reviewImage = this.images.stream().map { it.pictureUrl }.toList(),
+        isLike = this.like != null,
+        isFavorite = this.favorite != null
     )
 }
 
 
 @Composable
-fun ProfileScreen(profileViewModel: ProfileViewModel, navBackStackEntry: NavBackStackEntry) {
-    val id = navBackStackEntry.arguments?.getString("id")?.toInt()
-    profileViewModel.loadProfile(id!!)
+fun ProfileScreen(
+    profileViewModel: ProfileViewModel,
+    profileImageUrl: String,
+    imageServerUrl: String
+) {
     val uiState by profileViewModel.uiState.collectAsState()
     _ProfileScreen(
-        profileBaseUrl = "http://sarang628.iptime.org:89/profile_images/",
+        profileBaseUrl = profileImageUrl,
         profileViewModel = profileViewModel, onLogout = {
 
         },
@@ -103,7 +111,9 @@ fun ProfileScreen(profileViewModel: ProfileViewModel, navBackStackEntry: NavBack
                 onRestaurant = { /*TODO*/ },
                 onImage = {},
                 onRefresh = { /*TODO*/ },
-                isRefreshing = false
+                isRefreshing = false,
+                profileImageServerUrl = profileImageUrl,
+                imageServerUrl = imageServerUrl
             )
         },
         wantToGo = {
@@ -140,7 +150,7 @@ fun Feed.toFeedUiState(): FeedUiState {
         reviewId = this.reviewId,
         itemFeedTopUiState = this.toFeedTopUiState(),
         itemFeedBottomUiState = this.toFeedBottomUiState(),
-        reviewImages = ArrayList(),
+        reviewImages = this.reviewImage,
     )
 }
 
@@ -166,8 +176,8 @@ fun Feed.toFeedBottomUiState(): FeedBottomUIState {
         comment2 = "",
         comment1 = "",
         contents = this.contents,
-        isFavorite = true,
-        isLike = true,
+        isFavorite = this.isFavorite,
+        isLike = this.isLike,
         likeAmount = this.likeAmount,
         visibleComment = false,
         visibleLike = false

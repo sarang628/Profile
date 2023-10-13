@@ -1,5 +1,6 @@
 package com.sarang.profile.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,6 +36,7 @@ class ProfileViewModel @Inject constructor(
             )
 
             repository.getFavorites().collect {
+                Log.d("ProfileViewModel", "getFavorites:$it")
                 _uiState.emit(
                     uiState.value.copy(favoriteList = it)
                 )
