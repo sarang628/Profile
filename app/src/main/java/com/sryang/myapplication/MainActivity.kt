@@ -1,7 +1,6 @@
 package com.sryang.myapplication
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -9,13 +8,13 @@ import androidx.compose.material3.Button
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sarang.instagralleryModule.gallery.GalleryScreen
 import com.sarang.profile.edit.EditProfileScreen
 import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sryang.myapplication.di.profile.ProfileScreen
 import com.sryang.torang_repository.api.ApiProfile
-import com.sryang.torang_repository.repository.feed.FeedRepository
-import com.sryang.torang_repository.repository.feed.FeedRepositoryTest
-import com.sryang.torang_repository.repository.profile.ProfileRepository
+import com.sryang.torang_repository.repository.FeedRepository
+import com.sryang.torang_repository.repository.ProfileRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -56,13 +55,20 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("profileEdit") {
                     EditProfileScreen(
+                        profileImageServerUrl = "http://sarang628.iptime.org:89/profile_images/",
+                        profileViewModel = profileViewModel,
                         onBack = {
                             navHostController.popBackStack()
                         },
                         onEditImage = {
-
+                            navHostController.navigate("EditProfileImage")
                         }
                     )
+                }
+                composable("EditProfileImage") {
+                    GalleryScreen(onNext = {
+                        profileViewModel.updateProfileImage(1, it[0])
+                    }, onClose = {})
                 }
             }
 

@@ -1,7 +1,6 @@
 package com.sarang.profile.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.profile.uistate.ProfileUiState
@@ -13,10 +12,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val repository: ProfileService
+    private val service: ProfileService
 ) : ViewModel() {
 
-    val _uiState = MutableStateFlow(
+    private val _uiState = MutableStateFlow(
         ProfileUiState(
             profileUrl = "",
             feedCount = 0,
@@ -30,17 +29,24 @@ class ProfileViewModel @Inject constructor(
 
     fun loadProfile(id: Int) {
         viewModelScope.launch {
-            val result = repository.loadProfile(id)
+            val result = service.loadProfile(id)
             _uiState.emit(
                 result
             )
 
-            repository.getFavorites().collect {
+            service.getFavorites().collect {
                 Log.d("ProfileViewModel", "getFavorites:$it")
                 _uiState.emit(
                     uiState.value.copy(favoriteList = it)
                 )
             }
+        }
+    }
+
+    fun updateProfileImage(id: Int, uri: String) {
+        viewModelScope.launch {
+            service.updateProfile(id, uiState.value.name, uri)
+            loadProfile(id)
         }
     }
 

@@ -25,7 +25,7 @@ ext {
 
     themeVersion = '7c191eb4e6'
     baseFeedVersion = '4cb13bb5fc'
-    repositoryVersion = '928fce8039'
+    repositoryVersion = '075c522231'
     jsonToObjectGeneratorVersion = 'ab416a13e2'
 
 }

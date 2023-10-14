@@ -13,25 +13,33 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.sarang.profile.R
+import com.sarang.profile.viewmodel.ProfileViewModel
 
 @Composable
 fun EditProfileScreen(
+    profileImageServerUrl: String,
+    profileViewModel: ProfileViewModel,
     onEditImage: () -> Unit,
     onBack: () -> Unit
 ) {
+    val uiState by profileViewModel.uiState.collectAsState()
     Column(
         Modifier
             .fillMaxSize()
@@ -48,7 +56,7 @@ fun EditProfileScreen(
                 painter = painterResource(id = R.drawable.ic_back),
                 contentDescription = "",
                 Modifier
-                    .size(35.dp)
+                    .size(30.dp)
                     .align(Alignment.CenterStart)
                     .clickable {
                         onBack.invoke()
@@ -75,10 +83,13 @@ fun EditProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AsyncImage(
-                model = R.drawable.ic_settings,
+                model = profileImageServerUrl + uiState.profileUrl,
                 contentDescription = "",
                 modifier = Modifier
                     .size(70.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -108,7 +119,7 @@ fun EditProfileScreen(
                         .weight(8f)
                         .fillMaxHeight()
                 ) {
-                    Text(text = "torang", modifier = Modifier.align(Alignment.CenterStart))
+                    Text(text = uiState.name, modifier = Modifier.align(Alignment.CenterStart))
                     Text(
                         text = "",
                         Modifier
@@ -119,14 +130,14 @@ fun EditProfileScreen(
                     )
                 }
             }
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.height(45.dp)) {
+            /*Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.height(45.dp)) {
                 Text(text = "UserName", modifier = Modifier.weight(2f))
                 Box(
                     modifier = Modifier
                         .weight(8f)
                         .fillMaxHeight()
                 ) {
-                    Text(text = "torang", modifier = Modifier.align(Alignment.CenterStart))
+                    Text(text = uiState.name, modifier = Modifier.align(Alignment.CenterStart))
                     Text(
                         text = "",
                         Modifier
@@ -136,7 +147,7 @@ fun EditProfileScreen(
                             .align(Alignment.BottomStart)
                     )
                 }
-            }
+            }*/
         }
     }
 }
