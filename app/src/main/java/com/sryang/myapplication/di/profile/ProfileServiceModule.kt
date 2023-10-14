@@ -96,7 +96,7 @@ fun ProfileScreen(
     val uiState by profileViewModel.uiState.collectAsState()
     _ProfileScreen(
         profileBaseUrl = profileImageUrl,
-        profileViewModel = profileViewModel, onLogout = {
+        profileViewModel = profileViewModel, onSetting = {
 
         },
         onEditProfile = onEditProfile,
