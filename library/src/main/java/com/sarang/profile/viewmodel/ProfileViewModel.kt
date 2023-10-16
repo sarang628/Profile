@@ -64,10 +64,10 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun updateProfileImage(id: Int, uri: String) {
+    fun updateProfileImage(uri: String) {
         viewModelScope.launch {
-            service.updateProfile(id, uiState.value.name, uri)
-            loadProfile(id)
+            service.updateProfile(uiState.value.name, uri)
+            loadProfileByToken()
         }
     }
 

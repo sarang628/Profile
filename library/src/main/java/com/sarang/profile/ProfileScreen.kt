@@ -29,6 +29,7 @@ import com.sarang.profile.viewmodel.ProfileViewModel
 
 @Composable
 fun _ProfileScreen(
+    isMyProfile: Boolean,
     profileBaseUrl: String = "",
     profileViewModel: ProfileViewModel,
     onSetting: () -> Unit,
@@ -44,14 +45,16 @@ fun _ProfileScreen(
             .fillMaxHeight()
     )
     {
-        Row(Modifier.padding(end = 8.dp, top = 8.dp)) {
-            Spacer(modifier = Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = R.drawable.ic_settings), contentDescription = "",
-                Modifier.clickable {
-                    onSetting.invoke()
-                }
-            )
+        if (isMyProfile) {
+            Row(Modifier.padding(end = 8.dp, top = 8.dp)) {
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    painter = painterResource(id = R.drawable.ic_settings), contentDescription = "",
+                    Modifier.clickable {
+                        onSetting.invoke()
+                    }
+                )
+            }
         }
 
         Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 20.dp)) {
@@ -64,22 +67,24 @@ fun _ProfileScreen(
                 name = uiState.name
             )
             Spacer(modifier = Modifier.height(30.dp))
-            Row {
-                Button(
-                    onClick = {
-                        onEditProfile.invoke()
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(40.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = com.sarang.theme.R.color.colorPrimary))
-                ) {
-                    Text(
-                        text = "프로필 편집",
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 17.sp
-                    )
+            if (isMyProfile) {
+                Row {
+                    Button(
+                        onClick = {
+                            onEditProfile.invoke()
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(40.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = com.sarang.theme.R.color.colorPrimary))
+                    ) {
+                        Text(
+                            text = "프로필 편집",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 17.sp
+                        )
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(5.dp))

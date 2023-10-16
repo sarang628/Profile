@@ -62,6 +62,7 @@ class MainActivity : ComponentActivity() {
                     val id = it.arguments?.getString("id")?.toInt()
                     profileViewModel.loadProfile(id!!)
                     ProfileScreen(
+                        isMyProfile = false,
                         profileViewModel = profileViewModel,
                         profileImageUrl = profileImageServerUrl,
                         imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
@@ -73,6 +74,7 @@ class MainActivity : ComponentActivity() {
                 composable("myProfile") {
                     profileViewModel.loadProfileByToken()
                     ProfileScreen(
+                        isMyProfile = true,
                         profileViewModel = profileViewModel,
                         profileImageUrl = profileImageServerUrl,
                         imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
@@ -95,7 +97,7 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("EditProfileImage") {
                     GalleryScreen(onNext = {
-                        profileViewModel.updateProfileImage(1, it[0])
+                        profileViewModel.updateProfileImage(it[0])
                     }, onClose = {})
                 }
                 composable("login") {

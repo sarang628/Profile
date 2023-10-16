@@ -66,8 +66,8 @@ class ProfileServiceModule {
                 }
             }
 
-            override suspend fun updateProfile(id: Int, name: String, uri: String) {
-                editProfileRepository.editProfile(id, name, uri)
+            override suspend fun updateProfile(name: String, uri: String) {
+                editProfileRepository.editProfile(name, uri)
             }
         }
     }
@@ -100,6 +100,7 @@ fun ReviewAndImageEntity.toFeed(): Feed {
 
 @Composable
 fun ProfileScreen(
+    isMyProfile: Boolean,
     profileViewModel: ProfileViewModel,
     profileImageUrl: String,
     imageServerUrl: String,
@@ -107,6 +108,7 @@ fun ProfileScreen(
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     _ProfileScreen(
+        isMyProfile = isMyProfile,
         profileBaseUrl = profileImageUrl,
         profileViewModel = profileViewModel, onSetting = {
 
