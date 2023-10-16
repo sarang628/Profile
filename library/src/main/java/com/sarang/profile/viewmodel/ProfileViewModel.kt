@@ -1,6 +1,7 @@
 package com.sarang.profile.viewmodel
 
 import android.util.Log
+import android.util.LogPrinter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.profile.uistate.ProfileUiState
@@ -39,6 +40,26 @@ class ProfileViewModel @Inject constructor(
                 _uiState.emit(
                     uiState.value.copy(favoriteList = it)
                 )
+            }
+        }
+    }
+
+    fun loadProfileByToken() {
+        viewModelScope.launch {
+            try {
+                val result = service.loadProfileByToken()
+                _uiState.emit(
+                    result
+                )
+
+                service.getFavorites().collect {
+                    Log.d("ProfileViewModel", "getFavorites:$it")
+                    _uiState.emit(
+                        uiState.value.copy(favoriteList = it)
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e("ProfileViewModel", e.toString())
             }
         }
     }

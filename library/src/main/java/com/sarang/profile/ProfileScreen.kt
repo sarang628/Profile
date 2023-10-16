@@ -36,8 +36,6 @@ fun _ProfileScreen(
     wantToGo: @Composable () -> Unit,
     onEditProfile: () -> Unit
 ) {
-
-    val context = LocalContext.current
     val uiState by profileViewModel.uiState.collectAsState()
 
     Box(
@@ -46,7 +44,6 @@ fun _ProfileScreen(
             .fillMaxHeight()
     )
     {
-
         Row(Modifier.padding(end = 8.dp, top = 8.dp)) {
             Spacer(modifier = Modifier.weight(1f))
             Image(

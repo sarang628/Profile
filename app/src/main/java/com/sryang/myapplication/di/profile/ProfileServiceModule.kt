@@ -44,6 +44,18 @@ class ProfileServiceModule {
                 )
             }
 
+            override suspend fun loadProfileByToken(): ProfileUiState {
+                val result = profileRepository.loadProfileByToken()
+                return ProfileUiState(
+                    profileUrl = result.profilePicUrl,
+                    feedCount = result.reviewCount,
+                    following = result.following,
+                    follower = result.followers,
+                    name = result.userName,
+                    isLogin = true
+                )
+            }
+
             override suspend fun getFavorites(): kotlinx.coroutines.flow.Flow<List<Feed>> {
                 return MutableStateFlow<List<Feed>>(ArrayList()).combineTransform(
                     profileRepository.getMyFavorite(
