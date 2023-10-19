@@ -24,8 +24,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val profileViewModel: ProfileViewModel by viewModels()
-
     @Inject
     lateinit var apiProfile: ApiProfile
 
@@ -59,11 +57,9 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 composable("profile/{id}") {
-                    val id = it.arguments?.getString("id")?.toInt()
-                    profileViewModel.loadProfile(id!!)
                     ProfileScreen(
+                        id = it.arguments?.getString("id")?.toInt(),
                         isMyProfile = false,
-                        profileViewModel = profileViewModel,
                         profileImageUrl = profileImageServerUrl,
                         imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
                         onEditProfile = {
@@ -72,10 +68,8 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 composable("myProfile") {
-                    profileViewModel.loadProfileByToken()
                     ProfileScreen(
                         isMyProfile = true,
-                        profileViewModel = profileViewModel,
                         profileImageUrl = profileImageServerUrl,
                         imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
                         onEditProfile = {
@@ -86,7 +80,6 @@ class MainActivity : ComponentActivity() {
                 composable("profileEdit") {
                     EditProfileScreen(
                         profileImageServerUrl = profileImageServerUrl,
-                        profileViewModel = profileViewModel,
                         onBack = {
                             navHostController.popBackStack()
                         },
@@ -97,7 +90,7 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("EditProfileImage") {
                     GalleryScreen(onNext = {
-                        profileViewModel.updateProfileImage(it[0])
+                        //profileViewModel.updateProfileImage(it[0])
                     }, onClose = {})
                 }
                 composable("login") {

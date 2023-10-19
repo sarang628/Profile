@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.sarang.profile.R
 import com.sarang.profile.viewmodel.ProfileViewModel
@@ -35,7 +36,7 @@ import com.sarang.profile.viewmodel.ProfileViewModel
 @Composable
 fun EditProfileScreen(
     profileImageServerUrl: String,
-    profileViewModel: ProfileViewModel,
+    profileViewModel: ProfileViewModel = hiltViewModel(),
     onEditImage: () -> Unit,
     onBack: () -> Unit
 ) {

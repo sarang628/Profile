@@ -76,6 +76,9 @@ dependencies {
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:$room_version"
 
+    // hiltViewModel
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
     implementation "com.github.sarang628:Theme:$themeVersion"
     implementation "com.github.sarang628:TorangRepository:$repositoryVersion"
     implementation "com.github.sarang628:BaseFeed:$baseFeedVersion"
