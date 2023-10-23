@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
             NavHost(navController = navHostController, startDestination = "main") {
                 composable("main") {
                     Column {
-                        Button(onClick = { navHostController.navigate("profile/1") }) {
+                        Button(onClick = { navHostController.navigate("profile/3") }) {
                             Text(text = "profile")
                         }
                         Button(onClick = { navHostController.navigate("myProfile") }) {
