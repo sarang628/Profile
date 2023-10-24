@@ -16,8 +16,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,6 +34,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.sarang.profile.R
 import com.sarang.profile.viewmodel.ProfileViewModel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun EditProfileScreen(
@@ -41,6 +45,15 @@ fun EditProfileScreen(
     onBack: () -> Unit
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
+
+    val coroutine = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = uiState.name, block = {
+        coroutine.launch {
+            profileViewModel.loadProfileByToken()
+        }
+    })
+
     Column(
         Modifier
             .fillMaxSize()
@@ -79,6 +92,7 @@ fun EditProfileScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        // profile image
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -131,24 +145,6 @@ fun EditProfileScreen(
                     )
                 }
             }
-            /*Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.height(45.dp)) {
-                Text(text = "UserName", modifier = Modifier.weight(2f))
-                Box(
-                    modifier = Modifier
-                        .weight(8f)
-                        .fillMaxHeight()
-                ) {
-                    Text(text = uiState.name, modifier = Modifier.align(Alignment.CenterStart))
-                    Text(
-                        text = "",
-                        Modifier
-                            .height(1.dp)
-                            .fillMaxWidth()
-                            .background(Color.LightGray)
-                            .align(Alignment.BottomStart)
-                    )
-                }
-            }*/
         }
     }
 }

@@ -36,7 +36,6 @@ class ProfileViewModel @Inject constructor(
             )
 
             service.getFavorites().collect {
-                Log.d("ProfileViewModel", "getFavorites:$it")
                 _uiState.emit(
                     uiState.value.copy(favoriteList = it)
                 )
@@ -53,7 +52,6 @@ class ProfileViewModel @Inject constructor(
                 )
 
                 service.getFavorites().collect {
-                    Log.d("ProfileViewModel", "getFavorites:$it")
                     _uiState.emit(
                         uiState.value.copy(favoriteList = it)
                     )
@@ -66,7 +64,7 @@ class ProfileViewModel @Inject constructor(
 
     fun updateProfileImage(uri: String) {
         viewModelScope.launch {
-            service.updateProfile(uiState.value.name, uri)
+            service.updateProfile(uri)
             loadProfileByToken()
         }
     }

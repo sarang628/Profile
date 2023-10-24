@@ -68,8 +68,8 @@ class ProfileServiceModule {
                 }
             }
 
-            override suspend fun updateProfile(name: String, uri: String) {
-                editProfileRepository.editProfile(name, uri)
+            override suspend fun updateProfile(uri: String) {
+                editProfileRepository.editProfile(name = null, uri = uri)
             }
         }
     }

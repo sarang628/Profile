@@ -8,5 +8,5 @@ interface ProfileService {
     suspend fun loadProfile(i: Int): ProfileUiState
     suspend fun loadProfileByToken(): ProfileUiState
     suspend fun getFavorites(): kotlinx.coroutines.flow.Flow<List<Feed>>
-    suspend fun updateProfile(name: String, uri: String)
+    suspend fun updateProfile(uri: String)
 }

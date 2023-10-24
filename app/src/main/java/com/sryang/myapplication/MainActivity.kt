@@ -36,6 +36,8 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var loginRepository: LoginRepository
 
+    private val profileViewModel: ProfileViewModel by viewModels()
+
     val profileImageServerUrl = "http://sarang628.iptime.org:89/profile_images/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,8 +92,11 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("EditProfileImage") {
                     GalleryScreen(onNext = {
-                        //profileViewModel.updateProfileImage(it[0])
-                    }, onClose = {})
+                        profileViewModel.updateProfileImage(it[0])
+                        navHostController.popBackStack()
+                    }, onClose = {
+                        navHostController.popBackStack()
+                    })
                 }
                 composable("login") {
                     LoginRepositoryTest(loginRepository = loginRepository)
