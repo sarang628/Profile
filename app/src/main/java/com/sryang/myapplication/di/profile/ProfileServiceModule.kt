@@ -107,7 +107,8 @@ fun ProfileScreen(
     profileViewModel: ProfileViewModel = hiltViewModel(),
     profileImageUrl: String,
     imageServerUrl: String,
-    onEditProfile: () -> Unit
+    onEditProfile: () -> Unit,
+    onSetting: () -> Unit
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
 
@@ -124,9 +125,8 @@ fun ProfileScreen(
     _ProfileScreen(
         isMyProfile = isMyProfile,
         profileBaseUrl = profileImageUrl,
-        profileViewModel = profileViewModel, onSetting = {
-
-        },
+        profileViewModel = profileViewModel,
+        onSetting = onSetting,
         onEditProfile = onEditProfile,
         favorite = {
             Feeds(
@@ -181,6 +181,7 @@ fun Feed.toFeedUiState(): FeedUiState {
 
 fun Feed.toFeedTopUiState(): FeedTopUIState {
     return FeedTopUIState(
+        restaurantId = this.restaurantId,
         reviewId = this.reviewId,
         userId = this.userId,
         name = this.userName,

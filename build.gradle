@@ -25,8 +25,8 @@ ext {
     nav_version = "2.5.3"
 
     themeVersion = '7c191eb4e6'
-    baseFeedVersion = '4cb13bb5fc'
+    baseFeedVersion = '691a642d82'
     repositoryVersion = '93fa92a8fc'
-    jsonToObjectGeneratorVersion = 'ab416a13e2'
+    jsonToObjectGeneratorVersion = '8d8a65e1f1'
 
 }
