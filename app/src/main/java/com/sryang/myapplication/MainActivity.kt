@@ -66,6 +66,8 @@ class MainActivity : ComponentActivity() {
                         imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
                         onEditProfile = {
                             navHostController.navigate("profileEdit")
+                        }, onSetting = {
+
                         }
                     )
                 }
@@ -76,6 +78,8 @@ class MainActivity : ComponentActivity() {
                         imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
                         onEditProfile = {
                             navHostController.navigate("profileEdit")
+                        }, onSetting = {
+
                         }
                     )
                 }
