@@ -57,7 +57,6 @@ fun EditProfileScreen(
     Column(
         Modifier
             .fillMaxSize()
-            .background(colorResource(com.sarang.theme.R.color.colorSecondaryLight))
     ) {
         //titlebar
         Box(

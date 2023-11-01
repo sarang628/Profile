@@ -25,7 +25,7 @@ fun ProfileTabs(
     Row(
         Modifier
             .fillMaxWidth()
-            .background(colorResource(id = com.sarang.theme.R.color.colorSecondaryLight))
+
     ) {
         Column(
             Modifier
@@ -45,7 +45,6 @@ fun ProfileTabs(
                 Spacer(
                     modifier =
                     Modifier
-                        .background(colorResource(id = com.sarang.theme.R.color.colorSecondaryLight))
                         .fillMaxWidth()
                         .height(2.dp)
                 )
@@ -68,7 +67,6 @@ fun ProfileTabs(
                 Spacer(
                     modifier =
                     Modifier
-                        .background(colorResource(id = com.sarang.theme.R.color.colorPrimary))
                         .fillMaxWidth()
                         .height(2.dp)
                 )

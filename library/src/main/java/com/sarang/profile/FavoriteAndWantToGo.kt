@@ -45,7 +45,6 @@ fun FavoriteAndWantToGo(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colorResource(id = com.sarang.theme.R.color.colorSecondaryLight))
                 .padding(it)
         ) {
             NavHost(

@@ -41,7 +41,6 @@ fun _ProfileScreen(
 
     Box(
         modifier = Modifier
-            .background(colorResource(id = com.sarang.theme.R.color.colorSecondaryLight))
             .fillMaxHeight()
     )
     {
@@ -76,7 +75,6 @@ fun _ProfileScreen(
                         modifier = Modifier
                             .weight(1f)
                             .height(40.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = com.sarang.theme.R.color.colorPrimary))
                     ) {
                         Text(
                             text = "프로필 편집",

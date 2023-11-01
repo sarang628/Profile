@@ -65,6 +65,4 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
     implementation("io.coil-kt:coil-compose:2.3.0")
-
-    implementation "com.github.sarang628:Theme:$themeVersion"
 }
