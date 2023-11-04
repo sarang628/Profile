@@ -45,7 +45,6 @@ dependencies {
     // Android Studio Preview support
     implementation 'androidx.compose.ui:ui-tooling-preview'
     debugImplementation 'androidx.compose.ui:ui-tooling'
-    //JetNews Main 따라하기
     implementation 'androidx.compose.material3:material3:1.2.0-alpha10' //JetNews Main 따라하기
     implementation "androidx.compose.material3:material3-window-size-class"
     def nav_version = "2.5.3"
@@ -80,5 +79,5 @@ dependencies {
     implementation "com.github.sarang628:Theme:$themeVersion"
     implementation "com.github.sarang628:TorangRepository:$repositoryVersion"
     implementation "com.github.sarang628:BaseFeed:$baseFeedVersion"
-    implementation 'com.github.sarang628:InstagramGallery:50ecde5309'
+    implementation "com.github.sarang628:InstagramGallery:$instagramGalleryVersion"
 }

@@ -1,15 +1,16 @@
 package com.sryang.myapplication.di.profile
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import com.sarang.base_feed.ui.Feeds
 import com.sarang.base_feed.uistate.FeedBottomUIState
 import com.sarang.base_feed.uistate.FeedTopUIState
 import com.sarang.base_feed.uistate.FeedUiState
-import com.sarang.profile._ProfileScreen
+import com.sarang.instagralleryModule.gallery.GalleryScreen
+import com.sarang.profile.edit.ProfileNavHost
 import com.sarang.profile.uistate.Feed
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.viewmodel.ProfileService
@@ -23,7 +24,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combineTransform
-import kotlin.streams.toList
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -102,32 +102,17 @@ fun ReviewAndImageEntity.toFeed(): Feed {
 
 @Composable
 fun ProfileScreen(
-    id: Int? = null,
-    isMyProfile: Boolean,
     profileViewModel: ProfileViewModel = hiltViewModel(),
     profileImageUrl: String,
     imageServerUrl: String,
-    onEditProfile: () -> Unit,
-    onSetting: () -> Unit
+    onSetting: () -> Unit,
+    navBackStackEntry: NavBackStackEntry
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
 
-    LaunchedEffect(key1 = isMyProfile, block = {
-        if (isMyProfile) {
-            profileViewModel.loadProfileByToken()
-        } else {
-            id?.let {
-                profileViewModel.loadProfile(it)
-            }
-        }
-    })
-
-    _ProfileScreen(
-        isMyProfile = isMyProfile,
-        profileBaseUrl = profileImageUrl,
+    ProfileNavHost(
         profileViewModel = profileViewModel,
         onSetting = onSetting,
-        onEditProfile = onEditProfile,
         favorite = {
             Feeds(
                 list = uiState.favoriteList?.toFeedUiState() ?: ArrayList(),
@@ -162,7 +147,13 @@ fun ProfileScreen(
                 onRefresh = { /*TODO*/ },
                 isRefreshing = false
             )
-        }
+        },
+        galleryScreen = { onNext, onClose ->
+            GalleryScreen(onNext = onNext, onClose = { onClose.invoke() })
+        },
+        isMyProfile = navBackStackEntry.arguments?.getString("id")?.toInt() == -1,
+        id = navBackStackEntry.arguments?.getString("id")?.toInt(),
+        profileImageServerUrl = profileImageUrl
     )
 }
 

@@ -26,7 +26,7 @@ import com.sarang.profile.viewmodel.ProfileViewModel
 @Composable
 fun _ProfileScreen(
     isMyProfile: Boolean,
-    profileBaseUrl: String = "",
+    profileImageUrl: String = "",
     profileViewModel: ProfileViewModel,
     onSetting: () -> Unit,
     favorite: @Composable () -> Unit,
@@ -54,7 +54,7 @@ fun _ProfileScreen(
 
         Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 20.dp)) {
             ProfileSummary(
-                profileBaseUrl = profileBaseUrl,
+                profileBaseUrl = profileImageUrl,
                 profileUrl = uiState.profileUrl,
                 feedCount = uiState.feedCount,
                 follower = uiState.follower,
