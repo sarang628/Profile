@@ -18,7 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.instagralleryModule.gallery.GalleryScreen
-import com.sarang.profile.edit.ProfileNavHost
+import com.sarang.profile.compose.edit.ProfileNavHost
 import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sryang.myapplication.di.profile.ProfileScreen
 import com.sryang.torang_repository.api.ApiProfile

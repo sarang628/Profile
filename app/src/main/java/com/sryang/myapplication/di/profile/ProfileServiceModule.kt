@@ -10,7 +10,7 @@ import com.sarang.base_feed.uistate.FeedBottomUIState
 import com.sarang.base_feed.uistate.FeedTopUIState
 import com.sarang.base_feed.uistate.FeedUiState
 import com.sarang.instagralleryModule.gallery.GalleryScreen
-import com.sarang.profile.edit.ProfileNavHost
+import com.sarang.profile.compose.edit.ProfileNavHost
 import com.sarang.profile.uistate.Feed
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.viewmodel.ProfileService

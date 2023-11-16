@@ -1,4 +1,4 @@
-package com.sarang.profile
+package com.sarang.profile.compose.profile
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

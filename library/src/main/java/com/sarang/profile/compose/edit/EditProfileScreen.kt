@@ -1,4 +1,4 @@
-package com.sarang.profile.edit
+package com.sarang.profile.compose.edit
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,35 +25,47 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.sarang.profile.R
+import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.viewmodel.ProfileViewModel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
 fun EditProfileScreen(
-    profileImageServerUrl: String,
-    profileViewModel: ProfileViewModel = hiltViewModel(),
-    onEditImage: () -> Unit,
-    onBack: () -> Unit
+    profileImageServerUrl: String,                          // 프로필 이미지 서버 url
+    profileViewModel: ProfileViewModel = hiltViewModel(),   // 프로필 뷰모델
+    onEditImage: () -> Unit,                                // 프로필 수정 클릭
+    onBack: () -> Unit                                      // 뒤로가기 클릭
 ) {
-    val uiState by profileViewModel.uiState.collectAsState()
-
     val coroutine = rememberCoroutineScope()
-
+    val uiState by profileViewModel.uiState.collectAsState()
     LaunchedEffect(key1 = uiState.name, block = {
         coroutine.launch {
             profileViewModel.loadProfileByToken()
         }
     })
+    _EditProfileScreen(
+        profileImageServerUrl = profileImageServerUrl,
+        onEditImage = onEditImage,
+        onBack = onBack,
+        uiState = uiState
+    )
+}
 
+@Composable
+fun _EditProfileScreen(
+    profileImageServerUrl: String,
+    onEditImage: () -> Unit,
+    onBack: () -> Unit,
+    uiState: ProfileUiState
+) {
     Column(
         Modifier
             .fillMaxSize()
@@ -101,7 +113,8 @@ fun EditProfileScreen(
                 contentDescription = "",
                 modifier = Modifier
                     .size(70.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .background(Color(0x11000000)),
                 contentScale = ContentScale.Crop
 
             )
@@ -146,4 +159,21 @@ fun EditProfileScreen(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewEditProfileScreen() {
+    _EditProfileScreen(
+        profileImageServerUrl = "",
+        onEditImage = { /*TODO*/ },
+        onBack = { /*TODO*/ },
+        uiState = ProfileUiState(
+            profileUrl = "",
+            follower = 0,
+            following = 0,
+            feedCount = 0,
+            name = "name"
+        )
+    )
 }

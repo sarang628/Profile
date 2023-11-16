@@ -1,4 +1,4 @@
-package com.sarang.profile.edit
+package com.sarang.profile.compose.edit
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -6,7 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.profile._ProfileScreen
+import com.sarang.profile.compose.profile.ProfileScreen
 import com.sarang.profile.viewmodel.ProfileViewModel
 
 @Composable
@@ -47,7 +47,7 @@ fun ProfileNavHost(
             )
         }
         composable("profile") {
-            _ProfileScreen(
+            ProfileScreen(
                 isMyProfile = isMyProfile,
                 profileImageUrl = profileImageServerUrl,
                 onEditProfile = { navController.navigate("editProfile") },

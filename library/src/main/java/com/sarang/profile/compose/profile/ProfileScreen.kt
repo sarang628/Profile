@@ -1,4 +1,4 @@
-package com.sarang.profile
+package com.sarang.profile.compose.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -18,23 +18,46 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sarang.profile.R
+import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.viewmodel.ProfileViewModel
 
 
 @Composable
+fun ProfileScreen(
+    isMyProfile: Boolean,               // 내 프로필 여부
+    profileImageUrl: String,            // 프로필 이미지 서버 url
+    profileViewModel: ProfileViewModel, // 프로필 뷰모델
+    onSetting: () -> Unit,              // 설정 클릭
+    favorite: @Composable () -> Unit,   // 즐겨찾기 컴포즈
+    wantToGo: @Composable () -> Unit,   // 가고싶다 컴포즈,
+    onEditProfile: () -> Unit           // 프로필 수정 클릭
+) {
+    val uiState by profileViewModel.uiState.collectAsState()
+    _ProfileScreen(
+        isMyProfile = isMyProfile,
+        onSetting = onSetting,
+        favorite = favorite,
+        wantToGo = wantToGo,
+        onEditProfile = onEditProfile,
+        uiState = uiState,
+        profileImageUrl = profileImageUrl
+    )
+}
+
+@Composable
 fun _ProfileScreen(
     isMyProfile: Boolean,
-    profileImageUrl: String = "",
-    profileViewModel: ProfileViewModel,
+    profileImageUrl: String,
     onSetting: () -> Unit,
     favorite: @Composable () -> Unit,
     wantToGo: @Composable () -> Unit,
-    onEditProfile: () -> Unit
+    onEditProfile: () -> Unit,
+    uiState: ProfileUiState
 ) {
-    val uiState by profileViewModel.uiState.collectAsState()
-
     Box(
         modifier = Modifier
             .fillMaxHeight()
@@ -54,8 +77,7 @@ fun _ProfileScreen(
 
         Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 20.dp)) {
             ProfileSummary(
-                profileBaseUrl = profileImageUrl,
-                profileUrl = uiState.profileUrl,
+                profileUrl = profileImageUrl + uiState.profileUrl,
                 feedCount = uiState.feedCount,
                 follower = uiState.follower,
                 following = uiState.following,
@@ -88,4 +110,27 @@ fun _ProfileScreen(
             )
         }
     }
+}
+
+
+@Preview
+@Composable
+fun PreviewProfileScreen() {
+    _ProfileScreen(
+        isMyProfile = false,
+        onSetting = { /*TODO*/ },
+        favorite = { /*TODO*/ },
+        wantToGo = { /*TODO*/ },
+        onEditProfile = { /*TODO*/ },
+        uiState = ProfileUiState(
+            profileUrl = "",
+            feedCount = 0,
+            follower = 0,
+            following = 0,
+            name = "",
+            isLogin = false,
+            favoriteList = ArrayList(),
+        ),
+        profileImageUrl = ""
+    )
 }

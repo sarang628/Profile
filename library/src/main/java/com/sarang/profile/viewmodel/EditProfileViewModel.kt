@@ -1,4 +1,4 @@
-package com.sarang.profile.edit
+package com.sarang.profile.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

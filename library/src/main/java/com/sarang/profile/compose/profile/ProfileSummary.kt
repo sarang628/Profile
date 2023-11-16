@@ -1,8 +1,10 @@
-package com.sarang.profile
+package com.sarang.profile.compose.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -21,19 +23,18 @@ import coil.compose.AsyncImage
 
 @Composable
 fun ProfileSummary(
-    profileBaseUrl: String = "",
-    profileUrl: String,
-    name: String,
-    feedCount: Int,
-    follower: Int,
-    following: Int
+    profileUrl: String,         // 프로필 이미지 url
+    name: String,               // 이름
+    feedCount: Int,             // 피드 수
+    follower: Int,              // 팔로워 수
+    following: Int              // 팔로잉 수
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column {
             AsyncImage(
-                model = profileBaseUrl + profileUrl,
+                model = profileUrl,
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -41,9 +42,10 @@ fun ProfileSummary(
                     .background(Color(0x11000000)),
                 contentScale = ContentScale.Crop
             )
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = name,
-                Modifier.padding(start = 8.dp, top = 8.dp),
+                Modifier.padding(start = 8.dp),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -93,7 +95,7 @@ fun ProfileSummary(
 fun PreviewProfileSummary() {
     ProfileSummary(
         profileUrl = "",
-        name = "",
+        name = "name",
         feedCount = 11111,
         follower = 22222,
         following = 33333
