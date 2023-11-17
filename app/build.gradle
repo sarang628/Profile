@@ -80,4 +80,5 @@ dependencies {
     implementation "com.github.sarang628:TorangRepository:$repositoryVersion"
     implementation "com.github.sarang628:BaseFeed:$baseFeedVersion"
     implementation "com.github.sarang628:InstagramGallery:$instagramGalleryVersion"
+    implementation 'com.github.sarang628:MediaContentResolver:54ff69ee3a'
 }

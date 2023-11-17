@@ -12,15 +12,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.samples.apps.sunflower.ui.TorangTheme
-import com.sarang.instagralleryModule.gallery.GalleryScreen
-import com.sarang.profile.compose.edit.ProfileNavHost
 import com.sarang.profile.viewmodel.ProfileViewModel
-import com.sryang.myapplication.di.profile.ProfileScreen
+import com.sryang.myapplication.profile.ProfileScreen
 import com.sryang.torang_repository.api.ApiProfile
 import com.sryang.torang_repository.repository.FeedRepository
 import com.sryang.torang_repository.repository.LoginRepository

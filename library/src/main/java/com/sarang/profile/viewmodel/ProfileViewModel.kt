@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.profile.uistate.ProfileUiState
+import com.sarang.profile.usecase.IsLoginUseCase
+import com.sarang.profile.usecase.ProfileService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,10 +15,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val service: ProfileService
+    private val service: ProfileService,
+    private val isLoginUseCase: IsLoginUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ProfileUiState(profileUrl = "", feedCount = 0, follower = 0, following = 0, name = ""))
     val uiState = _uiState.asStateFlow()
+    val isLogin = isLoginUseCase.isLogin
 
     fun loadProfile(id: Int) {
         viewModelScope.launch {

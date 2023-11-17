@@ -1,4 +1,4 @@
-package com.sarang.profile.viewmodel
+package com.sarang.profile.usecase
 
 import com.sarang.profile.uistate.Feed
 import com.sarang.profile.uistate.ProfileUiState

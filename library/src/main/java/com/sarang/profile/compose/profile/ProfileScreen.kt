@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -14,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -37,15 +39,22 @@ fun ProfileScreen(
     onEditProfile: () -> Unit           // 프로필 수정 클릭
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
-    _ProfileScreen(
-        isMyProfile = isMyProfile,
-        onSetting = onSetting,
-        favorite = favorite,
-        wantToGo = wantToGo,
-        onEditProfile = onEditProfile,
-        uiState = uiState,
-        profileImageUrl = profileImageUrl
-    )
+    val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
+    if (isLogin) {
+        _ProfileScreen(
+            isMyProfile = isMyProfile,
+            onSetting = onSetting,
+            favorite = favorite,
+            wantToGo = wantToGo,
+            onEditProfile = onEditProfile,
+            uiState = uiState,
+            profileImageUrl = profileImageUrl
+        )
+    } else {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Text(text = "로그인을 해주세요.", modifier = Modifier.align(Alignment.Center), fontSize = 18.sp)
+        }
+    }
 }
 
 @Composable
