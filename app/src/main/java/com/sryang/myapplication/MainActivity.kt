@@ -7,19 +7,26 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.samples.apps.sunflower.ui.TorangTheme
+import com.sarang.profile.compose.follow.FollowScreen
 import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sryang.myapplication.di.profile_di.ProfileScreen
 import com.sryang.torang_repository.api.ApiProfile
 import com.sryang.torang_repository.repository.FeedRepository
+import com.sryang.torang_repository.repository.FeedRepositoryTest
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.repository.LoginRepositoryTest
 import com.sryang.torang_repository.repository.ProfileRepository
@@ -49,41 +56,69 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TorangTheme {
-                val navHostController = rememberNavController()
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.background)
                 ) {
-                    NavHost(navController = navHostController, startDestination = "main") {
-                        composable("main") {
-                            Column {
-                                Button(onClick = { navHostController.navigate("profile/3") }) {
-                                    Text(text = "profile")
-                                }
-                                Button(onClick = { navHostController.navigate("profile/-1") }) {
-                                    Text(text = "myProfile")
-                                }
-                                Button(onClick = { navHostController.navigate("login") }) {
-                                    Text(text = "login")
-                                }
-                            }
-                        }
-                        composable("profile/{id}") {
-                            ProfileScreen(
-                                profileImageUrl = profileImageServerUrl,
-                                imageServerUrl = reviewImageServerUrl,
-                                navBackStackEntry = it,
-                                onSetting = {}
+                    Column(Modifier.verticalScroll(rememberScrollState())) {
+                        Column(Modifier.height(700.dp)) {
+                            ProfileNavhost(
+                                profileImageServerUrl = profileImageServerUrl,
+                                reviewImageServerUrl = reviewImageServerUrl,
+                                loginRepository = loginRepository
                             )
                         }
-                        composable("login") {
-                            LoginRepositoryTest(loginRepository = loginRepository)
+                        Column(Modifier.height(300.dp)) {
+                            LoginRepositoryTest(loginRepository)
                         }
                     }
                 }
             }
-            //FeedRepositoryTest(feedRepository = feedRepository)
+        }
+    }
+}
+
+@Composable
+fun ProfileNavhost(
+    profileImageServerUrl: String,
+    reviewImageServerUrl: String,
+    loginRepository: LoginRepository
+) {
+    val navHostController = rememberNavController()
+    NavHost(navController = navHostController, startDestination = "main") {
+        composable("main") {
+            Column {
+                Button(onClick = { navHostController.navigate("profile/3") }) {
+                    Text(text = "profile")
+                }
+                Button(onClick = { navHostController.navigate("profile/-1") }) {
+                    Text(text = "myProfile")
+                }
+                Button(onClick = { navHostController.navigate("login") }) {
+                    Text(text = "login")
+                }
+                Button(onClick = { navHostController.navigate("follow") }) {
+                    Text(text = "follow")
+                }
+            }
+        }
+        composable("profile/{id}") {
+            ProfileScreen(
+                profileImageUrl = profileImageServerUrl,
+                imageServerUrl = reviewImageServerUrl,
+                navBackStackEntry = it,
+                onSetting = {}
+            )
+        }
+        composable("login") {
+            LoginRepositoryTest(loginRepository = loginRepository)
+        }
+        composable("follow") {
+            FollowScreen(
+                onBack = { navHostController.popBackStack() },
+                profileServerUrl = profileImageServerUrl
+            )
         }
     }
 }
