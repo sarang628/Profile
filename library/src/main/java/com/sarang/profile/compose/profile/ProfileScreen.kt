@@ -36,7 +36,10 @@ fun ProfileScreen(
     onSetting: () -> Unit,              // 설정 클릭
     favorite: @Composable () -> Unit,   // 즐겨찾기 컴포즈
     wantToGo: @Composable () -> Unit,   // 가고싶다 컴포즈,
-    onEditProfile: () -> Unit           // 프로필 수정 클릭
+    onEditProfile: () -> Unit,          // 프로필 수정 클릭
+    onFollowing: () -> Unit,            // 팔로잉 클릭
+    onFollwer: () -> Unit,              // 팔로워 클릭
+    onWrite: () -> Unit                 // 게시글 클릭
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
@@ -48,7 +51,10 @@ fun ProfileScreen(
             wantToGo = wantToGo,
             onEditProfile = onEditProfile,
             uiState = uiState,
-            profileImageUrl = profileImageUrl
+            profileImageUrl = profileImageUrl,
+            onWrite = onWrite,
+            onFollowing = onFollowing,
+            onFollwer = onFollwer
         )
     } else {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -65,7 +71,10 @@ fun _ProfileScreen(
     favorite: @Composable () -> Unit,
     wantToGo: @Composable () -> Unit,
     onEditProfile: () -> Unit,
-    uiState: ProfileUiState
+    uiState: ProfileUiState,
+    onFollowing: () -> Unit,    // 팔로잉 클릭
+    onFollwer: () -> Unit,      // 팔로워 클릭
+    onWrite: () -> Unit         // 게시글 클릭
 ) {
     Box(
         modifier = Modifier
@@ -90,7 +99,10 @@ fun _ProfileScreen(
                 feedCount = uiState.feedCount,
                 follower = uiState.follower,
                 following = uiState.following,
-                name = uiState.name
+                name = uiState.name,
+                onFollwer = onFollwer,
+                onFollowing = onFollowing,
+                onWrite = onWrite
             )
             Spacer(modifier = Modifier.height(30.dp))
             if (isMyProfile) {
@@ -140,6 +152,9 @@ fun PreviewProfileScreen() {
             isLogin = false,
             favoriteList = ArrayList(),
         ),
-        profileImageUrl = ""
+        profileImageUrl = "",
+        onFollwer = {},
+        onFollowing = {},
+        onWrite = {}
     )
 }

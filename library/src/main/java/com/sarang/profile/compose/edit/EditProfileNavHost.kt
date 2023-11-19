@@ -14,7 +14,7 @@ fun ProfileNavHost(
     profileViewModel: ProfileViewModel = hiltViewModel(),
     profileImageServerUrl: String,
     isMyProfile: Boolean,
-    onSetting : ()->Unit,
+    onSetting: () -> Unit,
     id: Int?,
     galleryScreen: @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit,
     favorite: @Composable () -> Unit,
@@ -54,7 +54,10 @@ fun ProfileNavHost(
                 onSetting = onSetting,
                 profileViewModel = profileViewModel,
                 favorite = { favorite.invoke() },
-                wantToGo = { wantToGo.invoke() }
+                wantToGo = { wantToGo.invoke() },
+                onFollowing = {},
+                onWrite = {},
+                onFollwer = {}
             )
         }
         composable("EditProfileImage") {
