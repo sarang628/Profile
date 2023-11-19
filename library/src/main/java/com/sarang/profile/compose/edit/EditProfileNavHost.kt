@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sarang.profile.compose.follow.FollowScreen
 import com.sarang.profile.compose.profile.ProfileScreen
 import com.sarang.profile.viewmodel.ProfileViewModel
 
@@ -55,9 +56,9 @@ fun ProfileNavHost(
                 profileViewModel = profileViewModel,
                 favorite = { favorite.invoke() },
                 wantToGo = { wantToGo.invoke() },
-                onFollowing = {},
-                onWrite = {},
-                onFollwer = {}
+                onFollowing = { navController.navigate("following") },
+                onWrite = { },
+                onFollwer = { navController.navigate("follow") }
             )
         }
         composable("EditProfileImage") {
@@ -67,6 +68,13 @@ fun ProfileNavHost(
             }, onClose = {
                 navController.popBackStack()
             })
+        }
+
+        composable("follow") {
+            FollowScreen(
+                onBack = { navController.popBackStack() },
+                profileServerUrl = profileImageServerUrl
+            )
         }
     }
 }
