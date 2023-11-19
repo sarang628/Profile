@@ -56,7 +56,7 @@ fun ProfileNavHost(
                 profileViewModel = profileViewModel,
                 favorite = { favorite.invoke() },
                 wantToGo = { wantToGo.invoke() },
-                onFollowing = { navController.navigate("following") },
+                onFollowing = { navController.navigate("follow") },
                 onWrite = { },
                 onFollwer = { navController.navigate("follow") }
             )
