@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,7 +55,11 @@ fun ProfileScreen(
             profileImageUrl = profileImageUrl,
             onWrite = onWrite,
             onFollowing = onFollowing,
-            onFollwer = onFollwer
+            onFollwer = onFollwer,
+            isFollow = uiState.isFollow,
+            onFollow = { profileViewModel.follow() },
+            onUnFollow = { profileViewModel.unFollow() },
+            onClearErrorMessage = { profileViewModel.onClearErrorMessage() }
         )
     } else {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -74,7 +79,11 @@ fun _ProfileScreen(
     uiState: ProfileUiState,
     onFollowing: () -> Unit,    // 팔로잉 클릭
     onFollwer: () -> Unit,      // 팔로워 클릭
-    onWrite: () -> Unit         // 게시글 클릭
+    onWrite: () -> Unit,        // 게시글 클릭
+    isFollow: Boolean,          // 팔로우 여부
+    onFollow: () -> Unit,
+    onUnFollow: () -> Unit,
+    onClearErrorMessage: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -123,12 +132,43 @@ fun _ProfileScreen(
                         )
                     }
                 }
+            } else {
+                Row {
+                    Button(
+                        onClick = {
+                            if (isFollow)
+                                onUnFollow.invoke()
+                            else
+                                onFollow.invoke()
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(40.dp),
+                    ) {
+                        Text(
+                            text = if (!isFollow) "Follow" else "UnFollow",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 17.sp
+                        )
+                    }
+                }
             }
             Spacer(modifier = Modifier.height(5.dp))
             FavoriteAndWantToGo(
                 wantToGo = { wantToGo.invoke() },
                 favorite = { favorite.invoke() }
             )
+        }
+        uiState.errorMessage?.let {
+            AlertDialog(onDismissRequest = { /*TODO*/ },
+                confirmButton = {
+                    Button(onClick = { onClearErrorMessage.invoke() }) {
+                        Text(text = "확인")
+                    }
+                },
+                text =
+                { Text(text = it, fontSize = 14.sp) })
         }
     }
 }
@@ -151,10 +191,15 @@ fun PreviewProfileScreen() {
             name = "",
             isLogin = false,
             favoriteList = ArrayList(),
+            id = 0
         ),
         profileImageUrl = "",
         onFollwer = {},
         onFollowing = {},
-        onWrite = {}
+        onWrite = {},
+        isFollow = false,
+        onUnFollow = {},
+        onFollow = {},
+        onClearErrorMessage = {}
     )
 }

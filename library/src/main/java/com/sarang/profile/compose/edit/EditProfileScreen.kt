@@ -173,7 +173,8 @@ fun PreviewEditProfileScreen() {
             follower = 0,
             following = 0,
             feedCount = 0,
-            name = "name"
+            name = "name",
+            id = 0
         )
     )
 }
