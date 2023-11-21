@@ -68,7 +68,7 @@ class FollowViewModel @Inject constructor(
         Log.d("FollowViewModel", "id = ${id}")
         viewModelScope.launch {
             try {
-                unFollowUseCase.invoke(id)
+                deleteUseCase.invoke(id)
                 follower.update {
                     it.stream().filter { it.id != id }.toList()
                 }
