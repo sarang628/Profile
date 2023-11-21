@@ -92,11 +92,8 @@ fun ProfileNavhost(
                 Button(onClick = { navHostController.navigate("profile/3") }) {
                     Text(text = "profile")
                 }
-                Button(onClick = { navHostController.navigate("profile/-1") }) {
+                Button(onClick = { navHostController.navigate("myProfile") }) {
                     Text(text = "myProfile")
-                }
-                Button(onClick = { navHostController.navigate("login") }) {
-                    Text(text = "login")
                 }
                 Button(onClick = { navHostController.navigate("follow") }) {
                     Text(text = "follow")
@@ -111,8 +108,13 @@ fun ProfileNavhost(
                 onSetting = {}
             )
         }
-        composable("login") {
-            LoginRepositoryTest(loginRepository = loginRepository)
+        composable("myProfile") {
+            ProfileScreen(
+                profileImageUrl = profileImageServerUrl,
+                imageServerUrl = reviewImageServerUrl,
+                navBackStackEntry = null,
+                onSetting = {}
+            )
         }
         composable("follow") {
             FollowScreen(

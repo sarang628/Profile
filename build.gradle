@@ -26,6 +26,6 @@ ext {
 
     themeVersion = '28a1702347'
     baseFeedVersion = '2b12e38961'
-    repositoryVersion = '2597ebe5aa'
+    repositoryVersion = 'bb23ffbd7a'
     instagramGalleryVersion = '4742515032'
 }
