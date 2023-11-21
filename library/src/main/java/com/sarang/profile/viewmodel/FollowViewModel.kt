@@ -1,5 +1,6 @@
 package com.sarang.profile.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.profile.compose.follow.Follow
@@ -10,8 +11,10 @@ import com.sarang.profile.usecase.GetProfileUseCase
 import com.sarang.profile.usecase.UnFollowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.streams.toList
 
 
 data class FollowUiState(
@@ -48,18 +51,31 @@ class FollowViewModel @Inject constructor(
         }
     }
 
-    fun unFollow(it: Int) {
+    fun unFollow(id: Int) {
         viewModelScope.launch {
             try {
-                unFollowUseCase.invoke(it)
+                unFollowUseCase.invoke(id)
+                following.update {
+                    it.stream().filter { it.id != id }.toList()
+                }
             } catch (e: Exception) {
                 errorMessage.emit(e.toString())
             }
         }
     }
 
-    fun delete(it: Int) {
-
+    fun delete(id: Int) {
+        Log.d("FollowViewModel", "id = ${id}")
+        viewModelScope.launch {
+            try {
+                unFollowUseCase.invoke(id)
+                follower.update {
+                    it.stream().filter { it.id != id }.toList()
+                }
+            } catch (e: Exception) {
+                errorMessage.emit(e.toString())
+            }
+        }
     }
 
     init {
