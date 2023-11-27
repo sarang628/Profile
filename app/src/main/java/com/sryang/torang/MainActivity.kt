@@ -21,9 +21,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.samples.apps.sunflower.ui.TorangTheme
+import com.sryang.myapplication.di.profile_di.ProfileScreen
 import com.sryang.torang.compose.follow.FollowScreen
 import com.sryang.torang.viewmodel.ProfileViewModel
-import com.sryang.torang.di.profile_di.ProfileScreen
 import com.sryang.torang_repository.api.ApiProfile
 import com.sryang.torang_repository.repository.FeedRepository
 import com.sryang.torang_repository.repository.LoginRepository
