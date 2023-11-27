@@ -7,7 +7,7 @@ plugins {
 
 android {
     compileSdk rootProject.compileSdk
-
+    namespace 'com.sryang.torang'
     defaultConfig {
         minSdk rootProject.minSdk
         targetSdk rootProject.targetSdk
@@ -28,15 +28,12 @@ android {
     }
 
     buildFeatures {
-        dataBinding true
-        viewBinding true
         compose true
     }
 
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.6"
     }
-    namespace 'com.sarang.profile'
 }
 
 dependencies {
@@ -45,6 +42,7 @@ dependencies {
     /** HILT */
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0" // hiltViewModel
 
     /** compose */
     def composeBom = platform('androidx.compose:compose-bom:2023.04.01')
@@ -58,8 +56,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-compose"
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
-    // hiltViewModel
-    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
 
     implementation("io.coil-kt:coil-compose:2.3.0")
 }

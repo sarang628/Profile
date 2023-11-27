@@ -8,7 +8,7 @@ plugins {
 
 android {
     compileSdk rootProject.compileSdk
-
+    namespace 'com.sryang.torang'
     defaultConfig {
         applicationId "com.example.torangscreenprofiletestapp"
         minSdk rootProject.minSdk
@@ -28,7 +28,6 @@ android {
         targetCompatibility JavaVersion.VERSION_17
         sourceCompatibility JavaVersion.VERSION_17
     }
-    namespace 'com.sryang.myapplication'
 }
 
 dependencies {
