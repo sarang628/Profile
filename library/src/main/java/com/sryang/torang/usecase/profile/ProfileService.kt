@@ -1,4 +1,4 @@
-package com.sryang.torang.usecase
+package com.sryang.torang.usecase.profile
 
 import com.sryang.torang.uistate.Feed
 import com.sryang.torang.uistate.ProfileUiState

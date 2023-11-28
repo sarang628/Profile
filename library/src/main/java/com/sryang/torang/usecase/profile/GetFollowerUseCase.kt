@@ -1,7 +1,7 @@
-package com.sryang.torang.usecase
+package com.sryang.torang.usecase.profile
 
 import com.sryang.torang.compose.follow.Follow
 
-interface GetFollowingUseCase {
+interface GetFollowerUseCase {
     suspend fun invoke(): List<Follow>
 }

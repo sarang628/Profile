@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sryang.torang.uistate.ProfileUiState
-import com.sryang.torang.usecase.FollowUseCase
-import com.sryang.torang.usecase.IsLoginUseCase
-import com.sryang.torang.usecase.ProfileService
-import com.sryang.torang.usecase.UnFollowUseCase
+import com.sryang.torang.usecase.profile.FollowUseCase
+import com.sryang.torang.usecase.profile.IsLoginUseCase
+import com.sryang.torang.usecase.profile.ProfileService
+import com.sryang.torang.usecase.profile.UnFollowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

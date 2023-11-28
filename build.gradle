@@ -25,7 +25,7 @@ ext {
     nav_version = "2.5.3"
 
     themeVersion = '28a1702347'
-    baseFeedVersion = 'a9f2774ef8'
+    baseFeedVersion = '73fe574ec5'
     repositoryVersion = '2ddc69463b'
     instagramGalleryVersion = '4742515032'
 }

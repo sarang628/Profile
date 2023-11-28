@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sryang.torang.compose.follow.Follow
-import com.sryang.torang.usecase.DeleteUseCase
-import com.sryang.torang.usecase.GetFollowerUseCase
-import com.sryang.torang.usecase.GetFollowingUseCase
-import com.sryang.torang.usecase.GetProfileUseCase
-import com.sryang.torang.usecase.UnFollowUseCase
+import com.sryang.torang.usecase.profile.DeleteUseCase
+import com.sryang.torang.usecase.profile.GetFollowerUseCase
+import com.sryang.torang.usecase.profile.GetFollowingUseCase
+import com.sryang.torang.usecase.profile.GetProfileUseCase
+import com.sryang.torang.usecase.profile.UnFollowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
