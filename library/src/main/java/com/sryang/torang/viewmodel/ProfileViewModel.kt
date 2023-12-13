@@ -24,7 +24,7 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(
         ProfileUiState(
-            id = 0,
+            id = -1,
             profileUrl = "",
             feedCount = 0,
             follower = 0,

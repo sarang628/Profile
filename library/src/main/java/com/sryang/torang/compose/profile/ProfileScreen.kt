@@ -45,7 +45,7 @@ fun ProfileScreen(
     val uiState by profileViewModel.uiState.collectAsState()
     val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
     if (isLogin) {
-        _ProfileScreen(
+        ProfileScreen(
             isMyProfile = isMyProfile,
             onSetting = onSetting,
             favorite = favorite,
@@ -69,7 +69,7 @@ fun ProfileScreen(
 }
 
 @Composable
-fun _ProfileScreen(
+fun ProfileScreen(
     isMyProfile: Boolean,
     profileImageUrl: String,
     onSetting: () -> Unit,
@@ -177,7 +177,7 @@ fun _ProfileScreen(
 @Preview
 @Composable
 fun PreviewProfileScreen() {
-    _ProfileScreen(
+    ProfileScreen(
         isMyProfile = false,
         onSetting = { /*TODO*/ },
         favorite = { /*TODO*/ },

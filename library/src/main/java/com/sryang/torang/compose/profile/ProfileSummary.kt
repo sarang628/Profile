@@ -1,5 +1,6 @@
 package com.sryang.torang.compose.profile
 
+import TorangAsyncImage
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -20,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 
 @Composable
 fun ProfileSummary(
@@ -37,14 +37,13 @@ fun ProfileSummary(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column {
-            AsyncImage(
+            TorangAsyncImage(
                 model = profileUrl,
-                contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
                     .clip(CircleShape)
                     .background(Color(0x11000000)),
-                contentScale = ContentScale.Crop
+                //contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(

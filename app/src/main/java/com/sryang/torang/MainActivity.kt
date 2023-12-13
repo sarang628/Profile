@@ -88,7 +88,7 @@ fun ProfileNavhost(
     NavHost(navController = navHostController, startDestination = "main") {
         composable("main") {
             Column {
-                Button(onClick = { navHostController.navigate("profile/3") }) {
+                Button(onClick = { navHostController.navigate("profile/1") }) {
                     Text(text = "profile")
                 }
                 Button(onClick = { navHostController.navigate("myProfile") }) {

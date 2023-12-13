@@ -1,5 +1,6 @@
 package com.sryang.torang.compose.follow
 
+import TorangAsyncImage
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 
 @Composable
 fun ItemFollow(
@@ -36,9 +36,8 @@ fun ItemFollow(
             .height(60.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
+        TorangAsyncImage(
             model = url,
-            contentDescription = "",
             modifier = Modifier
                 .clip(CircleShape)
                 .size(45.dp),

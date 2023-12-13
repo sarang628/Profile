@@ -1,5 +1,6 @@
 package com.sryang.torang.compose.edit
 
+import TorangAsyncImage
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -31,7 +32,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
 import com.sryang.torang.R
 import com.sryang.torang.uistate.ProfileUiState
 import com.sryang.torang.viewmodel.ProfileViewModel
@@ -108,15 +108,13 @@ fun _EditProfileScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AsyncImage(
+            TorangAsyncImage(
                 model = profileImageServerUrl + uiState.profileUrl,
-                contentDescription = "",
                 modifier = Modifier
                     .size(70.dp)
                     .clip(CircleShape)
                     .background(Color(0x11000000)),
-                contentScale = ContentScale.Crop
-
+                //contentScale = ContentScale.Crop
             )
 
             Spacer(modifier = Modifier.height(8.dp))

@@ -57,5 +57,5 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
 
-    implementation("io.coil-kt:coil-compose:2.3.0")
+    implementation 'com.github.sarang628:CommonImageLoader:df9b6c0516'
 }
