@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
                         .background(MaterialTheme.colorScheme.background)
                 ) {
                     Column(Modifier.verticalScroll(rememberScrollState())) {
-                        Column(Modifier.height(700.dp)) {
+                        Column(Modifier.height(800.dp)) {
                             ProfileNavhost(
                                 profileImageServerUrl = profileImageServerUrl,
                                 reviewImageServerUrl = reviewImageServerUrl,
@@ -101,16 +101,13 @@ fun ProfileNavhost(
         }
         composable("profile/{id}") {
             ProfileScreen(
-                profileImageUrl = profileImageServerUrl,
-                imageServerUrl = reviewImageServerUrl,
                 navBackStackEntry = it,
-                onSetting = {}
+                onSetting = {},
+                onClose = { navHostController.popBackStack() }
             )
         }
         composable("myProfile") {
             ProfileScreen(
-                profileImageUrl = profileImageServerUrl,
-                imageServerUrl = reviewImageServerUrl,
                 navBackStackEntry = null,
                 onSetting = {}
             )
@@ -118,7 +115,6 @@ fun ProfileNavhost(
         composable("follow") {
             FollowScreen(
                 onBack = { navHostController.popBackStack() },
-                profileServerUrl = profileImageServerUrl
             )
         }
     }

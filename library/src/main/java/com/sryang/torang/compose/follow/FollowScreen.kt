@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -41,7 +42,6 @@ import com.sryang.torang.viewmodel.FollowViewModel
 fun FollowScreen(
     followViewModel: FollowViewModel = hiltViewModel(),
     onBack: () -> Unit,
-    profileServerUrl: String
 ) {
     val follower by followViewModel.follower.collectAsState()
     val following by followViewModel.following.collectAsState()
@@ -59,7 +59,6 @@ fun FollowScreen(
         errorMessage = errorMessage,
         onClearErrorMessage = { followViewModel.clearErrorMessage() },
         onBack = onBack,
-        profileServerUrl = profileServerUrl,
         onUnFollow = { followViewModel.unFollow(it) },
         onDelete = { followViewModel.delete(it) }
     )
@@ -77,7 +76,6 @@ fun _FollowScreen(
     errorMessage: String? = null,
     onClearErrorMessage: () -> Unit,
     onBack: () -> Unit,
-    profileServerUrl: String,
     onDelete: (Int) -> Unit,
     onUnFollow: (Int) -> Unit
 ) {
@@ -106,7 +104,6 @@ fun _FollowScreen(
                 }
                 if (state == 0) {
                     Follow(
-                        profileServerUrl = profileServerUrl,
                         list = followerList,
                         isFollower = true,
                         onDelete = onDelete,
@@ -114,7 +111,6 @@ fun _FollowScreen(
                     )
                 } else if (state == 1) {
                     Follow(
-                        profileServerUrl = profileServerUrl,
                         list = followingList,
                         isFollower = false,
                         onDelete = onDelete,
@@ -122,7 +118,6 @@ fun _FollowScreen(
                     )
                 } else {
                     Follow(
-                        profileServerUrl = profileServerUrl,
                         list = subscriptionList,
                         isFollower = false,
                         onDelete = onDelete,
@@ -145,7 +140,7 @@ fun _FollowScreen(
 
 @Composable
 fun Follow(
-    profileServerUrl: String, list: List<Follow>, isFollower: Boolean, onDelete: (Int) -> Unit,
+    list: List<Follow>, isFollower: Boolean, onDelete: (Int) -> Unit,
     onUnFollow: (Int) -> Unit
 ) {
     Column {
@@ -154,7 +149,7 @@ fun Follow(
                 isFollower
                 items(list.size) {
                     ItemFollow(
-                        profileServerUrl + list[it].url,
+                        list[it].url,
                         list[it].nickname,
                         list[it].name,
                         onFollow = {},
@@ -191,7 +186,7 @@ fun FollowTopAppBar(name: String, onBack: () -> Unit) {
         navigationIcon = {
             IconButton(onClick = { onBack.invoke() }) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
                     contentDescription = "Localized description"
                 )
             }
@@ -213,7 +208,6 @@ fun PreViewFollowScreen() {
         subscriptionList = ArrayList(),
         onClearErrorMessage = {},
         onBack = {},
-        profileServerUrl = "",
         onUnFollow = {},
         onDelete = {}
     )

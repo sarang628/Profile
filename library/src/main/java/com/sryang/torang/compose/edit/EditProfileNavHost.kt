@@ -13,13 +13,13 @@ import com.sryang.torang.viewmodel.ProfileViewModel
 @Composable
 fun ProfileNavHost(
     profileViewModel: ProfileViewModel = hiltViewModel(),
-    profileImageServerUrl: String,
     isMyProfile: Boolean,
     onSetting: () -> Unit,
     id: Int?,
     galleryScreen: @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit,
     favorite: @Composable () -> Unit,
     wantToGo: @Composable () -> Unit,
+    onClose: (() -> Unit)? = null
 ) {
     val navController = rememberNavController()
 
@@ -40,7 +40,6 @@ fun ProfileNavHost(
         composable("editProfile") {
             EditProfileScreen(
                 profileViewModel = profileViewModel,
-                profileImageServerUrl = profileImageServerUrl,
                 onBack = { navController.popBackStack() },
                 onEditImage = {
                     navController.navigate("EditProfileImage")
@@ -50,7 +49,6 @@ fun ProfileNavHost(
         composable("profile") {
             ProfileScreen(
                 isMyProfile = isMyProfile,
-                profileImageUrl = profileImageServerUrl,
                 onEditProfile = { navController.navigate("editProfile") },
                 onSetting = onSetting,
                 profileViewModel = profileViewModel,
@@ -58,7 +56,8 @@ fun ProfileNavHost(
                 wantToGo = { wantToGo.invoke() },
                 onFollowing = { navController.navigate("follow") },
                 onWrite = { },
-                onFollwer = { navController.navigate("follow") }
+                onFollwer = { navController.navigate("follow") },
+                onClose = { onClose?.invoke() }
             )
         }
         composable("EditProfileImage") {
@@ -73,7 +72,6 @@ fun ProfileNavHost(
         composable("follow") {
             FollowScreen(
                 onBack = { navController.popBackStack() },
-                profileServerUrl = profileImageServerUrl
             )
         }
     }

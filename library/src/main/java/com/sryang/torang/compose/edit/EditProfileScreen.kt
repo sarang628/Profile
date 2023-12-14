@@ -39,7 +39,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun EditProfileScreen(
-    profileImageServerUrl: String,                          // 프로필 이미지 서버 url
     profileViewModel: ProfileViewModel = hiltViewModel(),   // 프로필 뷰모델
     onEditImage: () -> Unit,                                // 프로필 수정 클릭
     onBack: () -> Unit                                      // 뒤로가기 클릭
@@ -52,7 +51,6 @@ fun EditProfileScreen(
         }
     })
     _EditProfileScreen(
-        profileImageServerUrl = profileImageServerUrl,
         onEditImage = onEditImage,
         onBack = onBack,
         uiState = uiState
@@ -61,7 +59,6 @@ fun EditProfileScreen(
 
 @Composable
 fun _EditProfileScreen(
-    profileImageServerUrl: String,
     onEditImage: () -> Unit,
     onBack: () -> Unit,
     uiState: ProfileUiState
@@ -109,7 +106,7 @@ fun _EditProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TorangAsyncImage(
-                model = profileImageServerUrl + uiState.profileUrl,
+                model = uiState.profileUrl,
                 modifier = Modifier
                     .size(70.dp)
                     .clip(CircleShape)
@@ -163,7 +160,6 @@ fun _EditProfileScreen(
 @Composable
 fun PreviewEditProfileScreen() {
     _EditProfileScreen(
-        profileImageServerUrl = "",
         onEditImage = { /*TODO*/ },
         onBack = { /*TODO*/ },
         uiState = ProfileUiState(
