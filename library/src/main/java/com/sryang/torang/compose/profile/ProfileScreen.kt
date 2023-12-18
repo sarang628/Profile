@@ -53,7 +53,8 @@ fun ProfileScreen(
     onFollowing: () -> Unit,            // 팔로잉 클릭
     onFollwer: () -> Unit,              // 팔로워 클릭
     onWrite: () -> Unit,                // 게시글 클릭
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    onEmailLogin: () -> Unit
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
@@ -77,8 +78,16 @@ fun ProfileScreen(
             }
         )
     } else {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Text(text = "로그인을 해주세요.", modifier = Modifier.align(Alignment.Center), fontSize = 18.sp)
+        Box(Modifier.fillMaxSize()) {
+            Column(
+                Modifier.align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "로그인을 해주세요.")
+                Button(onClick = { onEmailLogin.invoke() }) {
+                    Text(text = "LOG IN WITH EMAIL")
+                }
+            }
         }
     }
 }

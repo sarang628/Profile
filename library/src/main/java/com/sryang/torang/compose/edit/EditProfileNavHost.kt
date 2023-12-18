@@ -19,7 +19,8 @@ fun ProfileNavHost(
     galleryScreen: @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit,
     favorite: @Composable () -> Unit,
     wantToGo: @Composable () -> Unit,
-    onClose: (() -> Unit)? = null
+    onClose: (() -> Unit)? = null,
+    onEmailLogin: () -> Unit
 ) {
     val navController = rememberNavController()
 
@@ -57,7 +58,8 @@ fun ProfileNavHost(
                 onFollowing = { navController.navigate("follow") },
                 onWrite = { },
                 onFollwer = { navController.navigate("follow") },
-                onClose = { onClose?.invoke() }
+                onClose = { onClose?.invoke() },
+                onEmailLogin =  onEmailLogin
             )
         }
         composable("EditProfileImage") {

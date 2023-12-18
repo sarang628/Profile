@@ -65,7 +65,10 @@ class MainActivity : ComponentActivity() {
                             ProfileNavhost(
                                 profileImageServerUrl = profileImageServerUrl,
                                 reviewImageServerUrl = reviewImageServerUrl,
-                                loginRepository = loginRepository
+                                loginRepository = loginRepository,
+                                onEmailLogin = {
+
+                                }
                             )
                         }
                         Column(Modifier.height(300.dp)) {
@@ -82,7 +85,8 @@ class MainActivity : ComponentActivity() {
 fun ProfileNavhost(
     profileImageServerUrl: String,
     reviewImageServerUrl: String,
-    loginRepository: LoginRepository
+    loginRepository: LoginRepository,
+    onEmailLogin: () -> Unit
 ) {
     val navHostController = rememberNavController()
     NavHost(navController = navHostController, startDestination = "main") {
@@ -103,13 +107,15 @@ fun ProfileNavhost(
             ProfileScreen(
                 navBackStackEntry = it,
                 onSetting = {},
-                onClose = { navHostController.popBackStack() }
+                onClose = { navHostController.popBackStack() },
+                onEmailLogin = onEmailLogin
             )
         }
         composable("myProfile") {
             ProfileScreen(
                 navBackStackEntry = null,
-                onSetting = {}
+                onSetting = {},
+                onEmailLogin = onEmailLogin
             )
         }
         composable("follow") {
