@@ -8,7 +8,7 @@ plugins {
 
 android {
     compileSdk rootProject.compileSdk
-    namespace 'com.sryang.torang'
+    namespace 'com.sarang.torang'
     defaultConfig {
         applicationId "com.example.torangscreenprofiletestapp"
         minSdk rootProject.minSdk
