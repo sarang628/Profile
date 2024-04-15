@@ -42,17 +42,28 @@ import com.sarang.torang.ProfileUiState
 import com.sarang.torang.viewmodel.ProfileViewModel
 
 
+/**
+ * @param isMyProfile 내 프로필 여부
+ * @param profileViewModel 프로필 뷰모델
+ * @param onSetting 설정 클릭
+ * @param favorite 즐겨찾기 컴포즈
+ * @param wantToGo 가고싶다 컴포즈
+ * @param onEditProfile 프로필 수정 클릭
+ * @param onFollowing 팔로잉 클릭
+ * @param onFollwer 팔로워 클릭
+ * @param onWrite 게시글 클릭
+ */
 @Composable
 fun ProfileScreen(
-    isMyProfile: Boolean,               // 내 프로필 여부
-    profileViewModel: ProfileViewModel, // 프로필 뷰모델
-    onSetting: () -> Unit,              // 설정 클릭
-    favorite: @Composable () -> Unit,   // 즐겨찾기 컴포즈
-    wantToGo: @Composable () -> Unit,   // 가고싶다 컴포즈,
-    onEditProfile: () -> Unit,          // 프로필 수정 클릭
-    onFollowing: () -> Unit,            // 팔로잉 클릭
-    onFollwer: () -> Unit,              // 팔로워 클릭
-    onWrite: () -> Unit,                // 게시글 클릭
+    isMyProfile: Boolean,
+    profileViewModel: ProfileViewModel,
+    onSetting: () -> Unit,
+    favorite: @Composable () -> Unit,
+    wantToGo: @Composable () -> Unit,
+    onEditProfile: () -> Unit,
+    onFollowing: () -> Unit,
+    onFollwer: () -> Unit,
+    onWrite: () -> Unit,
     onClose: () -> Unit,
     onEmailLogin: () -> Unit
 ) {
@@ -109,8 +120,6 @@ fun ProfileScreen(
     onClearErrorMessage: () -> Unit,
     onClose: (() -> Unit)? = null
 ) {
-    val InteractionSource = remember { MutableInteractionSource() }
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
