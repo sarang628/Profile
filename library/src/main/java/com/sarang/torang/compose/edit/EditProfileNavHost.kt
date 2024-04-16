@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.follow.FollowScreen
+import com.sarang.torang.compose.profile.MyProfileScreen
 import com.sarang.torang.compose.profile.ProfileScreen
 import com.sarang.torang.viewmodel.ProfileViewModel
 
@@ -48,19 +49,33 @@ fun ProfileNavHost(
             )
         }
         composable("profile") {
-            ProfileScreen(
-                isMyProfile = isMyProfile,
-                onEditProfile = { navController.navigate("editProfile") },
-                onSetting = onSetting,
-                profileViewModel = profileViewModel,
-                favorite = { favorite.invoke() },
-                wantToGo = { wantToGo.invoke() },
-                onFollowing = { navController.navigate("follow") },
-                onWrite = { },
-                onFollwer = { navController.navigate("follow") },
-                onClose = { onClose?.invoke() },
-                onEmailLogin =  onEmailLogin
-            )
+            if(isMyProfile) {
+                ProfileScreen(
+                    onEditProfile = { navController.navigate("editProfile") },
+                    onSetting = onSetting,
+                    profileViewModel = profileViewModel,
+                    favorite = { favorite.invoke() },
+                    wantToGo = { wantToGo.invoke() },
+                    onFollowing = { navController.navigate("follow") },
+                    onWrite = { },
+                    onFollwer = { navController.navigate("follow") },
+                    onClose = { onClose?.invoke() },
+                    onEmailLogin = onEmailLogin
+                )
+            }else{
+                MyProfileScreen(
+                    onEditProfile = { navController.navigate("editProfile") },
+                    onSetting = onSetting,
+                    profileViewModel = profileViewModel,
+                    favorite = { favorite.invoke() },
+                    wantToGo = { wantToGo.invoke() },
+                    onFollowing = { navController.navigate("follow") },
+                    onWrite = { },
+                    onFollwer = { navController.navigate("follow") },
+                    onClose = { onClose?.invoke() },
+                    onEmailLogin = onEmailLogin
+                )
+            }
         }
         composable("EditProfileImage") {
             galleryScreen.invoke(onNext = {

@@ -22,16 +22,8 @@ class ProfileViewModel @Inject constructor(
     private val followUseCase: FollowUseCase,
     private val unFollowUseCase: UnFollowUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(
-        ProfileUiState(
-            id = -1,
-            profileUrl = "",
-            feedCount = 0,
-            follower = 0,
-            following = 0,
-            name = ""
-        )
-    )
+    private val _uiState: MutableStateFlow<ProfileUiState> =
+        MutableStateFlow(ProfileUiState.Loading)
     val uiState = _uiState.asStateFlow()
     val isLogin = isLoginUseCase.isLogin
 
@@ -39,13 +31,13 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val result = service.loadProfile(id)
-                _uiState.emit(result.copy(id = id))
+                _uiState.emit((result as ProfileUiState.Success).copy(id = id))
                 service.getFavorites().collect { favs ->
-                    _uiState.update { it.copy(favoriteList = favs) }
+                    _uiState.update { (it as ProfileUiState.Success).copy(favoriteList = favs) }
                 }
             } catch (e: Exception) {
                 _uiState.update {
-                    it.copy(errorMessage = e.toString())
+                    ProfileUiState.Error(message = e.toString())
                 }
             }
 
@@ -58,7 +50,7 @@ class ProfileViewModel @Inject constructor(
                 _uiState.emit(service.loadProfileByToken())
 
                 service.getFavorites().collect { favs ->
-                    _uiState.update { it.copy(favoriteList = favs) }
+                    _uiState.update { (it as ProfileUiState.Success).copy(favoriteList = favs) }
                 }
             } catch (e: Exception) {
                 Log.e("ProfileViewModel", e.toString())
@@ -76,11 +68,11 @@ class ProfileViewModel @Inject constructor(
     fun follow() {
         viewModelScope.launch {
             try {
-                followUseCase.invoke(uiState.value.id)
-                _uiState.update { it.copy(isFollow = true) }
+                followUseCase.invoke((uiState.value as ProfileUiState.Success).id)
+                _uiState.update { (it as ProfileUiState.Success).copy(isFollow = true) }
             } catch (e: Exception) {
                 _uiState.update {
-                    it.copy(errorMessage = e.toString())
+                    (it as ProfileUiState.Success).copy(errorMessage = e.toString())
                 }
             }
         }
@@ -89,11 +81,11 @@ class ProfileViewModel @Inject constructor(
     fun unFollow() {
         viewModelScope.launch {
             try {
-                unFollowUseCase.invoke(uiState.value.id)
-                _uiState.update { it.copy(isFollow = false) }
+                unFollowUseCase.invoke((uiState.value as ProfileUiState.Success).id)
+                _uiState.update { (it as ProfileUiState.Success).copy(isFollow = false) }
             } catch (e: Exception) {
                 _uiState.update {
-                    it.copy(errorMessage = e.toString())
+                    (it as ProfileUiState.Success).copy(errorMessage = e.toString())
                 }
             }
         }
@@ -101,7 +93,7 @@ class ProfileViewModel @Inject constructor(
 
     fun onClearErrorMessage() {
         viewModelScope.launch {
-            _uiState.update { it.copy(errorMessage = null) }
+            _uiState.update { (it as ProfileUiState.Success).copy(errorMessage = null) }
         }
     }
 

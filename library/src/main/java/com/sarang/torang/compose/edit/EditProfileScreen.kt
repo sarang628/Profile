@@ -44,7 +44,7 @@ fun EditProfileScreen(
 ) {
     val coroutine = rememberCoroutineScope()
     val uiState by profileViewModel.uiState.collectAsState()
-    LaunchedEffect(key1 = uiState.name, block = {
+    LaunchedEffect(key1 = (uiState as ProfileUiState.Success).name, block = {
         coroutine.launch {
             profileViewModel.loadProfileByToken()
         }
@@ -52,7 +52,7 @@ fun EditProfileScreen(
     _EditProfileScreen(
         onEditImage = onEditImage,
         onBack = onBack,
-        uiState = uiState
+        uiState = (uiState as ProfileUiState.Success)
     )
 }
 
@@ -105,7 +105,7 @@ fun _EditProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TorangAsyncImage(
-                model = uiState.profileUrl,
+                model = (uiState as ProfileUiState.Success).profileUrl,
                 modifier = Modifier
                     .size(70.dp)
                     .clip(CircleShape)
@@ -140,7 +140,7 @@ fun _EditProfileScreen(
                         .weight(8f)
                         .fillMaxHeight()
                 ) {
-                    Text(text = uiState.name, modifier = Modifier.align(Alignment.CenterStart))
+                    Text(text = (uiState as ProfileUiState.Success).name, modifier = Modifier.align(Alignment.CenterStart))
                     Text(
                         text = "",
                         Modifier
@@ -161,7 +161,7 @@ fun PreviewEditProfileScreen() {
     _EditProfileScreen(
         onEditImage = { /*TODO*/ },
         onBack = { /*TODO*/ },
-        uiState = ProfileUiState(
+        uiState = ProfileUiState.Success(
             profileUrl = "",
             follower = 0,
             following = 0,
