@@ -49,7 +49,7 @@ fun ProfileNavHost(
             )
         }
         composable("profile") {
-            if(isMyProfile) {
+            if(!isMyProfile) {
                 ProfileScreen(
                     onEditProfile = { navController.navigate("editProfile") },
                     onSetting = onSetting,
