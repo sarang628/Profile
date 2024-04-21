@@ -3,9 +3,9 @@ package com.sarang.torang
 data class Feed(
     val reviewId: Int = -1,/* 1 */
     val userId: Int,/* 2 */
-    val restaurantId: Int,/* 3 */
+    val restaurantId: Int?,/* 3 */
     val userName: String,/* 4 */
-    val restaurantName: String,/* 5 */
+    val restaurantName: String?,/* 5 */
     val profilePicUrl: String,/* 6 */
     val contents: String,/* 7 */
     val rating: Float,/* 8 */
