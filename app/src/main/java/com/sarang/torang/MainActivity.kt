@@ -1,6 +1,7 @@
 package com.sarang.torang
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -68,6 +69,13 @@ class MainActivity : ComponentActivity() {
                                 loginRepository = loginRepository,
                                 onEmailLogin = {
 
+                                },
+                                onReview = {
+                                    Toast.makeText(
+                                        this@MainActivity,
+                                        "reviewId = ${it}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             )
                         }
@@ -86,7 +94,8 @@ fun ProfileNavhost(
     profileImageServerUrl: String,
     reviewImageServerUrl: String,
     loginRepository: LoginRepository,
-    onEmailLogin: () -> Unit
+    onEmailLogin: () -> Unit,
+    onReview: ((Int) -> Unit)? = null
 ) {
     val navHostController = rememberNavController()
     NavHost(navController = navHostController, startDestination = "main") {
@@ -104,18 +113,20 @@ fun ProfileNavhost(
             }
         }
         composable("profile/{id}") {
-            ProfileScreen(
+            ProfileScreen(/*MainActivity*/
                 navBackStackEntry = it,
                 onSetting = {},
                 onClose = { navHostController.popBackStack() },
-                onEmailLogin = onEmailLogin
+                onEmailLogin = onEmailLogin,
+                onReview = onReview
             )
         }
         composable("myProfile") {
-            ProfileScreen(
+            ProfileScreen(/*MainActivity*/
                 navBackStackEntry = null,
                 onSetting = {},
-                onEmailLogin = onEmailLogin
+                onEmailLogin = onEmailLogin,
+                onReview = onReview
             )
         }
         composable("follow") {

@@ -63,6 +63,7 @@ fun FollowScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun _FollowScreen(
     name: String,

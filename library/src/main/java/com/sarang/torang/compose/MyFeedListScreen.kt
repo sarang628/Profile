@@ -1,7 +1,8 @@
 package com.sarang.torang.compose
 
-import TorangAsyncImage
+import TorangAsyncImage1
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,7 +20,8 @@ import com.sarang.torang.viewmodel.FeedListViewModel
 @Composable
 fun FeedListScreen(
     feedListViewModel: FeedListViewModel = hiltViewModel(),
-    userId: Int
+    userId: Int,
+    onReview: ((Int) -> Unit)? = null
 ) {
     LaunchedEffect(key1 = userId, block = {
         feedListViewModel.load(userId)
@@ -32,10 +34,13 @@ fun FeedListScreen(
         content = {
             items(list.size) {
                 Log.d("_FeedListScreen", list[it].reviewImage[0])
-                TorangAsyncImage(
+                TorangAsyncImage1(
                     modifier = Modifier
                         .height(130.dp)
-                        .padding(0.5.dp),
+                        .padding(0.5.dp)
+                        .clickable {
+                            onReview?.invoke(list[it].reviewId)
+                        },
                     model = list[it].reviewImage[0],
                 )
             }

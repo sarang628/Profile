@@ -1,6 +1,7 @@
 package com.sarang.torang.compose.edit
 
 import TorangAsyncImage
+import TorangAsyncImage1
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -104,7 +105,7 @@ fun _EditProfileScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TorangAsyncImage(
+            TorangAsyncImage1(
                 model = (uiState as ProfileUiState.Success).profileUrl,
                 modifier = Modifier
                     .size(70.dp)
