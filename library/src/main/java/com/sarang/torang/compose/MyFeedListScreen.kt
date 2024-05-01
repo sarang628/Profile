@@ -15,15 +15,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sarang.torang.viewmodel.FeedListViewModel
+import com.sarang.torang.viewmodel.MyFeedListViewModel
 
 @Composable
 fun FeedListScreen(
-    feedListViewModel: FeedListViewModel = hiltViewModel(),
+    feedListViewModel: MyFeedListViewModel = hiltViewModel(),
     userId: Int,
     onReview: ((Int) -> Unit)? = null
 ) {
     LaunchedEffect(key1 = userId, block = {
+        Log.d("__FeedListScreen", "userId: ${userId}")
         feedListViewModel.load(userId)
     })
     val list by feedListViewModel.list.collectAsState()

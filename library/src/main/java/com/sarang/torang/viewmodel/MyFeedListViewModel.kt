@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.torang.Feed
-import com.sarang.torang.profile.GetFeedUseCase
+import com.sarang.torang.profile.GetMyFeedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,23 +13,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FeedListViewModel @Inject constructor(
-    private val getFeedUseCase: GetFeedUseCase
+class MyFeedListViewModel @Inject constructor(
+    private val getMyFeedUseCase: GetMyFeedUseCase
 ) : ViewModel() {
 
     private val _list = MutableStateFlow<List<Feed>>(arrayListOf())
     val list = _list.asStateFlow()
-    val _errorMessage = MutableStateFlow<String?>(null)
+    private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage = _errorMessage.asStateFlow()
 
     fun load(userId: Int) {
+        Log.d("__FeedListViewModel", "load userId : ${userId}}")
         viewModelScope.launch {
             try {
                 _list.update {
-                    getFeedUseCase.invoke(userId)
+                    getMyFeedUseCase.invoke(userId)
                 }
             } catch (e: Exception) {
-                Log.e("_FeedListViewModel", e.message.toString())
+                Log.e("__FeedListViewModel", e.message.toString())
                 _errorMessage.update {
                     e.message
                 }

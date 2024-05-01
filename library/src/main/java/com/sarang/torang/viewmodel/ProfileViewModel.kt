@@ -28,6 +28,7 @@ class ProfileViewModel @Inject constructor(
     val isLogin = isLoginUseCase.isLogin
 
     fun loadProfile(id: Int) {
+        Log.d("ProfileViewModel", "loadProfile : ${id}")
         viewModelScope.launch {
             try {
                 val result = service.loadProfile(id)
