@@ -1,18 +1,15 @@
 package com.sarang.torang.compose.profile
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.edit.EditProfileScreen
 import com.sarang.torang.compose.follow.MyFollowScreen
-import com.sarang.torang.compose.follow.OtherFollowScreen
 import com.sarang.torang.viewmodel.MyProfileViewModel
-import com.sarang.torang.viewmodel.ProfileViewModel
 
 @Composable
 fun MyProfileNavHost(
@@ -24,10 +21,9 @@ fun MyProfileNavHost(
     myFeed: @Composable (NavBackStackEntry) -> Unit,
     onClose: (() -> Unit)? = null,
     onEmailLogin: () -> Unit,
-    onProfile: ((Int) -> Unit)? = null
+    onProfile: ((Int) -> Unit)? = null,
+    navController : NavHostController = rememberNavController()
 ) {
-    val navController = rememberNavController()
-
     NavHost(
         navController = navController,
         startDestination = "profile"
