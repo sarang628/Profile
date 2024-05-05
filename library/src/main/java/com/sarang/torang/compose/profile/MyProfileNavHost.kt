@@ -4,6 +4,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,6 +21,7 @@ fun MyProfileNavHost(
     galleryScreen: @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit,
     favorite: @Composable () -> Unit,
     wantToGo: @Composable () -> Unit,
+    myFeed: @Composable (NavBackStackEntry) -> Unit,
     onClose: (() -> Unit)? = null,
     onEmailLogin: () -> Unit,
     onProfile: ((Int) -> Unit)? = null
@@ -67,6 +69,9 @@ fun MyProfileNavHost(
                 onBack = { navController.popBackStack() },
                 onProfile = onProfile
             )
+        }
+        composable("myFeed/{reviewId}") {
+            myFeed.invoke(it)
         }
     }
 }

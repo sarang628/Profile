@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -72,6 +73,9 @@ class MainActivity : ComponentActivity() {
                                         "reviewId = ${it}",
                                         Toast.LENGTH_SHORT
                                     ).show()
+                                },
+                                myFeed = {
+                                    Text(text = "myFeed")
                                 }
                             )
                         }
@@ -88,7 +92,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ProfileNavhost(
     onEmailLogin: () -> Unit,
-    onReview: ((Int) -> Unit)? = null
+    onReview: ((Int) -> Unit)? = null,
+    myFeed: @Composable (NavBackStackEntry) -> Unit
 ) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "main") {
@@ -118,7 +123,8 @@ fun ProfileNavhost(
                     userId = userId,
                     onProfile = {
                         navController.navigate("profile/${it}")
-                    }
+                    },
+                    myFeed = myFeed
                 )
             }
         }
@@ -131,7 +137,8 @@ fun ProfileNavhost(
                 onReview = onReview,
                 onProfile = {
                     navController.navigate("profile/${it}")
-                }
+                },
+                myFeed = myFeed
             )
         }
         composable("myFollow") {

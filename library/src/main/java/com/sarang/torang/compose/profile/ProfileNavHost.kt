@@ -4,6 +4,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -19,6 +20,7 @@ fun ProfileNavHost(
     id: Int,
     favorite: @Composable () -> Unit,
     wantToGo: @Composable () -> Unit,
+    myFeed: @Composable (NavBackStackEntry) -> Unit,
     onClose: (() -> Unit)? = null,
     onEmailLogin: () -> Unit,
     onProfile: ((Int) -> Unit)? = null,
@@ -60,6 +62,9 @@ fun ProfileNavHost(
             } else {
                 Text(text = "사용자 정보가 없습니다.")
             }
+        }
+        composable("myFeed/{reviewId}") {
+            myFeed.invoke(it)
         }
     }
 }
