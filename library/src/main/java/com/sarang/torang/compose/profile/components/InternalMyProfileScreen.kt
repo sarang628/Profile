@@ -50,7 +50,8 @@ internal fun InternalMyProfileScreen(
     onFollwer: () -> Unit,
     onWrite: () -> Unit,
     onClose: () -> Unit,
-    onEmailLogin: () -> Unit
+    onEmailLogin: () -> Unit,
+    onReview: ((Int) -> Unit)? = null,
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
@@ -78,7 +79,8 @@ internal fun InternalMyProfileScreen(
                 onWrite = onWrite,
                 onFollowing = onFollowing,
                 onFollwer = onFollwer,
-                onClearErrorMessage = { profileViewModel.onClearErrorMessage() }
+                onClearErrorMessage = { profileViewModel.onClearErrorMessage() },
+                onReview = onReview
             )
         }
 

@@ -31,8 +31,6 @@ fun _MyProfileScreen(
     onReview: ((Int) -> Unit)? = null,
     navController: NavHostController = rememberNavController()
 ) {
-    val uiState by profileViewModel.uiState.collectAsState()
-
     NavHost(
         navController = navController,
         startDestination = "myProfile"
@@ -55,7 +53,8 @@ fun _MyProfileScreen(
                 onWrite = { },
                 onFollwer = { navController.navigate("myFollow") },
                 onClose = { onClose?.invoke() },
-                onEmailLogin = onEmailLogin
+                onEmailLogin = onEmailLogin,
+                onReview = onReview
             )
         }
         composable("EditProfileImage") {
