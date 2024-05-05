@@ -26,8 +26,8 @@ import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.api.ApiProfile
 import com.sarang.torang.compose.follow.MyFollowScreen
 import com.sarang.torang.compose.follow.OtherFollowScreen
+import com.sarang.torang.compose.profile._ProfileScreen
 import com.sarang.torang.di.profile_di.MyProfileScreen
-import com.sarang.torang.di.profile_di.ProfileScreen
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
@@ -111,30 +111,19 @@ fun ProfileNavhost(
             }
         }
         composable("profile/{id}") {
-            val userId = it.arguments?.getString("id")?.toInt()
-            if (userId == null) {
-                Text(text = "사용자 정보가 없습니다.")
-            } else {
-                ProfileScreen(/*MainActivity*/
-                    onSetting = {},
-                    onClose = { navController.popBackStack() },
-                    onEmailLogin = onEmailLogin,
-                    onReview = onReview,
-                    userId = userId,
-                    onProfile = {
-                        navController.navigate("profile/${it}")
-                    },
-                    myFeed = myFeed
-                )
-            }
+            _ProfileScreen(
+                id = it.arguments?.getString("id")?.toInt(),
+                onClose = { navController.popBackStack() },
+                onEmailLogin = onEmailLogin,
+                onProfile = { navController.navigate("profile/${it}") },
+                myFeed = myFeed,
+                onReview = onReview
+            )
         }
         composable("myProfile") {
-            MyProfileScreen(
-                /*MainActivity*/
-                navBackStackEntry = null,
+            MyProfileScreen(/*MainActivity*/
                 onSetting = {},
                 onEmailLogin = onEmailLogin,
-                onReview = onReview,
                 onProfile = {
                     navController.navigate("profile/${it}")
                 },

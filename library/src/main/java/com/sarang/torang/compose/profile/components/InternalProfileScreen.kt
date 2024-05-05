@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.profile
+package com.sarang.torang.compose.profile.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.ProfileUiState
+import com.sarang.torang.compose.FeedListScreen
 import com.sarang.torang.viewmodel.ProfileViewModel
 
 
@@ -51,15 +52,12 @@ import com.sarang.torang.viewmodel.ProfileViewModel
 @Composable
 internal fun InternalProfileScreen(
     profileViewModel: ProfileViewModel,
-    onSetting: () -> Unit,
-    favorite: @Composable () -> Unit,
-    wantToGo: @Composable () -> Unit,
-    onEditProfile: () -> Unit,
     onFollowing: () -> Unit,
     onFollwer: () -> Unit,
     onWrite: () -> Unit,
     onClose: () -> Unit,
-    onEmailLogin: () -> Unit
+    onEmailLogin: () -> Unit,
+    onReview: ((Int) -> Unit)? = null,
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
@@ -88,10 +86,6 @@ internal fun InternalProfileScreen(
 
         is ProfileUiState.Success -> {
             InternalProfileScreen(
-                onSetting = onSetting,
-                favorite = favorite,
-                wantToGo = wantToGo,
-                onEditProfile = onEditProfile,
                 uiState = uiState as ProfileUiState.Success,
                 onWrite = onWrite,
                 onFollowing = onFollowing,
@@ -100,9 +94,8 @@ internal fun InternalProfileScreen(
                 onFollow = { profileViewModel.follow() },
                 onUnFollow = { profileViewModel.unFollow() },
                 onClearErrorMessage = { profileViewModel.onClearErrorMessage() },
-                onClose = {
-                    onClose.invoke()
-                }
+                onClose = onClose,
+                onReview = onReview
             )
         }
 
@@ -112,10 +105,6 @@ internal fun InternalProfileScreen(
 
 @Composable
 fun InternalProfileScreen(
-    onSetting: () -> Unit,
-    favorite: @Composable () -> Unit,
-    wantToGo: @Composable () -> Unit,
-    onEditProfile: () -> Unit,
     uiState: ProfileUiState.Success,
     onFollowing: () -> Unit,    // 팔로잉 클릭
     onFollwer: () -> Unit,      // 팔로워 클릭
@@ -124,7 +113,8 @@ fun InternalProfileScreen(
     onFollow: () -> Unit,
     onUnFollow: () -> Unit,
     onClearErrorMessage: () -> Unit,
-    onClose: (() -> Unit)? = null
+    onClose: (() -> Unit)? = null,
+    onReview: ((Int) -> Unit)? = null,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -173,8 +163,18 @@ fun InternalProfileScreen(
                 }
                 Spacer(modifier = Modifier.height(5.dp))
                 FavoriteAndWantToGo(
-                    wantToGo = { wantToGo.invoke() },
-                    favorite = { favorite.invoke() }
+                    wantToGo = {
+                        FeedListScreen(/*favorite*/
+                            userId = uiState.id,
+                            onReview = onReview
+                        )
+                    },
+                    favorite = {
+                        FeedListScreen(/*favorite*/
+                            userId = uiState.id,
+                            onReview = onReview
+                        )
+                    }
                 )
             }
             uiState.errorMessage?.let {
@@ -229,10 +229,6 @@ fun ProfileTopAppBar(name: String, onBack: () -> Unit) {
 @Composable
 fun PreviewProfileScreen() {
     InternalProfileScreen(
-        onSetting = { /*TODO*/ },
-        favorite = { /*TODO*/ },
-        wantToGo = { /*TODO*/ },
-        onEditProfile = { /*TODO*/ },
         uiState = ProfileUiState.Success(
             profileUrl = "",
             feedCount = 0,

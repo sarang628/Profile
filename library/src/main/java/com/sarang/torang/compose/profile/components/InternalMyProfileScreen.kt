@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.profile
+package com.sarang.torang.compose.profile.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.ProfileUiState
 import com.sarang.torang.R
+import com.sarang.torang.compose.FeedListScreen
 import com.sarang.torang.viewmodel.MyProfileViewModel
-import com.sarang.torang.viewmodel.ProfileViewModel
 
 
 /**
@@ -42,11 +42,9 @@ import com.sarang.torang.viewmodel.ProfileViewModel
  * @param onWrite 게시글 클릭
  */
 @Composable
-fun MyProfileScreen(
+internal fun InternalMyProfileScreen(
     profileViewModel: MyProfileViewModel,
     onSetting: () -> Unit,
-    favorite: @Composable () -> Unit,
-    wantToGo: @Composable () -> Unit,
     onEditProfile: () -> Unit,
     onFollowing: () -> Unit,
     onFollwer: () -> Unit,
@@ -73,10 +71,8 @@ fun MyProfileScreen(
 
     when (uiState) {
         is ProfileUiState.Success -> {
-            MyProfileScreen(
+            InternalMyProfileScreen(
                 onSetting = onSetting,
-                favorite = favorite,
-                wantToGo = wantToGo,
                 onEditProfile = onEditProfile,
                 uiState = uiState as ProfileUiState.Success,
                 onWrite = onWrite,
@@ -97,16 +93,15 @@ fun MyProfileScreen(
 }
 
 @Composable
-fun MyProfileScreen(
+fun InternalMyProfileScreen(
     onSetting: () -> Unit,
-    favorite: @Composable () -> Unit,
-    wantToGo: @Composable () -> Unit,
     onEditProfile: () -> Unit,
     uiState: ProfileUiState.Success,
     onFollowing: () -> Unit,    // 팔로잉 클릭
     onFollwer: () -> Unit,      // 팔로워 클릭
     onWrite: () -> Unit,        // 게시글 클릭
-    onClearErrorMessage: () -> Unit
+    onClearErrorMessage: () -> Unit,
+    onReview: ((Int) -> Unit)? = null,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize()
@@ -158,8 +153,18 @@ fun MyProfileScreen(
                 }
                 Spacer(modifier = Modifier.height(5.dp))
                 FavoriteAndWantToGo(
-                    wantToGo = { wantToGo.invoke() },
-                    favorite = { favorite.invoke() }
+                    wantToGo = {
+                        FeedListScreen(/*favorite*/
+                            userId = uiState.id,
+                            onReview = onReview
+                        )
+                    },
+                    favorite = {
+                        FeedListScreen(
+                            userId = uiState.id,
+                            onReview = onReview
+                        )
+                    }
                 )
             }
             uiState.errorMessage?.let {

@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.profile
+package com.sarang.torang.compose.profile.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun FavoriteAndWantToGo(
+internal fun FavoriteAndWantToGo(
     favorite: @Composable () -> Unit,
     wantToGo: @Composable () -> Unit
 ) {
