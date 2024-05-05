@@ -34,9 +34,9 @@ fun ProfileNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = "profile"
+        startDestination = "profileHome"
     ) {
-        composable("profile") {
+        composable("profileHome") {
             InternalProfileScreen(
                 onEditProfile = { navController.navigate("editProfile") },
                 onSetting = onSetting,
@@ -65,6 +65,9 @@ fun ProfileNavHost(
         }
         composable("myFeed/{reviewId}") {
             myFeed.invoke(it)
+        }
+        composable("profile/{userId}") {
+
         }
     }
 }
