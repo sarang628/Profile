@@ -5,9 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.torang.compose.follow.Follow
 import com.sarang.torang.profile.DeleteUseCase
-import com.sarang.torang.profile.GetFollowerUseCase
-import com.sarang.torang.profile.GetFollowingUseCase
-import com.sarang.torang.profile.GetProfileUseCase
 import com.sarang.torang.profile.UnFollowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,12 +21,9 @@ data class FollowUiState(
 )
 
 @HiltViewModel
-class FollowViewModel @Inject constructor(
-    val getFollowerUseCase: GetFollowerUseCase,
-    val getFollowingUseCase: GetFollowingUseCase,
-    val getProfileUserCase: GetProfileUseCase,
-    val unFollowUseCase: UnFollowUseCase,
-    val deleteUseCase: DeleteUseCase
+open class FollowViewModel @Inject constructor(
+    private val unFollowUseCase: UnFollowUseCase,
+    private val deleteUseCase: DeleteUseCase
 ) : ViewModel() {
     val following = MutableStateFlow<List<Follow>>(ArrayList())
     val follower = MutableStateFlow<List<Follow>>(ArrayList())
@@ -71,26 +65,6 @@ class FollowViewModel @Inject constructor(
                 follower.update {
                     it.stream().filter { it.id != id }.toList()
                 }
-            } catch (e: Exception) {
-                errorMessage.emit(e.toString())
-            }
-        }
-    }
-
-    init {
-        viewModelScope.launch {
-            try {
-                follower.emit(getFollowerUseCase.invoke())
-            } catch (e: Exception) {
-                errorMessage.emit(e.toString())
-            }
-            try {
-                following.emit(getFollowingUseCase.invoke())
-            } catch (e: Exception) {
-                errorMessage.emit(e.toString())
-            }
-            try {
-                uiState.emit(getProfileUserCase.invoke())
             } catch (e: Exception) {
                 errorMessage.emit(e.toString())
             }

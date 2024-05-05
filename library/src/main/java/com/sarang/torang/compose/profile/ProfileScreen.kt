@@ -49,7 +49,7 @@ import com.sarang.torang.viewmodel.ProfileViewModel
  * @param onWrite 게시글 클릭
  */
 @Composable
-fun ProfileScreen(
+internal fun InternalProfileScreen(
     profileViewModel: ProfileViewModel,
     onSetting: () -> Unit,
     favorite: @Composable () -> Unit,
@@ -87,7 +87,7 @@ fun ProfileScreen(
         }
 
         is ProfileUiState.Success -> {
-            ProfileScreen(
+            InternalProfileScreen(
                 onSetting = onSetting,
                 favorite = favorite,
                 wantToGo = wantToGo,
@@ -111,7 +111,7 @@ fun ProfileScreen(
 }
 
 @Composable
-fun ProfileScreen(
+fun InternalProfileScreen(
     onSetting: () -> Unit,
     favorite: @Composable () -> Unit,
     wantToGo: @Composable () -> Unit,
@@ -228,7 +228,7 @@ fun ProfileTopAppBar(name: String, onBack: () -> Unit) {
 @Preview
 @Composable
 fun PreviewProfileScreen() {
-    ProfileScreen(
+    InternalProfileScreen(
         onSetting = { /*TODO*/ },
         favorite = { /*TODO*/ },
         wantToGo = { /*TODO*/ },

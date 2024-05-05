@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.ProfileUiState
 import com.sarang.torang.R
+import com.sarang.torang.viewmodel.MyProfileViewModel
 import com.sarang.torang.viewmodel.ProfileViewModel
 
 
@@ -42,7 +43,7 @@ import com.sarang.torang.viewmodel.ProfileViewModel
  */
 @Composable
 fun MyProfileScreen(
-    profileViewModel: ProfileViewModel,
+    profileViewModel: MyProfileViewModel,
     onSetting: () -> Unit,
     favorite: @Composable () -> Unit,
     wantToGo: @Composable () -> Unit,
@@ -81,13 +82,7 @@ fun MyProfileScreen(
                 onWrite = onWrite,
                 onFollowing = onFollowing,
                 onFollwer = onFollwer,
-                isFollow = (uiState as ProfileUiState.Success).isFollow,
-                onFollow = { profileViewModel.follow() },
-                onUnFollow = { profileViewModel.unFollow() },
-                onClearErrorMessage = { profileViewModel.onClearErrorMessage() },
-                onClose = {
-                    onClose.invoke()
-                }
+                onClearErrorMessage = { profileViewModel.onClearErrorMessage() }
             )
         }
 
@@ -111,11 +106,7 @@ fun MyProfileScreen(
     onFollowing: () -> Unit,    // 팔로잉 클릭
     onFollwer: () -> Unit,      // 팔로워 클릭
     onWrite: () -> Unit,        // 게시글 클릭
-    isFollow: Boolean,          // 팔로우 여부
-    onFollow: () -> Unit,
-    onUnFollow: () -> Unit,
-    onClearErrorMessage: () -> Unit,
-    onClose: (() -> Unit)? = null
+    onClearErrorMessage: () -> Unit
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize()

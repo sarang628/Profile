@@ -34,12 +34,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.torang.R
 import com.sarang.torang.ProfileUiState
+import com.sarang.torang.viewmodel.MyProfileViewModel
 import com.sarang.torang.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun EditProfileScreen(
-    profileViewModel: ProfileViewModel = hiltViewModel(),   // 프로필 뷰모델
+    profileViewModel: MyProfileViewModel = hiltViewModel(),   // 프로필 뷰모델
     onEditImage: () -> Unit,                                // 프로필 수정 클릭
     onBack: () -> Unit                                      // 뒤로가기 클릭
 ) {
@@ -141,7 +142,10 @@ fun _EditProfileScreen(
                         .weight(8f)
                         .fillMaxHeight()
                 ) {
-                    Text(text = (uiState as ProfileUiState.Success).name, modifier = Modifier.align(Alignment.CenterStart))
+                    Text(
+                        text = (uiState as ProfileUiState.Success).name,
+                        modifier = Modifier.align(Alignment.CenterStart)
+                    )
                     Text(
                         text = "",
                         Modifier

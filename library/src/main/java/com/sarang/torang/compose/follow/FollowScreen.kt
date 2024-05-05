@@ -34,34 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sarang.torang.viewmodel.FollowViewModel
+import com.sarang.torang.viewmodel.MyFollowViewModel
 
-
-@Composable
-fun FollowScreen(
-    followViewModel: FollowViewModel = hiltViewModel(),
-    onBack: () -> Unit,
-) {
-    val follower by followViewModel.follower.collectAsState()
-    val following by followViewModel.following.collectAsState()
-    val subscription by followViewModel.subscription.collectAsState()
-    val uiState by followViewModel.uiState.collectAsState()
-    val errorMessage by followViewModel.errorMessage.collectAsState()
-    _FollowScreen(
-        name = uiState.name,
-        following = uiState.following,
-        follower = uiState.follower,
-        subscription = uiState.subscription,
-        followerList = follower,
-        followingList = following,
-        subscriptionList = subscription,
-        errorMessage = errorMessage,
-        onClearErrorMessage = { followViewModel.clearErrorMessage() },
-        onBack = onBack,
-        onUnFollow = { followViewModel.unFollow(it) },
-        onDelete = { followViewModel.delete(it) }
-    )
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,7 +51,9 @@ fun _FollowScreen(
     onClearErrorMessage: () -> Unit,
     onBack: () -> Unit,
     onDelete: (Int) -> Unit,
-    onUnFollow: (Int) -> Unit
+    onUnFollow: (Int) -> Unit,
+    isMe: Boolean = false,
+    onProfile: ((Int) -> Unit)? = null
 ) {
     Scaffold(
         topBar = { FollowTopAppBar(name, onBack = onBack) },
@@ -103,26 +79,31 @@ fun _FollowScreen(
                     }
                 }
                 if (state == 0) {
-                    Follow(
-                        list = followerList,
-                        isFollower = true,
-                        onDelete = onDelete,
-                        onUnFollow = onUnFollow
-                    )
+                    if (isMe) {
+                        MyFollowerList(
+                            list = followerList,
+                            onDelete = onDelete,
+                            onProfile = onProfile
+                        )
+                    } else {
+                        FollowerList(
+                            list = followerList,
+                            onProfile = onProfile
+                        )
+                    }
                 } else if (state == 1) {
-                    Follow(
-                        list = followingList,
-                        isFollower = false,
-                        onDelete = onDelete,
-                        onUnFollow = onUnFollow
-                    )
-                } else {
-                    Follow(
-                        list = subscriptionList,
-                        isFollower = false,
-                        onDelete = onDelete,
-                        onUnFollow = onUnFollow
-                    )
+                    if (isMe) {
+                        MyFollowingList(
+                            list = followingList,
+                            onUnFollow = onUnFollow,
+                            onProfile = onProfile
+                        )
+                    } else {
+                        FollowingList(
+                            list = followingList,
+                            onProfile = onProfile
+                        )
+                    }
                 }
             }
             errorMessage?.let {
@@ -135,30 +116,6 @@ fun _FollowScreen(
                 })
             }
         }
-    }
-}
-
-@Composable
-fun Follow(
-    list: List<Follow>, isFollower: Boolean, onDelete: (Int) -> Unit,
-    onUnFollow: (Int) -> Unit
-) {
-    Column {
-        LazyColumn(
-            content = {
-                isFollower
-                items(list.size) {
-                    ItemFollow(
-                        list[it].url,
-                        list[it].nickname,
-                        list[it].name,
-                        onFollow = {},
-                        isFollower = isFollower,
-                        onDelete = { onDelete.invoke(list[it].id) },
-                        onUnFollow = { onUnFollow.invoke(list[it].id) }
-                    )
-                }
-            })
     }
 }
 
@@ -198,7 +155,7 @@ fun FollowTopAppBar(name: String, onBack: () -> Unit) {
 @Preview
 @Composable
 fun PreViewFollowScreen() {
-    _FollowScreen(
+    _FollowScreen(/*Preview*/
         name = "torang110113",
         following = 10,
         follower = 11,

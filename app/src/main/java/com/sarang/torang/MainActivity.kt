@@ -23,8 +23,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.api.ApiProfile
+import com.sarang.torang.compose.follow.MyFollowScreen
+import com.sarang.torang.compose.follow.OtherFollowScreen
+import com.sarang.torang.di.profile_di.MyProfileScreen
 import com.sarang.torang.di.profile_di.ProfileScreen
-import com.sarang.torang.compose.follow.FollowScreen
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
@@ -49,9 +51,6 @@ class MainActivity : ComponentActivity() {
 
     private val profileViewModel: ProfileViewModel by viewModels()
 
-    val profileImageServerUrl = "http://sarang628.iptime.org:89/profile_images/"
-    val reviewImageServerUrl = "http://sarang628.iptime.org:89/review_images/"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -64,9 +63,6 @@ class MainActivity : ComponentActivity() {
                     Column(Modifier.verticalScroll(rememberScrollState())) {
                         Column(Modifier.height(800.dp)) {
                             ProfileNavhost(
-                                profileImageServerUrl = profileImageServerUrl,
-                                reviewImageServerUrl = reviewImageServerUrl,
-                                loginRepository = loginRepository,
                                 onEmailLogin = {
 
                                 },
@@ -91,48 +87,72 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ProfileNavhost(
-    profileImageServerUrl: String,
-    reviewImageServerUrl: String,
-    loginRepository: LoginRepository,
     onEmailLogin: () -> Unit,
     onReview: ((Int) -> Unit)? = null
 ) {
-    val navHostController = rememberNavController()
-    NavHost(navController = navHostController, startDestination = "main") {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "main") {
         composable("main") {
             Column {
-                Button(onClick = { navHostController.navigate("profile/1") }) {
+                Button(onClick = { navController.navigate("profile/1") }) {
                     Text(text = "profile")
                 }
-                Button(onClick = { navHostController.navigate("myProfile") }) {
+                Button(onClick = { navController.navigate("myProfile") }) {
                     Text(text = "myProfile")
                 }
-                Button(onClick = { navHostController.navigate("follow") }) {
-                    Text(text = "follow")
+                Button(onClick = { navController.navigate("myFollow") }) {
+                    Text(text = "myFollow")
                 }
             }
         }
         composable("profile/{id}") {
-            ProfileScreen(/*MainActivity*/
-                navBackStackEntry = it,
-                onSetting = {},
-                onClose = { navHostController.popBackStack() },
-                onEmailLogin = onEmailLogin,
-                onReview = onReview
-            )
+            val userId = it.arguments?.getString("id")?.toInt()
+            if (userId == null) {
+                Text(text = "사용자 정보가 없습니다.")
+            } else {
+                ProfileScreen(/*MainActivity*/
+                    onSetting = {},
+                    onClose = { navController.popBackStack() },
+                    onEmailLogin = onEmailLogin,
+                    onReview = onReview,
+                    userId = userId,
+                    onProfile = {
+                        navController.navigate("profile/${it}")
+                    }
+                )
+            }
         }
         composable("myProfile") {
-            ProfileScreen(/*MainActivity*/
+            MyProfileScreen(
+                /*MainActivity*/
                 navBackStackEntry = null,
                 onSetting = {},
                 onEmailLogin = onEmailLogin,
-                onReview = onReview
+                onReview = onReview,
+                onProfile = {
+                    navController.navigate("profile/${it}")
+                }
             )
         }
-        composable("follow") {
-            FollowScreen(
-                onBack = { navHostController.popBackStack() },
+        composable("myFollow") {
+            MyFollowScreen(
+                onBack = { navController.popBackStack() },
+                onProfile = {
+                    navController.navigate("profile/${it}")
+                }
             )
+        }
+        composable("follow/{userId}") {
+            val userId = it.arguments?.getString("id")?.toInt()
+
+            if (userId != null) {
+                OtherFollowScreen(
+                    onBack = { navController.popBackStack() },
+                    userId = userId
+                )
+            } else {
+                Text(text = "사용자 정보가 없습니다.")
+            }
         }
     }
 }
