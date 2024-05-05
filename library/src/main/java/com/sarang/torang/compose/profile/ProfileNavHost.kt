@@ -4,6 +4,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,10 +21,9 @@ fun ProfileNavHost(
     wantToGo: @Composable () -> Unit,
     onClose: (() -> Unit)? = null,
     onEmailLogin: () -> Unit,
-    onProfile: ((Int) -> Unit)? = null
+    onProfile: ((Int) -> Unit)? = null,
+    navController: NavHostController = rememberNavController()
 ) {
-    val navController = rememberNavController()
-
     LaunchedEffect(key1 = id, block = {
         id.let {
             profileViewModel.loadProfile(it)
