@@ -40,6 +40,9 @@ fun FeedListScreen(
                         .height(130.dp)
                         .padding(0.5.dp)
                         .clickable {
+                            if (onReview == null) {
+                                Log.w("_FeedListScreen", "onReview is null")
+                            }
                             onReview?.invoke(list[it].reviewId)
                         },
                     model = list[it].reviewImage[0],

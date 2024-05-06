@@ -11,10 +11,9 @@ import com.sarang.torang.compose.edit.EditProfileScreen
 import com.sarang.torang.compose.follow.MyFollowScreen
 import com.sarang.torang.compose.profile.MyProfileScreen
 import com.sarang.torang.viewmodel.MyProfileViewModel
-import com.sarang.torang.viewmodel.ProfileViewModel
 
 @Composable
-fun MyProfileScreenNavHost(
+fun _MyProfileScreenNavHost(
     myProfileViewModel: MyProfileViewModel = hiltViewModel(),
     onSetting: () -> Unit,
     galleryScreen: @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit,

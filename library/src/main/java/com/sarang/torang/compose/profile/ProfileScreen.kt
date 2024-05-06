@@ -180,13 +180,13 @@ fun _ProfileScreen(
                 Spacer(modifier = Modifier.height(5.dp))
                 FavoriteAndWantToGo(
                     wantToGo = {
-                        FeedListScreen(/*favorite*/
+                        FeedListScreen(
                             userId = uiState.id,
                             onReview = onReview
                         )
                     },
                     favorite = {
-                        FeedListScreen(/*favorite*/
+                        FeedListScreen(
                             userId = uiState.id,
                             onReview = onReview
                         )

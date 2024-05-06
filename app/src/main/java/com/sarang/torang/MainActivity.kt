@@ -27,7 +27,7 @@ import com.sarang.torang.api.ApiProfile
 import com.sarang.torang.compose.ProfileScreenNavHost
 import com.sarang.torang.compose.follow.MyFollowScreen
 import com.sarang.torang.compose.follow.OtherFollowScreen
-import com.sarang.torang.di.profile_di.MyProfileScreen
+import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
@@ -120,11 +120,12 @@ fun ProfileNavhost(
             )
         }
         composable("myProfile") {
-            MyProfileScreen(/*MainActivity*/
+            MyProfileScreenNavHost(/*MainActivity*/
                 onSetting = {},
                 onEmailLogin = onEmailLogin,
                 myFeed = myFeed,
-                onClose = { navController.popBackStack() }
+                onClose = { navController.popBackStack() },
+                onReview = {}
             )
         }
         composable("myFollow") {
