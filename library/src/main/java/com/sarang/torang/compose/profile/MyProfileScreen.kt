@@ -189,7 +189,7 @@ internal fun _MyProfileScreen(
 @Preview
 @Composable
 fun PreviewMyProfileScreen() {
-    _MyProfileScreen(
+    _MyProfileScreen(/*Preview*/
         onSetting = { /*TODO*/ },
         onEditProfile = { /*TODO*/ },
         uiState = ProfileUiState.Success(
