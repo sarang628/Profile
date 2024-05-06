@@ -24,9 +24,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.api.ApiProfile
+import com.sarang.torang.compose.ProfileScreenNavHost
 import com.sarang.torang.compose.follow.MyFollowScreen
 import com.sarang.torang.compose.follow.OtherFollowScreen
-import com.sarang.torang.compose.profile._ProfileScreen
 import com.sarang.torang.di.profile_di.MyProfileScreen
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.LoginRepository
@@ -111,11 +111,10 @@ fun ProfileNavhost(
             }
         }
         composable("profile/{id}") {
-            _ProfileScreen(
+            ProfileScreenNavHost(
                 id = it.arguments?.getString("id")?.toInt(),
                 onClose = { navController.popBackStack() },
                 onEmailLogin = onEmailLogin,
-                onProfile = { navController.navigate("profile/${it}") },
                 myFeed = myFeed,
                 onReview = onReview
             )
@@ -124,10 +123,8 @@ fun ProfileNavhost(
             MyProfileScreen(/*MainActivity*/
                 onSetting = {},
                 onEmailLogin = onEmailLogin,
-                onProfile = {
-                    navController.navigate("profile/${it}")
-                },
-                myFeed = myFeed
+                myFeed = myFeed,
+                onClose = { navController.popBackStack() }
             )
         }
         composable("myFollow") {

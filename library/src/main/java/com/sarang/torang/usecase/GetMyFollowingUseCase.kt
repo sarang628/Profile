@@ -1,4 +1,4 @@
-package com.sarang.torang.profile
+package com.sarang.torang.usecase
 
 import com.sarang.torang.compose.follow.Follow
 
