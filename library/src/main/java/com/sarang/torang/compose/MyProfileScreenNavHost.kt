@@ -73,7 +73,7 @@ fun MyProfileScreenNavHost(
                 id = it.arguments?.getString("userId")?.toInt(),
                 onClose = { onClose?.invoke() },
                 onEmailLogin = onEmailLogin,
-                onReview = {},
+                onReview = onReview,
                 myFeed = myFeed
             )
         }
