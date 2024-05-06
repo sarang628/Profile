@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.ProfileUiState
 import com.sarang.torang.R
+import com.sarang.torang.compose.myfeed.FeedListScreen
 import com.sarang.torang.compose.profile.components.FavoriteAndWantToGo
 import com.sarang.torang.compose.profile.components.ProfileSummary
 import com.sarang.torang.viewmodel.MyProfileViewModel
@@ -158,16 +159,16 @@ internal fun _MyProfileScreen(
                 Spacer(modifier = Modifier.height(5.dp))
                 FavoriteAndWantToGo(
                     wantToGo = {
-                        /*FeedListScreen(
+                        FeedListScreen(
                             userId = uiState.id,
                             onReview = onReview
-                        )*/
+                        )
                     },
                     favorite = {
-                        /*FeedListScreen(
+                        FeedListScreen(
                             userId = uiState.id,
                             onReview = onReview
-                        )*/
+                        )
                     }
                 )
             }
