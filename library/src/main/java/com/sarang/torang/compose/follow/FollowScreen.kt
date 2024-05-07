@@ -53,13 +53,14 @@ fun _FollowScreen(
     onDelete: (Int) -> Unit,
     onUnFollow: (Int) -> Unit,
     isMe: Boolean = false,
-    onProfile: ((Int) -> Unit)? = null
+    onProfile: ((Int) -> Unit)? = null,
+    page: Int? = null
 ) {
     Scaffold(
         topBar = { FollowTopAppBar(name, onBack = onBack) },
     ) { innerPadding ->
         Column(Modifier.padding(innerPadding)) {
-            var state by remember { mutableIntStateOf(0) }
+            var state by remember { mutableIntStateOf(page ?: 0) }
             val titles =
                 listOf("$follower followers", "$following following", "$subscription subscription")
             Column {

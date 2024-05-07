@@ -28,23 +28,24 @@ fun ProfileScreenNavHost(
     ) {
         composable("profileHome") {
             ProfileScreen(
-                onFollowing = { navController.navigate("follow/${id}") },
+                onFollowing = { navController.navigate("follow/${id}/1") },
                 onWrite = { },
-                onFollwer = { navController.navigate("follow/${id}") },
+                onFollwer = { navController.navigate("follow/${id}/0") },
                 onClose = { onClose.invoke() },
                 onEmailLogin = onEmailLogin,
                 id = id,
                 onReview = onReview
             )
         }
-        composable("follow/{userId}") {
+        composable("follow/{userId}/{page}") {
             val userId = it.arguments?.getString("userId")?.toInt()
 
             if (userId != null) {
                 OtherFollowScreen(
                     onBack = { navController.popBackStack() },
                     userId = userId,
-                    onProfile = { navController.navigate("profile/${it}") }
+                    onProfile = { navController.navigate("profile/${it}") },
+                    page = it.arguments?.getString("page")?.toInt()
                 )
             } else {
                 Text(text = "사용자 정보가 없습니다.")
@@ -55,9 +56,9 @@ fun ProfileScreenNavHost(
         }
         composable("profile/{userId}") {
             ProfileScreen(
-                onFollowing = { navController.navigate("follow/${id}") },
+                onFollowing = { navController.navigate("follow/${it.arguments?.getString("userId")?.toInt()}/1") },
                 onWrite = { },
-                onFollwer = { navController.navigate("follow/${id}") },
+                onFollwer = { navController.navigate("follow/${it.arguments?.getString("userId")?.toInt()}/0") },
                 onClose = { navController.popBackStack() },
                 onEmailLogin = onEmailLogin,
                 onReview = onReview,

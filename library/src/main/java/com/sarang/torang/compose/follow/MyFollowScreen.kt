@@ -10,7 +10,8 @@ import com.sarang.torang.viewmodel.MyFollowViewModel
 fun MyFollowScreen(
     followViewModel: MyFollowViewModel = hiltViewModel(),
     onBack: () -> Unit,
-    onProfile: ((Int) -> Unit)? = null
+    onProfile: ((Int) -> Unit)? = null,
+    page: Int? = null
 ) {
     val follower by followViewModel.follower.collectAsState()
     val following by followViewModel.following.collectAsState()
@@ -31,6 +32,7 @@ fun MyFollowScreen(
         onUnFollow = { followViewModel.unFollow(it) },
         onDelete = { followViewModel.delete(it) },
         isMe = true,
-        onProfile = onProfile
+        onProfile = onProfile,
+        page = page
     )
 }

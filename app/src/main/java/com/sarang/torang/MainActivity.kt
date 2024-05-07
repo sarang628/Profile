@@ -125,15 +125,16 @@ fun ProfileNavhost(
                 onEmailLogin = onEmailLogin,
                 myFeed = myFeed,
                 onClose = { navController.popBackStack() },
-                onReview = {}
+                onReview = {},
+                navController = rememberNavController()
             )
         }
-        composable("myFollow") {
+        composable("myFollow/{page}}") {
             MyFollowScreen(
                 onBack = { navController.popBackStack() },
                 onProfile = {
                     navController.navigate("profile/${it}")
-                }
+                }, page = it.arguments?.getString("page")?.toInt()
             )
         }
         composable("follow/{userId}") {

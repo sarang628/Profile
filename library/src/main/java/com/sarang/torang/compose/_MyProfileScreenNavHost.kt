@@ -38,12 +38,12 @@ fun _MyProfileScreenNavHost(
         }
         composable("myProfile") {
             MyProfileScreen(
+                profileViewModel = myProfileViewModel,
                 onEditProfile = { navController.navigate("editProfile") },
                 onSetting = onSetting,
-                profileViewModel = myProfileViewModel,
-                onFollowing = { navController.navigate("myFollow") },
+                onFollowing = { navController.navigate("myFollow/1") },
                 onWrite = { },
-                onFollwer = { navController.navigate("myFollow") },
+                onFollwer = { navController.navigate("myFollow/0") },
                 onClose = { onClose?.invoke() },
                 onEmailLogin = onEmailLogin,
                 onReview = onReview
@@ -58,10 +58,11 @@ fun _MyProfileScreenNavHost(
             })
         }
 
-        composable("myFollow") {
+        composable("myFollow/{page}") {
             MyFollowScreen(
                 onBack = { navController.popBackStack() },
-                onProfile = { navController.navigate("profile/${it}") }
+                onProfile = { navController.navigate("profile/${it}") },
+                page = it.arguments?.getString("page")?.toInt()
             )
         }
         composable("myFeed/{reviewId}") {

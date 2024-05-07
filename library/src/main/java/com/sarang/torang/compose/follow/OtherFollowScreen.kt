@@ -12,7 +12,8 @@ fun OtherFollowScreen(
     followViewModel: OtherFollowViewModel = hiltViewModel(),
     onBack: () -> Unit,
     userId : Int,
-    onProfile: ((Int) -> Unit)? = null
+    onProfile: ((Int) -> Unit)? = null,
+    page: Int? = null
 ) {
     val follower by followViewModel.follower.collectAsState()
     val following by followViewModel.following.collectAsState()
@@ -37,6 +38,7 @@ fun OtherFollowScreen(
         onBack = onBack,
         onUnFollow = { followViewModel.unFollow(it) },
         onDelete = { followViewModel.delete(it) },
-        onProfile = onProfile
+        onProfile = onProfile,
+        page = page
     )
 }

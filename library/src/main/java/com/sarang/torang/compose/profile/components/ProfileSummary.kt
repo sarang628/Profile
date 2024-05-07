@@ -101,7 +101,7 @@ internal fun ProfileSummary(
                 Modifier
                     .weight(1f)
                     .clickable {
-                        onFollowing.invoke()
+                        onFollwer.invoke()
                     }, horizontalAlignment = Alignment.CenterHorizontally
             )
             {
@@ -142,7 +142,7 @@ internal fun profileSummaryConstraintSet(): ConstraintSet {
 @Preview
 @Composable
 fun PreviewProfileSummary() {
-    ProfileSummary(
+    ProfileSummary(/*Preview*/
         profileUrl = "",
         name = "name",
         feedCount = 11111,
