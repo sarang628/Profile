@@ -1,6 +1,6 @@
 package com.sarang.torang.compose.myfeed
 
-import TorangAsyncImage1
+import android.icu.number.Scale
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +13,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.torang.viewmodel.MyFeedListViewModel
@@ -21,7 +23,8 @@ import com.sarang.torang.viewmodel.MyFeedListViewModel
 fun FeedListScreen(
     feedListViewModel: MyFeedListViewModel = hiltViewModel(),
     userId: Int,
-    onReview: ((Int) -> Unit)? = null
+    onReview: ((Int) -> Unit)? = null,
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     LaunchedEffect(key1 = userId, block = {
         Log.d("__FeedListScreen", "userId: ${userId}")
@@ -35,8 +38,8 @@ fun FeedListScreen(
         content = {
             items(list.size) {
                 Log.d("_FeedListScreen", list[it].reviewImage[0])
-                TorangAsyncImage1(
-                    modifier = Modifier
+                image.invoke(
+                    Modifier
                         .height(130.dp)
                         .padding(0.5.dp)
                         .clickable {
@@ -45,7 +48,10 @@ fun FeedListScreen(
                             }
                             onReview?.invoke(list[it].reviewId)
                         },
-                    model = list[it].reviewImage[0],
+                    list[it].reviewImage[0],
+                    50.dp,
+                    50.dp,
+                    ContentScale.Crop
                 )
             }
         })

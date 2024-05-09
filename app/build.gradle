@@ -103,4 +103,5 @@ dependencies {
     implementation "com.github.sarang628:BaseFeed:$baseFeedVersion"
     implementation "com.github.sarang628:InstagramGallery:$instagramGalleryVersion"
     implementation 'com.github.sarang628:MediaContentResolver:54ff69ee3a'
+    implementation "com.github.sarang628:CommonImageLoader:$commonImageLoaderVersion"
 }

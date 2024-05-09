@@ -1,7 +1,5 @@
 package com.sarang.torang.compose.edit
 
-import TorangAsyncImage
-import TorangAsyncImage1
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,23 +24,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sarang.torang.R
 import com.sarang.torang.ProfileUiState
+import com.sarang.torang.R
 import com.sarang.torang.viewmodel.MyProfileViewModel
-import com.sarang.torang.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun EditProfileScreen(
     profileViewModel: MyProfileViewModel = hiltViewModel(),   // 프로필 뷰모델
     onEditImage: () -> Unit,                                // 프로필 수정 클릭
-    onBack: () -> Unit                                      // 뒤로가기 클릭
+    onBack: () -> Unit,                                  // 뒤로가기 클릭
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     val coroutine = rememberCoroutineScope()
     val uiState by profileViewModel.uiState.collectAsState()
@@ -54,7 +54,8 @@ fun EditProfileScreen(
     _EditProfileScreen(
         onEditImage = onEditImage,
         onBack = onBack,
-        uiState = (uiState as ProfileUiState.Success)
+        uiState = (uiState as ProfileUiState.Success),
+        image = image
     )
 }
 
@@ -62,7 +63,8 @@ fun EditProfileScreen(
 fun _EditProfileScreen(
     onEditImage: () -> Unit,
     onBack: () -> Unit,
-    uiState: ProfileUiState
+    uiState: ProfileUiState,
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     Column(
         Modifier
@@ -106,13 +108,15 @@ fun _EditProfileScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TorangAsyncImage1(
-                model = (uiState as ProfileUiState.Success).profileUrl,
-                modifier = Modifier
+            image.invoke(
+                Modifier
                     .size(70.dp)
                     .clip(CircleShape)
                     .background(Color(0x11000000)),
-                //contentScale = ContentScale.Crop
+                (uiState as ProfileUiState.Success).profileUrl,
+                30.dp,
+                30.dp,
+                ContentScale.Crop
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -173,6 +177,7 @@ fun PreviewEditProfileScreen() {
             feedCount = 0,
             name = "name",
             id = 0
-        )
+        ),
+        image = { _, _, _, _, _ -> }
     )
 }

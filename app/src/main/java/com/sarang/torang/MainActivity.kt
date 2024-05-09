@@ -17,6 +17,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
@@ -27,6 +29,7 @@ import com.sarang.torang.api.ApiProfile
 import com.sarang.torang.compose.ProfileScreenNavHost
 import com.sarang.torang.compose.follow.MyFollowScreen
 import com.sarang.torang.compose.follow.OtherFollowScreen
+import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.LoginRepository
@@ -76,7 +79,8 @@ class MainActivity : ComponentActivity() {
                                 },
                                 myFeed = {
                                     Text(text = "myFeed")
-                                }
+                                },
+                                image = provideTorangAsyncImage()
                             )
                         }
                         Column(Modifier.height(300.dp)) {
@@ -93,6 +97,7 @@ class MainActivity : ComponentActivity() {
 fun ProfileNavhost(
     onEmailLogin: () -> Unit,
     onReview: ((Int) -> Unit)? = null,
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
     myFeed: @Composable (NavBackStackEntry) -> Unit
 ) {
     val navController = rememberNavController()
@@ -116,7 +121,8 @@ fun ProfileNavhost(
                 onClose = { navController.popBackStack() },
                 onEmailLogin = onEmailLogin,
                 myFeed = myFeed,
-                onReview = onReview
+                onReview = onReview,
+                image = image
             )
         }
         composable("myProfile") {
@@ -134,7 +140,8 @@ fun ProfileNavhost(
                 onBack = { navController.popBackStack() },
                 onProfile = {
                     navController.navigate("profile/${it}")
-                }, page = it.arguments?.getString("page")?.toInt()
+                }, page = it.arguments?.getString("page")?.toInt(),
+                image = image
             )
         }
         composable("follow/{userId}") {
@@ -143,7 +150,8 @@ fun ProfileNavhost(
             if (userId != null) {
                 OtherFollowScreen(
                     onBack = { navController.popBackStack() },
-                    userId = userId
+                    userId = userId,
+                    image = provideTorangAsyncImage()
                 )
             } else {
                 Text(text = "사용자 정보가 없습니다.")

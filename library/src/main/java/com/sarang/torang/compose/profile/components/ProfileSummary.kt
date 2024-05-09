@@ -1,6 +1,5 @@
 package com.sarang.torang.compose.profile.components
 
-import TorangAsyncImage1
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,9 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -37,7 +38,8 @@ internal fun ProfileSummary(
     following: Int,             // 팔로잉 수
     onFollowing: () -> Unit,    // 팔로잉 클릭
     onFollwer: () -> Unit,      // 팔로워 클릭
-    onWrite: () -> Unit         // 게시글 클릭
+    onWrite: () -> Unit,         // 게시글 클릭
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
 
     ConstraintLayout(
@@ -46,13 +48,15 @@ internal fun ProfileSummary(
         Box(modifier = Modifier.layoutId("profileImg"))
         {
             if (profileUrl.isNotEmpty()) {
-                TorangAsyncImage1(
-                    model = profileUrl,
-                    modifier = Modifier
+                image.invoke(
+                    Modifier
                         .size(100.dp)
                         .clip(CircleShape)
                         .background(Color(0x11000000)),
-                    //contentScale = ContentScale.Crop
+                    profileUrl,
+                    50.dp,
+                    50.dp,
+                    null
                 )
             } else {
                 Icon(
@@ -150,6 +154,7 @@ fun PreviewProfileSummary() {
         following = 33333,
         onFollowing = {},
         onFollwer = {},
-        onWrite = {}
+        onWrite = {},
+        image = { _, _, _, _, _ -> }
     )
 }

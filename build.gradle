@@ -28,5 +28,5 @@ ext {
     baseFeedVersion = '42d25f12fa'
     repositoryVersion = '4dfb5c65c6'
     instagramGalleryVersion = '4742515032'
-    commonImageLoaderVersion = '9ec5b04dfa'
+    commonImageLoaderVersion = '8230ade5ca'
 }

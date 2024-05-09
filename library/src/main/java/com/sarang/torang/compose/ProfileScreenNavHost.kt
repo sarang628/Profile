@@ -3,6 +3,9 @@ package com.sarang.torang.compose
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
@@ -20,7 +23,8 @@ fun ProfileScreenNavHost(
     onEmailLogin: () -> Unit,
     onReview: ((Int) -> Unit)? = null,
     navController: NavHostController = rememberNavController(),
-    onClose : () -> Unit
+    onClose : () -> Unit,
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -34,7 +38,8 @@ fun ProfileScreenNavHost(
                 onClose = { onClose.invoke() },
                 onEmailLogin = onEmailLogin,
                 id = id,
-                onReview = onReview
+                onReview = onReview,
+                image = image
             )
         }
         composable("follow/{userId}/{page}") {
@@ -45,7 +50,8 @@ fun ProfileScreenNavHost(
                     onBack = { navController.popBackStack() },
                     userId = userId,
                     onProfile = { navController.navigate("profile/${it}") },
-                    page = it.arguments?.getString("page")?.toInt()
+                    page = it.arguments?.getString("page")?.toInt(),
+                    image = image
                 )
             } else {
                 Text(text = "사용자 정보가 없습니다.")
@@ -62,7 +68,8 @@ fun ProfileScreenNavHost(
                 onClose = { navController.popBackStack() },
                 onEmailLogin = onEmailLogin,
                 onReview = onReview,
-                id = it.arguments?.getString("userId")?.toInt()
+                id = it.arguments?.getString("userId")?.toInt(),
+                image = image
             )
         }
     }

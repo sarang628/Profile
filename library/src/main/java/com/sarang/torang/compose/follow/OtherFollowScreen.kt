@@ -4,6 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.torang.viewmodel.OtherFollowViewModel
 
@@ -13,7 +16,8 @@ fun OtherFollowScreen(
     onBack: () -> Unit,
     userId : Int,
     onProfile: ((Int) -> Unit)? = null,
-    page: Int? = null
+    page: Int? = null,
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit
 ) {
     val follower by followViewModel.follower.collectAsState()
     val following by followViewModel.following.collectAsState()
@@ -39,6 +43,7 @@ fun OtherFollowScreen(
         onUnFollow = { followViewModel.unFollow(it) },
         onDelete = { followViewModel.delete(it) },
         onProfile = onProfile,
-        page = page
+        page = page,
+        image = image
     )
 }

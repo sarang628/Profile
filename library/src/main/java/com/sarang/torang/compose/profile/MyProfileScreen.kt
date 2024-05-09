@@ -20,9 +20,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.ProfileUiState
@@ -55,6 +57,7 @@ fun MyProfileScreen(
     onClose: () -> Unit,
     onEmailLogin: () -> Unit,
     onReview: ((Int) -> Unit)? = null,
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
@@ -83,7 +86,8 @@ fun MyProfileScreen(
                 onFollowing = onFollowing,
                 onFollwer = onFollwer,
                 onClearErrorMessage = { profileViewModel.onClearErrorMessage() },
-                onReview = onReview
+                onReview = onReview,
+                image = image
             )
         }
 
@@ -107,6 +111,7 @@ internal fun _MyProfileScreen(
     onWrite: () -> Unit,        // 게시글 클릭
     onClearErrorMessage: () -> Unit,
     onReview: ((Int) -> Unit)? = null,
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize()
@@ -136,7 +141,8 @@ internal fun _MyProfileScreen(
                     name = uiState.name,
                     onFollwer = onFollwer,
                     onFollowing = onFollowing,
-                    onWrite = onWrite
+                    onWrite = onWrite,
+                    image = { _, _, _, _, _ -> }
                 )
                 Spacer(modifier = Modifier.height(30.dp))
                 Row {
@@ -161,13 +167,15 @@ internal fun _MyProfileScreen(
                     wantToGo = {
                         FeedListScreen(
                             userId = uiState.id,
-                            onReview = onReview
+                            onReview = onReview,
+                            image = image
                         )
                     },
                     favorite = {
                         FeedListScreen(
                             userId = uiState.id,
-                            onReview = onReview
+                            onReview = onReview,
+                            image = image
                         )
                     }
                 )
@@ -203,5 +211,6 @@ fun PreviewMyProfileScreen() {
         onFollowing = { /*TODO*/ },
         onFollwer = { /*TODO*/ },
         onWrite = { /*TODO*/ },
-        onClearErrorMessage = { /*TODO*/ })
+        onClearErrorMessage = { /*TODO*/ },
+        image = { _, _, _, _, _ -> })
 }

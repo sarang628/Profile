@@ -1,25 +1,21 @@
 package com.sarang.torang.compose.follow
 
-import TorangAsyncImage1
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -33,7 +29,8 @@ internal fun ItemFollow(
     isMe: Boolean = false,
     onButton: (() -> Unit)? = null,
     btnText: String? = null,
-    onProfile: (() -> Unit)? = null
+    onProfile: (() -> Unit)? = null,
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -43,12 +40,15 @@ internal fun ItemFollow(
             .height(60.dp),
         constraintSet = itemFollowConstraintSet()
     ) {
-        TorangAsyncImage1(
-            model = url,
-            modifier = Modifier
+        image.invoke(
+            Modifier
                 .layoutId("profileImg")
                 .clip(CircleShape)
                 .size(45.dp),
+            url,
+            20.dp,
+            20.dp,
+            null
         )
 
         Text(text = id, modifier = Modifier.layoutId("id"))
@@ -114,5 +114,6 @@ fun PreviewItemFollow() {
         name = "LISA",
         id = "lalalalisa_m",
         url = "url",
+        image = { _, _, _, _, _ -> }
     )
 }

@@ -29,8 +29,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -54,7 +56,8 @@ fun _FollowScreen(
     onUnFollow: (Int) -> Unit,
     isMe: Boolean = false,
     onProfile: ((Int) -> Unit)? = null,
-    page: Int? = null
+    page: Int? = null,
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     Scaffold(
         topBar = { FollowTopAppBar(name, onBack = onBack) },
@@ -84,12 +87,14 @@ fun _FollowScreen(
                         MyFollowerList(
                             list = followerList,
                             onDelete = onDelete,
-                            onProfile = onProfile
+                            onProfile = onProfile,
+                            image = image
                         )
                     } else {
                         FollowerList(
                             list = followerList,
-                            onProfile = onProfile
+                            onProfile = onProfile,
+                            image = image
                         )
                     }
                 } else if (state == 1) {
@@ -97,12 +102,14 @@ fun _FollowScreen(
                         MyFollowingList(
                             list = followingList,
                             onUnFollow = onUnFollow,
-                            onProfile = onProfile
+                            onProfile = onProfile,
+                            image = image
                         )
                     } else {
                         FollowingList(
                             list = followingList,
-                            onProfile = onProfile
+                            onProfile = onProfile,
+                            image = image
                         )
                     }
                 }
@@ -167,6 +174,7 @@ fun PreViewFollowScreen() {
         onClearErrorMessage = {},
         onBack = {},
         onUnFollow = {},
-        onDelete = {}
+        onDelete = {},
+        image = { _, _, _, _, _ -> }
     )
 }

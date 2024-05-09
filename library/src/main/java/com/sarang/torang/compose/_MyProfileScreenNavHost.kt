@@ -1,6 +1,9 @@
 package com.sarang.torang.compose
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
@@ -21,7 +24,8 @@ fun _MyProfileScreenNavHost(
     onClose: (() -> Unit)? = null,
     onEmailLogin: () -> Unit,
     onReview: ((Int) -> Unit)? = null,
-    navController: NavHostController = rememberNavController()
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
+    navController: NavHostController = rememberNavController(),
 ) {
     NavHost(
         navController = navController,
@@ -33,7 +37,8 @@ fun _MyProfileScreenNavHost(
                 onBack = { navController.popBackStack() },
                 onEditImage = {
                     navController.navigate("EditProfileImage")
-                }
+                },
+                image = image
             )
         }
         composable("myProfile") {
@@ -46,7 +51,8 @@ fun _MyProfileScreenNavHost(
                 onFollwer = { navController.navigate("myFollow/0") },
                 onClose = { onClose?.invoke() },
                 onEmailLogin = onEmailLogin,
-                onReview = onReview
+                onReview = onReview,
+                image = image
             )
         }
         composable("EditProfileImage") {
@@ -62,7 +68,8 @@ fun _MyProfileScreenNavHost(
             MyFollowScreen(
                 onBack = { navController.popBackStack() },
                 onProfile = { navController.navigate("profile/${it}") },
-                page = it.arguments?.getString("page")?.toInt()
+                page = it.arguments?.getString("page")?.toInt(),
+                image = image
             )
         }
         composable("myFeed/{reviewId}") {
@@ -74,7 +81,8 @@ fun _MyProfileScreenNavHost(
                 onClose = { onClose?.invoke() },
                 onEmailLogin = onEmailLogin,
                 onReview = onReview,
-                myFeed = myFeed
+                myFeed = myFeed,
+                image = image
             )
         }
     }
