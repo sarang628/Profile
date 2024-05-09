@@ -142,7 +142,7 @@ internal fun _MyProfileScreen(
                     onFollwer = onFollwer,
                     onFollowing = onFollowing,
                     onWrite = onWrite,
-                    image = { _, _, _, _, _ -> }
+                    image = image
                 )
                 Spacer(modifier = Modifier.height(30.dp))
                 Row {

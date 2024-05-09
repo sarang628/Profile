@@ -1,6 +1,5 @@
 package com.sarang.torang.compose.myfeed
 
-import android.icu.number.Scale
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize

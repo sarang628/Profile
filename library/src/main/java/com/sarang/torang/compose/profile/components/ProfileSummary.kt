@@ -56,7 +56,7 @@ internal fun ProfileSummary(
                     profileUrl,
                     50.dp,
                     50.dp,
-                    null
+                    ContentScale.Crop
                 )
             } else {
                 Icon(

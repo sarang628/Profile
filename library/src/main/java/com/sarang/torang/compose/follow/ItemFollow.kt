@@ -48,7 +48,7 @@ internal fun ItemFollow(
             url,
             20.dp,
             20.dp,
-            null
+            ContentScale.Crop
         )
 
         Text(text = id, modifier = Modifier.layoutId("id"))
