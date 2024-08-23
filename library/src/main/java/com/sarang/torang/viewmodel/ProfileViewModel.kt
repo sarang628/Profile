@@ -11,6 +11,7 @@ import com.sarang.torang.usecase.UnFollowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,7 +21,7 @@ class ProfileViewModel @Inject constructor(
     private val service: ProfileService,
     private val isLoginUseCase: IsLoginUseCase,
     private val followUseCase: FollowUseCase,
-    private val unFollowUseCase: UnFollowUseCase
+    private val unFollowUseCase: UnFollowUseCase,
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<ProfileUiState> =
         MutableStateFlow(ProfileUiState.Loading)
@@ -28,7 +29,7 @@ class ProfileViewModel @Inject constructor(
     val isLogin = isLoginUseCase.isLogin
 
     fun loadProfile(id: Int) {
-        Log.d("ProfileViewModel", "loadProfile : ${id}")
+        Log.d("__ProfileViewModel", "loadProfile : ${id}")
         viewModelScope.launch {
             try {
                 val result = service.loadProfile(id)
@@ -37,32 +38,12 @@ class ProfileViewModel @Inject constructor(
                     _uiState.update { (it as ProfileUiState.Success).copy(favoriteList = favs) }
                 }
             } catch (e: Exception) {
+                Log.e("__ProfileViewModel", e.toString())
                 _uiState.update {
                     ProfileUiState.Error(message = e.toString())
                 }
             }
 
-        }
-    }
-
-    fun loadProfileByToken() {
-        viewModelScope.launch {
-            try {
-                _uiState.emit(service.loadProfileByToken())
-
-                service.getFavorites().collect { favs ->
-                    _uiState.update { (it as ProfileUiState.Success).copy(favoriteList = favs) }
-                }
-            } catch (e: Exception) {
-                Log.e("ProfileViewModel", e.toString())
-            }
-        }
-    }
-
-    fun updateProfileImage(uri: String) {
-        viewModelScope.launch {
-            service.updateProfile(uri)
-            loadProfileByToken()
         }
     }
 

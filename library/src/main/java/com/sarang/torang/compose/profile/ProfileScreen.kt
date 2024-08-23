@@ -45,7 +45,6 @@ import com.sarang.torang.viewmodel.ProfileViewModel
 
 
 /**
- * @param isMyProfile 내 프로필 여부
  * @param profileViewModel 프로필 뷰모델
  * @param onSetting 설정 클릭
  * @param favorite 즐겨찾기 컴포즈
@@ -81,21 +80,6 @@ fun ProfileScreen(
         return
     }
 
-    if (!isLogin) {
-        Box(Modifier.fillMaxSize()) {
-            Column(
-                Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = "로그인을 해주세요.")
-                Button(onClick = { onEmailLogin.invoke() }) {
-                    Text(text = "LOG IN WITH EMAIL")
-                }
-            }
-        }
-        return
-    }
-
     when (uiState) {
         is ProfileUiState.Loading -> {
             Box(modifier = Modifier.fillMaxSize()) {
@@ -104,7 +88,7 @@ fun ProfileScreen(
         }
 
         is ProfileUiState.Success -> {
-            _ProfileScreen(
+            Profile(
                 uiState = uiState as ProfileUiState.Success,
                 onWrite = onWrite,
                 onFollowing = onFollowing,
@@ -115,7 +99,8 @@ fun ProfileScreen(
                 onClearErrorMessage = { profileViewModel.onClearErrorMessage() },
                 onClose = onClose,
                 onReview = onReview,
-                image = image
+                image = image,
+                isLogin = isLogin
             )
         }
 
@@ -124,7 +109,7 @@ fun ProfileScreen(
 }
 
 @Composable
-fun _ProfileScreen(
+fun Profile(
     uiState: ProfileUiState.Success,
     onFollowing: () -> Unit,    // 팔로잉 클릭
     onFollwer: () -> Unit,      // 팔로워 클릭
@@ -136,6 +121,7 @@ fun _ProfileScreen(
     onClose: (() -> Unit)? = null,
     onReview: ((Int) -> Unit)? = null,
     image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
+    isLogin: Boolean = false,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -164,23 +150,25 @@ fun _ProfileScreen(
                 )
                 Spacer(modifier = Modifier.height(30.dp))
                 Row {
-                    Button(
-                        onClick = {
-                            if (isFollow)
-                                onUnFollow.invoke()
-                            else
-                                onFollow.invoke()
-                        },
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(40.dp),
-                    ) {
-                        Text(
-                            text = if (!isFollow) "Follow" else "UnFollow",
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 17.sp
-                        )
+                    if (isLogin) {
+                        Button(
+                            onClick = {
+                                if (isFollow)
+                                    onUnFollow.invoke()
+                                else
+                                    onFollow.invoke()
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(40.dp),
+                        ) {
+                            Text(
+                                text = if (!isFollow) "Follow" else "UnFollow",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 17.sp
+                            )
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(5.dp))
@@ -252,7 +240,7 @@ fun ProfileTopAppBar(name: String, onBack: () -> Unit) {
 @Preview
 @Composable
 fun PreviewProfileScreen() {
-    _ProfileScreen(/*Preview*/
+    Profile(/*Preview*/
         uiState = ProfileUiState.Success(
             profileUrl = "",
             feedCount = 0,

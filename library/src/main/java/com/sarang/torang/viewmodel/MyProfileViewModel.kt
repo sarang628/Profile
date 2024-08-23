@@ -11,6 +11,7 @@ import com.sarang.torang.usecase.UnFollowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,7 +21,7 @@ class MyProfileViewModel @Inject constructor(
     private val service: ProfileService,
     private val isLoginUseCase: IsLoginUseCase,
     private val followUseCase: FollowUseCase,
-    private val unFollowUseCase: UnFollowUseCase
+    private val unFollowUseCase: UnFollowUseCase,
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<ProfileUiState> =
         MutableStateFlow(ProfileUiState.Loading)
@@ -28,7 +29,11 @@ class MyProfileViewModel @Inject constructor(
     val isLogin = isLoginUseCase.isLogin
 
     init {
-        loadProfileByToken()
+        viewModelScope.launch {
+            isLogin.distinctUntilChanged().collect {
+                if (it) loadProfileByToken()
+            }
+        }
     }
 
     fun loadProfileByToken() {
