@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
@@ -30,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -62,6 +63,7 @@ fun ProfileScreen(
     onWrite: () -> Unit,
     onClose: () -> Unit,
     onEmailLogin: () -> Unit,
+    onMessage: () -> Unit,
     id: Int? = null,
     onReview: ((Int) -> Unit)? = null,
     image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
@@ -100,7 +102,8 @@ fun ProfileScreen(
                 onClose = onClose,
                 onReview = onReview,
                 image = image,
-                isLogin = isLogin
+                isLogin = isLogin,
+                onMessage = onMessage
             )
         }
 
@@ -117,25 +120,26 @@ fun Profile(
     isFollow: Boolean,          // 팔로우 여부
     onFollow: () -> Unit,
     onUnFollow: () -> Unit,
+    onMessage: () -> Unit,
     onClearErrorMessage: () -> Unit,
     onClose: (() -> Unit)? = null,
     onReview: ((Int) -> Unit)? = null,
     image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
     isLogin: Boolean = false,
-) {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            ProfileTopAppBar(name = uiState.name, onBack = {
-                onClose?.invoke()
-            })
-        }
-    ) { padding ->
-        Box(
-            modifier = Modifier
-                .padding(padding)
+    feedListScreen: @Composable () -> Unit = {
+        FeedListScreen(
+            userId = uiState.id, onReview = onReview, image = image
         )
-        {
+    },
+) {
+    Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
+        ProfileTopAppBar(name = uiState.name, onBack = {
+            onClose?.invoke()
+        })
+    }) { padding ->
+        Box(
+            modifier = Modifier.padding(padding)
+        ) {
             Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 20.dp)) {
                 ProfileSummary(
                     profileUrl = uiState.profileUrl,
@@ -148,56 +152,48 @@ fun Profile(
                     onWrite = onWrite,
                     image = image
                 )
-                Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(25.dp))
                 Row {
                     if (isLogin) {
                         Button(
+                            shape = RoundedCornerShape(8.dp),
                             onClick = {
-                                if (isFollow)
-                                    onUnFollow.invoke()
-                                else
-                                    onFollow.invoke()
+                                if (isFollow) onUnFollow.invoke()
+                                else onFollow.invoke()
                             },
                             modifier = Modifier
                                 .weight(1f)
-                                .height(40.dp),
+                                .height(35.dp),
                         ) {
                             Text(
-                                text = if (!isFollow) "Follow" else "UnFollow",
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 17.sp
+                                text = if (!isFollow) "Follow" else "UnFollow", color = Color.White
                             )
+                        }
+                        Spacer(modifier = Modifier.width(3.dp))
+                        Button(
+                            shape = RoundedCornerShape(8.dp),
+                            onClick = onMessage,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(35.dp)
+                        ) {
+                            Text(text = "Message")
                         }
                     }
                 }
                 Spacer(modifier = Modifier.height(5.dp))
-                FavoriteAndWantToGo(
-                    wantToGo = {
-                        FeedListScreen(
-                            userId = uiState.id,
-                            onReview = onReview,
-                            image = image
-                        )
-                    },
-                    favorite = {
-                        FeedListScreen(
-                            userId = uiState.id,
-                            onReview = onReview,
-                            image = image
-                        )
-                    }
-                )
+                FavoriteAndWantToGo(wantToGo = {
+                    feedListScreen.invoke()
+                }, favorite = {
+                    feedListScreen.invoke()
+                })
             }
             uiState.errorMessage?.let {
-                AlertDialog(onDismissRequest = { /*TODO*/ },
-                    confirmButton = {
-                        Button(onClick = { onClearErrorMessage.invoke() }) {
-                            Text(text = "확인")
-                        }
-                    },
-                    text =
-                    { Text(text = it, fontSize = 14.sp) })
+                AlertDialog(onDismissRequest = { /*TODO*/ }, confirmButton = {
+                    Button(onClick = { onClearErrorMessage.invoke() }) {
+                        Text(text = "확인")
+                    }
+                }, text = { Text(text = it, fontSize = 14.sp) })
             }
         }
     }
@@ -247,17 +243,18 @@ fun PreviewProfileScreen() {
             follower = 0,
             following = 0,
             name = "Amanda",
-            isLogin = false,
+            isLogin = true,
             favoriteList = ArrayList(),
             id = 0
         ),
         onFollwer = {},
         onFollowing = {},
         onWrite = {},
+        isLogin = true,
         isFollow = false,
         onUnFollow = {},
         onFollow = {},
         onClearErrorMessage = {},
-        image = { _, _, _, _, _ -> }
-    )
+        image = { _, _, _, _, _ -> },
+        feedListScreen = {}, onMessage = {})
 }

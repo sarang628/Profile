@@ -26,7 +26,6 @@ fun FeedListScreen(
     image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     LaunchedEffect(key1 = userId, block = {
-        Log.d("__FeedListScreen", "userId: ${userId}")
         feedListViewModel.load(userId)
     })
     val list by feedListViewModel.list.collectAsState()

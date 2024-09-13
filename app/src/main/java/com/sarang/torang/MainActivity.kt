@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
@@ -29,6 +30,7 @@ import com.sarang.torang.api.ApiProfile
 import com.sarang.torang.compose.ProfileScreenNavHost
 import com.sarang.torang.compose.follow.MyFollowScreen
 import com.sarang.torang.compose.follow.OtherFollowScreen
+import com.sarang.torang.compose.profile.PreviewProfileScreen
 import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
 import com.sarang.torang.repository.FeedRepository
@@ -98,7 +100,7 @@ fun ProfileNavhost(
     onEmailLogin: () -> Unit,
     onReview: ((Int) -> Unit)? = null,
     image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
-    myFeed: @Composable (NavBackStackEntry) -> Unit
+    myFeed: @Composable (NavBackStackEntry) -> Unit,
 ) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "main") {
@@ -122,7 +124,10 @@ fun ProfileNavhost(
                 onEmailLogin = onEmailLogin,
                 myFeed = myFeed,
                 onReview = onReview,
-                image = image
+                image = image,
+                onMessage = {
+
+                }
             )
         }
         composable("myProfile") {
@@ -132,7 +137,8 @@ fun ProfileNavhost(
                 myFeed = myFeed,
                 onClose = { navController.popBackStack() },
                 onReview = {},
-                navController = rememberNavController()
+                navController = rememberNavController(),
+                onMessage = {}
             )
         }
         composable("myFollow/{page}}") {
@@ -157,5 +163,13 @@ fun ProfileNavhost(
                 Text(text = "사용자 정보가 없습니다.")
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewProfile() {
+    TorangTheme {
+        PreviewProfileScreen()
     }
 }

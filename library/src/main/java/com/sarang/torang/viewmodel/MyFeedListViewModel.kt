@@ -23,7 +23,6 @@ class MyFeedListViewModel @Inject constructor(
     val errorMessage = _errorMessage.asStateFlow()
 
     fun load(userId: Int) {
-        Log.d("__FeedListViewModel", "load userId : ${userId}}")
         viewModelScope.launch {
             try {
                 _list.update {

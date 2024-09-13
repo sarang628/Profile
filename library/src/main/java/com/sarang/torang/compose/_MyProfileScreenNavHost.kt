@@ -25,6 +25,7 @@ fun _MyProfileScreenNavHost(
     onEmailLogin: () -> Unit,
     onReview: ((Int) -> Unit)? = null,
     image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
+    onMessage: (Int) -> Unit,
     navController: NavHostController = rememberNavController(),
 ) {
     NavHost(
@@ -82,7 +83,8 @@ fun _MyProfileScreenNavHost(
                 onEmailLogin = onEmailLogin,
                 onReview = onReview,
                 myFeed = myFeed,
-                image = image
+                image = image,
+                onMessage = onMessage
             )
         }
     }

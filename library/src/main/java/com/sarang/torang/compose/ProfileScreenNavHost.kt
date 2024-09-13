@@ -1,5 +1,6 @@
 package com.sarang.torang.compose
 
+import android.util.Log
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,8 +24,9 @@ fun ProfileScreenNavHost(
     onEmailLogin: () -> Unit,
     onReview: ((Int) -> Unit)? = null,
     navController: NavHostController = rememberNavController(),
-    onClose : () -> Unit,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit
+    onClose: () -> Unit,
+    onMessage: (Int) -> Unit,
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     NavHost(
         navController = navController,
@@ -39,7 +41,14 @@ fun ProfileScreenNavHost(
                 onEmailLogin = onEmailLogin,
                 id = id,
                 onReview = onReview,
-                image = image
+                image = image,
+                onMessage = {
+                    id?.let { onMessage.invoke(it) }
+
+                    if (id == null) {
+                        Log.e("__ProfileScreenNavHost", "Message click but id is null!")
+                    }
+                }
             )
         }
         composable("follow/{userId}/{page}") {
@@ -62,14 +71,27 @@ fun ProfileScreenNavHost(
         }
         composable("profile/{userId}") {
             ProfileScreen(
-                onFollowing = { navController.navigate("follow/${it.arguments?.getString("userId")?.toInt()}/1") },
+                onFollowing = {
+                    navController.navigate(
+                        "follow/${
+                            it.arguments?.getString("userId")?.toInt()
+                        }/1"
+                    )
+                },
                 onWrite = { },
-                onFollwer = { navController.navigate("follow/${it.arguments?.getString("userId")?.toInt()}/0") },
+                onFollwer = {
+                    navController.navigate(
+                        "follow/${
+                            it.arguments?.getString("userId")?.toInt()
+                        }/0"
+                    )
+                },
                 onClose = { navController.popBackStack() },
                 onEmailLogin = onEmailLogin,
                 onReview = onReview,
                 id = it.arguments?.getString("userId")?.toInt(),
-                image = image
+                image = image,
+                onMessage = {}
             )
         }
     }
