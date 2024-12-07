@@ -1,11 +1,11 @@
 package com.sarang.torang.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.sarang.torang.usecase.DeleteUseCase
-import com.sarang.torang.usecase.GetMyFollowerUseCase
-import com.sarang.torang.usecase.GetMyFollowingUseCase
-import com.sarang.torang.usecase.GetMyProfileUseCase
-import com.sarang.torang.usecase.UnFollowUseCase
+import com.sarang.torang.usecase.profile.DeleteUseCase
+import com.sarang.torang.usecase.profile.GetMyFollowerUseCase
+import com.sarang.torang.usecase.profile.GetMyFollowingUseCase
+import com.sarang.torang.usecase.profile.GetMyProfileUseCase
+import com.sarang.torang.usecase.profile.UnFollowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
