@@ -48,7 +48,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtension.get()
     }
 
     compileOptions {
@@ -139,6 +139,11 @@ dependencies {
     implementation(libs.instagramGallery)
     implementation(libs.mediaContentResolver)
     implementation(libs.commonImageLoader)
+    implementation(libs.torangnetwork)
+    implementation(libs.torangdatabase)
+
+    implementation(libs.composePermissionTest)
+    implementation(libs.accompanist.permissions)
 
     implementation(project(":library"))
 }

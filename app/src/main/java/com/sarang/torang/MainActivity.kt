@@ -34,8 +34,8 @@ import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.LoginRepository
-import com.sarang.torang.repository.LoginRepositoryTest
 import com.sarang.torang.repository.ProfileRepository
+import com.sarang.torang.repository.test.LoginRepositoryTest
 import com.sarang.torang.viewmodel.ProfileViewModel
 import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
