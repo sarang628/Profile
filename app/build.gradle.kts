@@ -145,5 +145,19 @@ dependencies {
     implementation(libs.composePermissionTest)
     implementation(libs.accompanist.permissions)
 
+    implementation(libs.basefeed)
+    implementation(libs.feed)
+    implementation(libs.expandableText)
+    implementation(libs.mui3scrolltorefresh)
+    implementation(libs.bottomdetectlazycolunm)
+    implementation(libs.coil)
+
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+    implementation("androidx.media3:media3-session:1.4.0")
+    implementation("androidx.media3:media3-exoplayer-hls:1.4.0")
+
+
+
     implementation(project(":library"))
 }
