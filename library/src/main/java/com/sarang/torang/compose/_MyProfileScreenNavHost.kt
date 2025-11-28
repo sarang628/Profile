@@ -20,11 +20,9 @@ fun _MyProfileScreenNavHost(
     myProfileViewModel: MyProfileViewModel = hiltViewModel(),
     onSetting: () -> Unit,
     galleryScreen: @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit,
-    myFeed: @Composable (NavBackStackEntry) -> Unit,
     onClose: (() -> Unit)? = null,
     onEmailLogin: () -> Unit,
     onReview: ((Int) -> Unit)? = null,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
     onMessage: (Int) -> Unit,
     navController: NavHostController = rememberNavController(),
 ) {
@@ -38,8 +36,7 @@ fun _MyProfileScreenNavHost(
                 onBack = { navController.popBackStack() },
                 onEditImage = {
                     navController.navigate("EditProfileImage")
-                },
-                image = image
+                }
             )
         }
         composable("myProfile") {
@@ -52,9 +49,7 @@ fun _MyProfileScreenNavHost(
                 onFollwer = { navController.navigate("myFollow/0") },
                 onClose = { onClose?.invoke() },
                 onEmailLogin = onEmailLogin,
-                onReview = onReview,
-                image = image
-            )
+                onReview = onReview)
         }
         composable("EditProfileImage") {
             galleryScreen.invoke(onNext = {
@@ -66,15 +61,14 @@ fun _MyProfileScreenNavHost(
         }
 
         composable("myFollow/{page}") {
-            MyFollowScreen(
-                onBack = { navController.popBackStack() },
-                onProfile = { navController.navigate("profile/${it}") },
-                page = it.arguments?.getString("page")?.toInt(),
-                image = image
-            )
+            MyFollowScreen(onBack = { navController.popBackStack() },
+                           onProfile = { navController.navigate("profile/${it}") },
+                           page = it.arguments?.getString("page")?.toInt())
         }
         composable("myFeed/{reviewId}") {
-            myFeed.invoke(it)
+            it.arguments?.getString("reviewId")?.toInt()?.let {
+                LocalMyFeed.current.invoke(it)
+            }
         }
         composable("profile/{userId}") {
             ProfileScreenNavHost(
@@ -82,8 +76,6 @@ fun _MyProfileScreenNavHost(
                 onClose = { onClose?.invoke() },
                 onEmailLogin = onEmailLogin,
                 onReview = onReview,
-                myFeed = myFeed,
-                image = image,
                 onMessage = onMessage
             )
         }

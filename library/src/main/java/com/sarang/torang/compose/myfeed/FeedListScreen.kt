@@ -16,15 +16,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sarang.torang.compose.LocalProfileImage
+import com.sarang.torang.compose.ProfileImageTypeData
 import com.sarang.torang.viewmodel.MyFeedListViewModel
 
 @Composable
-fun FeedListScreen(
-    feedListViewModel: MyFeedListViewModel = hiltViewModel(),
-    userId: Int,
-    onReview: ((Int) -> Unit)? = null,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
-) {
+fun FeedListScreen(feedListViewModel: MyFeedListViewModel = hiltViewModel(),
+                   userId: Int,
+                   onReview: ((Int) -> Unit)? = null) {
     LaunchedEffect(key1 = userId, block = {
         feedListViewModel.load(userId)
     })
@@ -36,20 +35,18 @@ fun FeedListScreen(
         content = {
             items(list.size) {
                 Log.d("_FeedListScreen", list[it].reviewImage[0])
-                image.invoke(
-                    Modifier
-                        .height(130.dp)
-                        .padding(0.5.dp)
-                        .clickable {
-                            if (onReview == null) {
-                                Log.w("_FeedListScreen", "onReview is null")
-                            }
-                            onReview?.invoke(list[it].reviewId)
-                        },
-                    list[it].reviewImage[0],
-                    50.dp,
-                    50.dp,
-                    ContentScale.Crop
+                LocalProfileImage.current.invoke(
+                    ProfileImageTypeData(
+                        modifier = Modifier.height(130.dp)
+                                           .padding(0.5.dp)
+                                           .clickable { if (onReview == null) {
+                                                            Log.w("_FeedListScreen", "onReview is null") }
+                                                        onReview?.invoke(list[it].reviewId) },
+                        url = list[it].reviewImage[0],
+                        errorIconSize = 50.dp,
+                        progressSize = 50.dp,
+                        contentScale = ContentScale.Crop
+                    )
                 )
             }
         })

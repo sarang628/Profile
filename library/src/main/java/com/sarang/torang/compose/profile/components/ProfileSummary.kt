@@ -1,17 +1,23 @@
 package com.sarang.torang.compose.profile.components
 
+import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,133 +34,84 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
+import com.sarang.torang.compose.LocalProfileImage
+import com.sarang.torang.compose.ProfileImageTypeData
+import org.intellij.lang.annotations.JdkConstants
 
+@Preview(showBackground = true)
 @Composable
 internal fun ProfileSummary(
-    profileUrl: String,         // 프로필 이미지 url
-    name: String,               // 이름
-    feedCount: Int,             // 피드 수
-    follower: Int,              // 팔로워 수
-    following: Int,             // 팔로잉 수
-    onFollowing: () -> Unit,    // 팔로잉 클릭
-    onFollwer: () -> Unit,      // 팔로워 클릭
-    onWrite: () -> Unit,         // 게시글 클릭
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
+    profileUrl: String = "",
+    name: String = "name",
+    feedCount: Int = 0,
+    follower: Int = 0,
+    following: Int = 0,
+    onFollowing: () -> Unit = {},
+    onFollwer: () -> Unit = {},
+    onWrite: () -> Unit = {},
 ) {
-
-    ConstraintLayout(
-        constraintSet = profileSummaryConstraintSet()
-    ) {
-        Box(modifier = Modifier.layoutId("profileImg"))
-        {
+    val profileImage = @Composable {
+        Box(modifier = Modifier.layoutId("profileImg")) {
             if (profileUrl.isNotEmpty()) {
-                image.invoke(
-                    Modifier
-                        .size(100.dp)
-                        .clip(CircleShape)
-                        .background(Color(0x11000000)),
-                    profileUrl,
-                    50.dp,
-                    50.dp,
-                    ContentScale.Crop
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.Outlined.AccountCircle,
-                    contentDescription = "emptyProfile",
-                    modifier = Modifier.size(100.dp),
-                )
+                LocalProfileImage.current.invoke(
+                    ProfileImageTypeData(modifier = Modifier.size(80.dp)
+                                                                 .clip(CircleShape)
+                                                                 .background(Color(0x11000000)),
+                                              url = profileUrl,
+                                              errorIconSize = 50.dp,
+                                              progressSize = 50.dp,
+                                              contentScale = ContentScale.Crop)) }
+            else {
+                Icon(imageVector = Icons.Rounded.AccountCircle,
+                     contentDescription = "emptyProfile",
+                     modifier = Modifier.size(90.dp))
             }
         }
     }
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column {
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = name,
-                Modifier.padding(start = 8.dp),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
+    fun follow(modifier : Modifier = Modifier) = @Composable {
+        Row(modifier              = modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween) {
+            Column(modifier            = Modifier.clickable { onWrite.invoke() },
+                   horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text       = feedCount.toString(),
+                     fontSize   = 14.sp,
+                     fontWeight = FontWeight.Bold)
+                Text(text = "게시물", fontSize = 14.sp)
+            }
 
-        Row(
-            Modifier
-                .weight(1f)
-                .padding(start = 16.dp)
-        ) {
-            Column(
-                Modifier
-                    .weight(1f)
-                    .clickable { onWrite.invoke() },
-                horizontalAlignment = Alignment.CenterHorizontally
-            )
-            {
-                Text(
-                    text = feedCount.toString(),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(text = "게시물", fontSize = 18.sp)
+            Column(modifier            = Modifier.clickable { onFollwer.invoke() },
+                   horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text       = follower.toString(),
+                     fontSize   = 14.sp,
+                     fontWeight = FontWeight.Bold)
+                Text(text = "팔로워", fontSize = 14.sp)
             }
 
             Column(
-                Modifier
-                    .weight(1f)
-                    .clickable {
-                        onFollwer.invoke()
-                    }, horizontalAlignment = Alignment.CenterHorizontally
-            )
-            {
-                Text(
-                    text = follower.toString(),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(text = "팔로워", fontSize = 18.sp)
-            }
-
-            Column(
-                Modifier
-                    .weight(1f)
-                    .clickable {
-                        onFollowing.invoke()
-                    }, horizontalAlignment = Alignment.CenterHorizontally
+                Modifier.clickable {
+                    onFollowing.invoke()
+                }, horizontalAlignment = Alignment.CenterHorizontally
             )
             {
                 Text(
                     text = following.toString(),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1
                 )
-                Text(text = "팔로잉", fontSize = 18.sp)
+                Text(text = "팔로잉", fontSize = 14.sp)
             }
         }
-
     }
-}
-
-internal fun profileSummaryConstraintSet(): ConstraintSet {
-    return ConstraintSet {
-        val contents = createRefFor("contents")
+        Row(modifier = Modifier.fillMaxWidth().height(100.dp),
+            verticalAlignment = Alignment.CenterVertically){
+            profileImage()
+            Box(Modifier.fillMaxSize().padding(vertical = 4.dp, horizontal = 20.dp)) {
+                Text(text       = name,
+                    fontSize   = 12.sp,
+                    fontWeight = FontWeight.Bold)
+                follow(modifier = Modifier.align(Alignment.Center)).invoke()
+            }
     }
-}
-
-@Preview
-@Composable
-fun PreviewProfileSummary() {
-    ProfileSummary(/*Preview*/
-        profileUrl = "",
-        name = "name",
-        feedCount = 11111,
-        follower = 22222,
-        following = 33333,
-        onFollowing = {},
-        onFollwer = {},
-        onWrite = {},
-        image = { _, _, _, _, _ -> }
-    )
 }

@@ -42,22 +42,21 @@ import com.sarang.torang.viewmodel.MyFollowViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun _FollowScreen(
-    name: String,
-    following: Int,
-    follower: Int,
-    subscription: Int,
-    followerList: List<Follow>,
-    followingList: List<Follow>,
-    subscriptionList: List<Follow>,
-    errorMessage: String? = null,
-    onClearErrorMessage: () -> Unit,
-    onBack: () -> Unit,
-    onDelete: (Int) -> Unit,
-    onUnFollow: (Int) -> Unit,
-    isMe: Boolean = false,
-    onProfile: ((Int) -> Unit)? = null,
-    page: Int? = null,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
+    name                : String        = "",
+    following           : Int           = 0,
+    follower            : Int           = 0,
+    subscription        : Int           = 0,
+    followerList        : List<Follow>  = listOf(),
+    followingList       : List<Follow>  = listOf(),
+    subscriptionList    : List<Follow>  = listOf(),
+    errorMessage        : String?       = null,
+    onClearErrorMessage : () -> Unit    = { },
+    onBack              : () -> Unit    = { },
+    onDelete            : (Int) -> Unit = { },
+    onUnFollow          : (Int) -> Unit = { },
+    isMe                : Boolean       = false,
+    onProfile           : (Int) -> Unit = { },
+    page                : Int?          = null
 ) {
     Scaffold(
         topBar = { FollowTopAppBar(name, onBack = onBack) },
@@ -87,30 +86,20 @@ fun _FollowScreen(
                         MyFollowerList(
                             list = followerList,
                             onDelete = onDelete,
-                            onProfile = onProfile,
-                            image = image
+                            onProfile = onProfile
                         )
                     } else {
-                        FollowerList(
-                            list = followerList,
-                            onProfile = onProfile,
-                            image = image
-                        )
+                        FollowerList(list = followerList,
+                                     onProfile = onProfile)
                     }
                 } else if (state == 1) {
                     if (isMe) {
-                        MyFollowingList(
-                            list = followingList,
-                            onUnFollow = onUnFollow,
-                            onProfile = onProfile,
-                            image = image
-                        )
+                        MyFollowingList(list = followingList,
+                                        onUnFollow = onUnFollow,
+                                        onProfile = onProfile)
                     } else {
-                        FollowingList(
-                            list = followingList,
-                            onProfile = onProfile,
-                            image = image
-                        )
+                        FollowingList(list = followingList,
+                                      onProfile = onProfile)
                     }
                 }
             }
@@ -127,9 +116,11 @@ fun _FollowScreen(
     }
 }
 
+@Preview(showBackground = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FollowTopAppBar(name: String, onBack: () -> Unit) {
+fun FollowTopAppBar(name: String = "",
+                    onBack: () -> Unit = { }) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     TopAppBar(
         modifier = Modifier.height(50.dp),
@@ -157,24 +148,5 @@ fun FollowTopAppBar(name: String, onBack: () -> Unit) {
             }
         },
         scrollBehavior = scrollBehavior,
-    )
-}
-
-@Preview
-@Composable
-fun PreViewFollowScreen() {
-    _FollowScreen(/*Preview*/
-        name = "torang110113",
-        following = 10,
-        follower = 11,
-        subscription = 13,
-        followingList = ArrayList(),
-        followerList = ArrayList(),
-        subscriptionList = ArrayList(),
-        onClearErrorMessage = {},
-        onBack = {},
-        onUnFollow = {},
-        onDelete = {},
-        image = { _, _, _, _, _ -> }
     )
 }

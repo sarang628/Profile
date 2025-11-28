@@ -4,9 +4,12 @@ import android.util.Log
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
@@ -17,17 +20,40 @@ import com.sarang.torang.compose.follow.OtherFollowScreen
 import com.sarang.torang.compose.profile.ProfileScreen
 import com.sarang.torang.viewmodel.ProfileViewModel
 
+typealias ProfileImageType = @Composable (ProfileImageTypeData) -> Unit
+
+val LocalProfileImage : ProvidableCompositionLocal<ProfileImageType> = compositionLocalOf<ProfileImageType> {
+    @Composable {
+
+    }
+}
+
+data class ProfileImageTypeData(
+    val modifier : Modifier = Modifier,
+    val url : String = "",
+    val errorIconSize : Dp = 30.dp,
+    val progressSize : Dp = 30.dp,
+    val contentScale : ContentScale = ContentScale.Fit
+)
+
+typealias MyFeedType = @Composable (Int) -> Unit
+
+val LocalMyFeed : ProvidableCompositionLocal<MyFeedType> = compositionLocalOf<MyFeedType> {
+    @Composable {
+
+    }
+}
+
 @Composable
 fun ProfileScreenNavHost(
     id: Int? = null,
-    myFeed: @Composable (NavBackStackEntry) -> Unit,
     onEmailLogin: () -> Unit,
     onReview: ((Int) -> Unit)? = null,
     navController: NavHostController = rememberNavController(),
     onClose: () -> Unit,
     onMessage: (Int) -> Unit,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
+    val tag = "__ProfileScreenNavHost"
     NavHost(
         navController = navController,
         startDestination = "profileHome"
@@ -41,7 +67,6 @@ fun ProfileScreenNavHost(
                 onEmailLogin = onEmailLogin,
                 id = id,
                 onReview = onReview,
-                image = image,
                 onMessage = {
                     id?.let { onMessage.invoke(it) }
 
@@ -59,15 +84,18 @@ fun ProfileScreenNavHost(
                     onBack = { navController.popBackStack() },
                     userId = userId,
                     onProfile = { navController.navigate("profile/${it}") },
-                    page = it.arguments?.getString("page")?.toInt(),
-                    image = image
+                    page = it.arguments?.getString("page")?.toInt()
                 )
             } else {
                 Text(text = "사용자 정보가 없습니다.")
             }
         }
         composable("myFeed/{reviewId}") {
-            myFeed.invoke(it)
+            it.arguments?.getString("reviewId")?.toInt()?.let {
+                LocalMyFeed.current.invoke(it)
+            } ?: run {
+                Log.e(tag, "reviewId is null : ${it.arguments?.getString("reviewId")}")
+            }
         }
         composable("profile/{userId}") {
             ProfileScreen(
@@ -90,7 +118,6 @@ fun ProfileScreenNavHost(
                 onEmailLogin = onEmailLogin,
                 onReview = onReview,
                 id = it.arguments?.getString("userId")?.toInt(),
-                image = image,
                 onMessage = {}
             )
         }

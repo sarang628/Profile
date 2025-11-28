@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.torang.ProfileUiState
 import com.sarang.torang.R
+import com.sarang.torang.compose.LocalProfileImage
+import com.sarang.torang.compose.ProfileImageTypeData
 import com.sarang.torang.viewmodel.MyProfileViewModel
 import kotlinx.coroutines.launch
 
@@ -42,7 +44,6 @@ fun EditProfileScreen(
     profileViewModel: MyProfileViewModel = hiltViewModel(),   // 프로필 뷰모델
     onEditImage: () -> Unit,                                // 프로필 수정 클릭
     onBack: () -> Unit,                                  // 뒤로가기 클릭
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     val coroutine = rememberCoroutineScope()
     val uiState by profileViewModel.uiState.collectAsState()
@@ -54,18 +55,14 @@ fun EditProfileScreen(
     _EditProfileScreen(
         onEditImage = onEditImage,
         onBack = onBack,
-        uiState = (uiState as ProfileUiState.Success),
-        image = image
-    )
+        uiState = (uiState as ProfileUiState.Success))
 }
 
 @Composable
 fun _EditProfileScreen(
     onEditImage: () -> Unit,
     onBack: () -> Unit,
-    uiState: ProfileUiState,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
-) {
+    uiState: ProfileUiState) {
     Column(
         Modifier
             .fillMaxSize()
@@ -108,15 +105,14 @@ fun _EditProfileScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            image.invoke(
-                Modifier
-                    .size(70.dp)
-                    .clip(CircleShape)
-                    .background(Color(0x11000000)),
-                (uiState as ProfileUiState.Success).profileUrl,
-                30.dp,
-                30.dp,
-                ContentScale.Crop
+            LocalProfileImage.current.invoke(
+                ProfileImageTypeData(modifier = Modifier.size(70.dp)
+                                                             .clip(CircleShape)
+                                                             .background(Color(0x11000000)),
+                                          url = (uiState as ProfileUiState.Success).profileUrl,
+                                          errorIconSize = 30.dp,
+                                          progressSize = 30.dp,
+                                          contentScale = ContentScale.Crop)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -177,7 +173,6 @@ fun PreviewEditProfileScreen() {
             feedCount = 0,
             name = "name",
             id = 0
-        ),
-        image = { _, _, _, _, _ -> }
+        )
     )
 }

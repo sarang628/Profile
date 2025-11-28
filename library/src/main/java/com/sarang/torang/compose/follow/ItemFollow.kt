@@ -20,53 +20,43 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
+import com.sarang.torang.compose.LocalProfileImage
+import com.sarang.torang.compose.ProfileImageTypeData
 
+@Preview(showBackground = true)
 @Composable
-internal fun ItemFollow(
-    url: String,
-    id: String,
-    name: String,
-    isMe: Boolean = false,
-    onButton: (() -> Unit)? = null,
-    btnText: String? = null,
-    onProfile: (() -> Unit)? = null,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
-) {
-    ConstraintLayout(
-        modifier = Modifier
-            .padding(start = 8.dp, end = 8.dp)
-            .fillMaxWidth()
-            .clickable { onProfile?.invoke() }
-            .height(60.dp),
-        constraintSet = itemFollowConstraintSet()
-    ) {
-        image.invoke(
-            Modifier
-                .layoutId("profileImg")
-                .clip(CircleShape)
-                .size(45.dp),
-            url,
-            20.dp,
-            20.dp,
-            ContentScale.Crop
-        )
+internal fun ItemFollow( url: String = "",
+                         id: String = "",
+                         name: String = "",
+                         isMe: Boolean = false,
+                         onButton: () -> Unit = { },
+                         btnText: String? = null,
+                         onProfile: () -> Unit = {} ) {
+    ConstraintLayout( modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+                                         .fillMaxWidth()
+                                         .clickable { onProfile?.invoke() }
+                                         .height(60.dp),
+                     constraintSet = itemFollowConstraintSet()) {
+        LocalProfileImage.current.invoke(
+            ProfileImageTypeData( modifier = Modifier.layoutId("profileImg")
+                                                          .clip(CircleShape)
+                                                          .size(45.dp),
+                                       url = url,
+                                       errorIconSize = 20.dp,
+                                       progressSize = 20.dp,
+                                       contentScale = ContentScale.Crop ))
 
         Text(text = id, modifier = Modifier.layoutId("id"))
 
-        Text(
-            text = name,
-            fontSize = 14.sp,
-            color = Color.Gray,
-            modifier = Modifier.layoutId("name")
-        )
+        Text(text = name,
+             fontSize = 14.sp,
+             color = Color.Gray,
+             modifier = Modifier.layoutId("name") )
 
         if (isMe) {
-            Button(
-                onClick = { onButton?.invoke() },
-                modifier = Modifier
-                    .height(35.dp)
-                    .layoutId("button")
-            ) {
+            Button(onClick = { onButton?.invoke() },
+                   modifier = Modifier.height(35.dp)
+                                      .layoutId("button")) {
                 Text(text = btnText ?: "")
             }
         }
@@ -105,15 +95,4 @@ fun itemFollowConstraintSet(): ConstraintSet {
         }
 
     }
-}
-
-@Preview
-@Composable
-fun PreviewItemFollow() {
-    ItemFollow(
-        name = "LISA",
-        id = "lalalalisa_m",
-        url = "url",
-        image = { _, _, _, _, _ -> }
-    )
 }

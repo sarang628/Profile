@@ -69,7 +69,6 @@ fun ProfileScreen(
     onMessage: (Int) -> Unit,
     id: Int? = null,
     onReview: ((Int) -> Unit)? = null,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
@@ -94,6 +93,10 @@ fun ProfileScreen(
         }
 
         is ProfileUiState.Success -> {
+            val feedListScreen = @Composable {
+                FeedListScreen(userId = (uiState as ProfileUiState.Success).id,
+                               onReview = onReview)
+            }
             Profile(
                 uiState = uiState as ProfileUiState.Success,
                 onWrite = onWrite,
@@ -104,8 +107,6 @@ fun ProfileScreen(
                 onUnFollow = { profileViewModel.unFollow() },
                 onClearErrorMessage = { profileViewModel.onClearErrorMessage() },
                 onClose = onClose,
-                onReview = onReview,
-                image = image,
                 isLogin = isLogin,
                 onMessage = {
                     coroutine.launch {
@@ -113,7 +114,8 @@ fun ProfileScreen(
                             profileViewModel.findOrCreateChatRoomByUserId(id)
                         )
                     }
-                }
+                },
+                feedListScreen = feedListScreen
             )
         }
 
@@ -121,26 +123,21 @@ fun ProfileScreen(
     }
 }
 
+@Preview(showBackground = true)
 @Composable
 fun Profile(
-    uiState: ProfileUiState.Success,
-    onFollowing: () -> Unit,    // 팔로잉 클릭
-    onFollwer: () -> Unit,      // 팔로워 클릭
-    onWrite: () -> Unit,        // 게시글 클릭
-    isFollow: Boolean,          // 팔로우 여부
-    onFollow: () -> Unit,
-    onUnFollow: () -> Unit,
-    onMessage: () -> Unit,
-    onClearErrorMessage: () -> Unit,
+    uiState: ProfileUiState.Success = ProfileUiState.Success(),
+    onFollowing: () -> Unit = {},
+    onFollwer: () -> Unit = {},
+    onWrite: () -> Unit = {},
+    isFollow: Boolean = false,
+    onFollow: () -> Unit = {},
+    onUnFollow: () -> Unit = {},
+    onMessage: () -> Unit = {},
+    onClearErrorMessage: () -> Unit = {},
     onClose: (() -> Unit)? = null,
-    onReview: ((Int) -> Unit)? = null,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
     isLogin: Boolean = false,
-    feedListScreen: @Composable () -> Unit = {
-        FeedListScreen(
-            userId = uiState.id, onReview = onReview, image = image
-        )
-    },
+    feedListScreen: @Composable () -> Unit = {},
 ) {
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
         ProfileTopAppBar(name = uiState.name, onBack = {
@@ -150,7 +147,7 @@ fun Profile(
         Box(
             modifier = Modifier.padding(padding)
         ) {
-            Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 20.dp)) {
+            Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 10.dp)) {
                 ProfileSummary(
                     profileUrl = uiState.profileUrl,
                     feedCount = uiState.feedCount,
@@ -160,33 +157,21 @@ fun Profile(
                     onFollwer = onFollwer,
                     onFollowing = onFollowing,
                     onWrite = onWrite,
-                    image = image
                 )
-                Spacer(modifier = Modifier.height(25.dp))
-                Row {
                     if (isLogin) {
-                        Button(
-                            shape = RoundedCornerShape(8.dp),
-                            onClick = {
-                                if (isFollow) onUnFollow.invoke()
-                                else onFollow.invoke()
-                            },
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(35.dp),
-                        ) {
-                            Text(
-                                text = if (!isFollow) "Follow" else "UnFollow", color = Color.White
-                            )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row(modifier = Modifier.height(35.dp)) {
+                            Button( shape = RoundedCornerShape(8.dp),
+                                    onClick = { if (isFollow) onUnFollow.invoke()
+                                                else onFollow.invoke() },
+                                    modifier = Modifier.weight(1f),) {
+                            Text( text = if (!isFollow) "Follow" else "UnFollow",
+                                  color = Color.White)
                         }
                         Spacer(modifier = Modifier.width(3.dp))
-                        Button(
-                            shape = RoundedCornerShape(8.dp),
-                            onClick = onMessage,
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(35.dp)
-                        ) {
+                        Button( shape = RoundedCornerShape(8.dp), 
+                                onClick = onMessage,
+                                modifier = Modifier.weight(1f)) {
                             Text(text = "Message")
                         }
                     }
@@ -209,9 +194,11 @@ fun Profile(
     }
 }
 
+@Preview(showBackground = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileTopAppBar(name: String, onBack: () -> Unit) {
+fun ProfileTopAppBar(name: String = "",
+                     onBack: () -> Unit = {}) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     TopAppBar(
         modifier = Modifier.height(50.dp),
@@ -240,31 +227,4 @@ fun ProfileTopAppBar(name: String, onBack: () -> Unit) {
         },
         scrollBehavior = scrollBehavior,
     )
-}
-
-
-@Preview
-@Composable
-fun PreviewProfileScreen() {
-    Profile(/*Preview*/
-        uiState = ProfileUiState.Success(
-            profileUrl = "",
-            feedCount = 0,
-            follower = 0,
-            following = 0,
-            name = "Amanda",
-            isLogin = true,
-            favoriteList = ArrayList(),
-            id = 0
-        ),
-        onFollwer = {},
-        onFollowing = {},
-        onWrite = {},
-        isLogin = true,
-        isFollow = false,
-        onUnFollow = {},
-        onFollow = {},
-        onClearErrorMessage = {},
-        image = { _, _, _, _, _ -> },
-        feedListScreen = {}, onMessage = {})
 }

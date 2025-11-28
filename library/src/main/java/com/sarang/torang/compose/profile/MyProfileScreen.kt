@@ -56,8 +56,7 @@ fun MyProfileScreen(
     onWrite: () -> Unit,
     onClose: () -> Unit,
     onEmailLogin: () -> Unit,
-    onReview: ((Int) -> Unit)? = null,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
+    onReview: ((Int) -> Unit)? = null
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
@@ -86,9 +85,7 @@ fun MyProfileScreen(
                 onFollowing = onFollowing,
                 onFollwer = onFollwer,
                 onClearErrorMessage = { profileViewModel.onClearErrorMessage() },
-                onReview = onReview,
-                image = image
-            )
+                onReview = onReview)
         }
 
         is ProfileUiState.Loading -> {
@@ -110,9 +107,7 @@ internal fun _MyProfileScreen(
     onFollwer: () -> Unit,      // 팔로워 클릭
     onWrite: () -> Unit,        // 게시글 클릭
     onClearErrorMessage: () -> Unit,
-    onReview: ((Int) -> Unit)? = null,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
-) {
+    onReview: ((Int) -> Unit)? = null) {
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) { padding ->
@@ -133,17 +128,14 @@ internal fun _MyProfileScreen(
             }
 
             Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 20.dp)) {
-                ProfileSummary(
-                    profileUrl = uiState.profileUrl,
-                    feedCount = uiState.feedCount,
-                    follower = uiState.follower,
-                    following = uiState.following,
-                    name = uiState.name,
-                    onFollwer = onFollwer,
-                    onFollowing = onFollowing,
-                    onWrite = onWrite,
-                    image = image
-                )
+                ProfileSummary(profileUrl = uiState.profileUrl,
+                               feedCount = uiState.feedCount,
+                               follower = uiState.follower,
+                               following = uiState.following,
+                               name = uiState.name,
+                               onFollwer = onFollwer,
+                               onFollowing = onFollowing,
+                               onWrite = onWrite)
                 Spacer(modifier = Modifier.height(30.dp))
                 Row {
                     Button(
@@ -165,18 +157,12 @@ internal fun _MyProfileScreen(
                 Spacer(modifier = Modifier.height(5.dp))
                 FavoriteAndWantToGo(
                     wantToGo = {
-                        FeedListScreen(
-                            userId = uiState.id,
-                            onReview = onReview,
-                            image = image
-                        )
+                        FeedListScreen(userId = uiState.id,
+                                       onReview = onReview)
                     },
                     favorite = {
-                        FeedListScreen(
-                            userId = uiState.id,
-                            onReview = onReview,
-                            image = image
-                        )
+                        FeedListScreen(userId = uiState.id,
+                                       onReview = onReview)
                     }
                 )
             }
@@ -192,25 +178,4 @@ internal fun _MyProfileScreen(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewMyProfileScreen() {
-    _MyProfileScreen(/*Preview*/
-        onSetting = { /*TODO*/ },
-        onEditProfile = { /*TODO*/ },
-        uiState = ProfileUiState.Success(
-            id = 32,
-            feedCount = 10,
-            follower = 0,
-            following = 10,
-            name = "name",
-            profileUrl = "profileUrl"
-        ),
-        onFollowing = { /*TODO*/ },
-        onFollwer = { /*TODO*/ },
-        onWrite = { /*TODO*/ },
-        onClearErrorMessage = { /*TODO*/ },
-        image = { _, _, _, _, _ -> })
 }

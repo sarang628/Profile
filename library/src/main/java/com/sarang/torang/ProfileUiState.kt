@@ -5,12 +5,12 @@ sealed interface ProfileUiState {
     object Loading : ProfileUiState
 
     data class Success(
-        val id: Int,
-        val profileUrl: String,
-        val feedCount: Int,
-        val follower: Int,
-        val following: Int,
-        val name: String,
+        val id: Int = 0,
+        val profileUrl: String = "",
+        val feedCount: Int = 0,
+        val follower: Int = 0,
+        val following: Int = 0,
+        val name: String = "",
         val isLogin: Boolean = false,
         val favoriteList: List<Feed>? = null,
         val isFollow: Boolean = false,

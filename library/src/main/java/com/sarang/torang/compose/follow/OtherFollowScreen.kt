@@ -12,12 +12,11 @@ import com.sarang.torang.viewmodel.OtherFollowViewModel
 
 @Composable
 fun OtherFollowScreen(
-    followViewModel: OtherFollowViewModel = hiltViewModel(),
-    onBack: () -> Unit,
-    userId : Int,
-    onProfile: ((Int) -> Unit)? = null,
-    page: Int? = null,
-    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit
+    followViewModel : OtherFollowViewModel = hiltViewModel(),
+    onBack          : () -> Unit = { },
+    userId          : Int = 0,
+    onProfile       : (Int) -> Unit = { },
+    page            : Int? = null
 ) {
     val follower by followViewModel.follower.collectAsState()
     val following by followViewModel.following.collectAsState()
@@ -43,7 +42,6 @@ fun OtherFollowScreen(
         onUnFollow = { followViewModel.unFollow(it) },
         onDelete = { followViewModel.delete(it) },
         onProfile = onProfile,
-        page = page,
-        image = image
+        page = page
     )
 }

@@ -1,8 +1,8 @@
 package com.sarang.torang.compose.profile.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,37 +23,19 @@ internal fun FavoriteAndWantToGo(
     favorite: @Composable () -> Unit,
     wantToGo: @Composable () -> Unit
 ) {
-    val navController = rememberNavController()
     var isFavorite by remember { mutableStateOf(true) }
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
 
     Scaffold(
         topBar = {
-            ProfileTabs(
-                isFavorite = isFavorite,
-                onFavorite = {
-                    isFavorite = true
-                    navController.move("favorite")
-                },
-                onWantToGo = {
-                    isFavorite = false
-                    navController.move("wantToGo")
-                })
-        },
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-        ) {
-            NavHost(
-                navController = navController, startDestination = "favorite"
-            ) {
-                composable("favorite") {
-                    favorite.invoke()
-                }
-                composable("wantToGo") {
-                    wantToGo.invoke()
-                }
+            ProfileTabs(pagerState = pagerState)
+        }) {
+        HorizontalPager(modifier = Modifier.padding(it) ,
+                        state = pagerState ){
+            when(it){
+                0 -> {favorite.invoke()}
+                1 -> {wantToGo.invoke()}
+                2 -> {wantToGo.invoke()}
             }
         }
     }
