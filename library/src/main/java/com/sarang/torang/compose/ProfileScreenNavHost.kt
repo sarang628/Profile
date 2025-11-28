@@ -45,14 +45,12 @@ val LocalMyFeed : ProvidableCompositionLocal<MyFeedType> = compositionLocalOf<My
 }
 
 @Composable
-fun ProfileScreenNavHost(
-    id: Int? = null,
-    onEmailLogin: () -> Unit,
-    onReview: ((Int) -> Unit)? = null,
-    navController: NavHostController = rememberNavController(),
-    onClose: () -> Unit,
-    onMessage: (Int) -> Unit,
-) {
+fun ProfileScreenNavHost(id             : Int? = null,
+                         onEmailLogin   : () -> Unit = { },
+                         onReview       : (Int) -> Unit = { },
+                         navController  : NavHostController = rememberNavController(),
+                         onClose        : () -> Unit = { },
+                         onMessage      : (Int) -> Unit = { }) {
     val tag = "__ProfileScreenNavHost"
     NavHost(
         navController = navController,

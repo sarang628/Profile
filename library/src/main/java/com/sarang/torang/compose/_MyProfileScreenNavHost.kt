@@ -18,12 +18,12 @@ import com.sarang.torang.viewmodel.MyProfileViewModel
 @Composable
 fun _MyProfileScreenNavHost(
     myProfileViewModel: MyProfileViewModel = hiltViewModel(),
-    onSetting: () -> Unit,
-    galleryScreen: @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit,
+    onSetting: () -> Unit = {},
+    galleryScreen: @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit = {_,_->},
     onClose: (() -> Unit)? = null,
-    onEmailLogin: () -> Unit,
-    onReview: ((Int) -> Unit)? = null,
-    onMessage: (Int) -> Unit,
+    onEmailLogin: () -> Unit = {},
+    onReview: (Int) -> Unit = {},
+    onMessage: (Int) -> Unit = {},
     navController: NavHostController = rememberNavController(),
 ) {
     NavHost(

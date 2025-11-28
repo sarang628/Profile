@@ -6,14 +6,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -56,7 +62,7 @@ fun MyProfileScreen(
     onWrite: () -> Unit,
     onClose: () -> Unit,
     onEmailLogin: () -> Unit,
-    onReview: ((Int) -> Unit)? = null
+    onReview: (Int) -> Unit = {}
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
@@ -77,6 +83,10 @@ fun MyProfileScreen(
 
     when (uiState) {
         is ProfileUiState.Success -> {
+            val feedScreenList = @Composable {
+                FeedListScreen(userId = (uiState as ProfileUiState.Success).id,
+                    onReview = onReview)
+            }
             _MyProfileScreen(
                 onSetting = onSetting,
                 onEditProfile = onEditProfile,
@@ -85,7 +95,8 @@ fun MyProfileScreen(
                 onFollowing = onFollowing,
                 onFollwer = onFollwer,
                 onClearErrorMessage = { profileViewModel.onClearErrorMessage() },
-                onReview = onReview)
+                onReview = onReview,
+                feedScreenList = feedScreenList)
         }
 
         is ProfileUiState.Loading -> {
@@ -98,36 +109,44 @@ fun MyProfileScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
 @Composable
 internal fun _MyProfileScreen(
-    onSetting: () -> Unit,
-    onEditProfile: () -> Unit,
-    uiState: ProfileUiState.Success,
-    onFollowing: () -> Unit,    // 팔로잉 클릭
-    onFollwer: () -> Unit,      // 팔로워 클릭
-    onWrite: () -> Unit,        // 게시글 클릭
-    onClearErrorMessage: () -> Unit,
-    onReview: ((Int) -> Unit)? = null) {
+    onSetting: () -> Unit = {},
+    onEditProfile: () -> Unit = {},
+    uiState: ProfileUiState.Success = ProfileUiState.Success(),
+    onFollowing: () -> Unit = {},
+    onFollwer: () -> Unit = {},
+    onWrite: () -> Unit = {},
+    onClearErrorMessage: () -> Unit = {},
+    onReview: (Int) -> Unit = { },
+    feedScreenList : @Composable () -> Unit = {}
+    ) {
     Scaffold(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            TopAppBar(
+                modifier = Modifier.height(40.dp),
+                windowInsets = WindowInsets(0.dp, 8.dp, 0.dp, 0.dp),
+                title = {},
+                actions = {
+                    IconButton({onSetting.invoke()}) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_settings),
+                            contentDescription = "",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                })
+        }
     ) { padding ->
         Box(
             modifier = Modifier
                 .padding(padding)
         )
         {
-            Row(Modifier.padding(end = 8.dp, top = 8.dp)) {
-                Spacer(modifier = Modifier.weight(1f))
-                Image(
-                    painter = painterResource(id = R.drawable.ic_settings),
-                    contentDescription = "",
-                    Modifier.clickable {
-                        onSetting.invoke()
-                    }
-                )
-            }
-
-            Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 20.dp)) {
+            Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
                 ProfileSummary(profileUrl = uiState.profileUrl,
                                feedCount = uiState.feedCount,
                                follower = uiState.follower,
@@ -157,12 +176,10 @@ internal fun _MyProfileScreen(
                 Spacer(modifier = Modifier.height(5.dp))
                 FavoriteAndWantToGo(
                     wantToGo = {
-                        FeedListScreen(userId = uiState.id,
-                                       onReview = onReview)
+                        feedScreenList.invoke()
                     },
                     favorite = {
-                        FeedListScreen(userId = uiState.id,
-                                       onReview = onReview)
+                        feedScreenList.invoke()
                     }
                 )
             }

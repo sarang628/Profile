@@ -1,11 +1,19 @@
 package com.sarang.torang
 
+import androidx.navigation.NavHostController
+
 class RootNavController {
+
+    var navController : NavHostController? = null
     fun editProfileImage() {
 
     }
 
     fun popBackStack() {
 
+    }
+
+    fun myReview(it: Int) {
+        navController?.navigate("myReview/${it}")
     }
 }

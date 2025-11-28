@@ -1,7 +1,6 @@
 package com.sarang.torang
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -15,22 +14,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.api.ApiProfile
 import com.sarang.torang.compose.LocalProfileImage
-import com.sarang.torang.compose.ProfileScreenNavHost
 import com.sarang.torang.compose.follow.MyFollowScreen
 import com.sarang.torang.compose.follow.OtherFollowScreen
 import com.sarang.torang.compose.profile.Profile
 import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
+import com.sarang.torang.di.profile_di.ProvideProfileScreen
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.ProfileRepository
@@ -62,10 +58,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 @Composable
-fun ProfileTestMenu(
-    loginRepository : LoginRepository
-) {
+fun ProfileTestMenu(loginRepository : LoginRepository) {
     val navController = rememberNavController()
+    val rootNavController = RootNavController()
+    rootNavController.navController = navController
     NavHost(navController = navController, startDestination = "main") {
         composable("main") {
             Column {
@@ -84,18 +80,13 @@ fun ProfileTestMenu(
             }
         }
         composable("LoginRepositoryTest"){
-            Column(Modifier.height(300.dp)) {
-                LoginRepositoryTest(loginRepository)
-            }
+            LoginRepositoryTest(loginRepository)
         }
         composable("profile/{id}") {
-            ProfileScreenNavHost(
-                id = it.arguments?.getString("id")?.toInt(),
-                onClose = { navController.popBackStack() },
-                onEmailLogin = { },
-                onReview = { },
-                onMessage = {}
-            )
+            it.arguments?.getString("id")?.toInt()?.let {
+                ProvideProfileScreen(id = it,
+                                     rootNavController = rootNavController)
+            }
         }
         composable("myProfile") {
             MyProfileScreenNavHost(/*MainActivity*/
@@ -128,6 +119,9 @@ fun ProfileTestMenu(
             } else {
                 Text(text = "사용자 정보가 없습니다.")
             }
+        }
+        composable("myReview/{reviewId}"){
+            Text("${it.arguments?.getString("reviewId")?.toInt()}")
         }
     }
 }
