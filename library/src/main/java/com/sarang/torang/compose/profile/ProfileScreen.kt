@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +44,7 @@ import com.sarang.torang.compose.myfeed.FeedListScreen
 import com.sarang.torang.compose.profile.components.FavoriteAndWantToGo
 import com.sarang.torang.compose.profile.components.ProfileSummary
 import com.sarang.torang.viewmodel.ProfileViewModel
+import kotlinx.coroutines.launch
 
 
 /**
@@ -54,6 +56,7 @@ import com.sarang.torang.viewmodel.ProfileViewModel
  * @param onFollowing 팔로잉 클릭
  * @param onFollwer 팔로워 클릭
  * @param onWrite 게시글 클릭
+ * @param onMessage 메시지 클릭 (채팅방 id를 찾아 파라미터로 전달)
  */
 @Composable
 fun ProfileScreen(
@@ -63,13 +66,14 @@ fun ProfileScreen(
     onWrite: () -> Unit,
     onClose: () -> Unit,
     onEmailLogin: () -> Unit,
-    onMessage: () -> Unit,
+    onMessage: (Int) -> Unit,
     id: Int? = null,
     onReview: ((Int) -> Unit)? = null,
     image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit,
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
+    val coroutine = rememberCoroutineScope()
 
     LaunchedEffect(key1 = id, block = {
         id?.let {
@@ -103,7 +107,13 @@ fun ProfileScreen(
                 onReview = onReview,
                 image = image,
                 isLogin = isLogin,
-                onMessage = onMessage
+                onMessage = {
+                    coroutine.launch {
+                        onMessage.invoke(
+                            profileViewModel.findOrCreateChatRoomByUserId(id)
+                        )
+                    }
+                }
             )
         }
 

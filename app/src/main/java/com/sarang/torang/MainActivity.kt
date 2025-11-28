@@ -25,7 +25,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.api.ApiProfile
 import com.sarang.torang.compose.ProfileScreenNavHost
 import com.sarang.torang.compose.follow.MyFollowScreen
@@ -38,6 +37,7 @@ import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
 import com.sarang.torang.repository.ProfileRepository
 import com.sarang.torang.viewmodel.ProfileViewModel
+import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
