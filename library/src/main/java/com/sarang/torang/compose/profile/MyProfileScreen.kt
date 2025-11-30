@@ -28,66 +28,48 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sarang.torang.MyProfileUiState
 import com.sarang.torang.ProfileUiState
 import com.sarang.torang.R
-import com.sarang.torang.compose.myfeed.FeedListScreen
 import com.sarang.torang.compose.myfeed.MyFeedListScreen
 import com.sarang.torang.compose.profile.components.FavoriteAndWantToGo
 import com.sarang.torang.compose.profile.components.ProfileSummary
 import com.sarang.torang.viewmodel.MyProfileViewModel
 
-
-/**
- * @param isMyProfile 내 프로필 여부
- * @param myProfileViewModel 프로필 뷰모델
- * @param onSetting 설정 클릭
- * @param favorite 즐겨찾기 컴포즈
- * @param wantToGo 가고싶다 컴포즈
- * @param onEditProfile 프로필 수정 클릭
- * @param onFollowing 팔로잉 클릭
- * @param onFollwer 팔로워 클릭
- * @param onWrite 게시글 클릭
- */
 @Composable
 fun MyProfileScreen(myProfileViewModel: MyProfileViewModel,
-                    onSetting: () -> Unit,
-                    onEditProfile: () -> Unit,
-                    onFollowing: () -> Unit,
-                    onFollwer: () -> Unit,
-                    onWrite: () -> Unit,
-                    onClose: () -> Unit,
-                    onEmailLogin: () -> Unit,
-                    onReview: (Int) -> Unit = {}) {
+                    onSetting         : () -> Unit      = {},
+                    onEditProfile     : () -> Unit      = {},
+                    onFollowing       : () -> Unit      = {},
+                    onFollower        : () -> Unit      = {},
+                    onWrite           : () -> Unit      = {},
+                    onEmailLogin      : () -> Unit      = {},
+                    onReview          : (Int) -> Unit   = {}) {
     val uiState by myProfileViewModel.uiState.collectAsStateWithLifecycle()
 
     when (uiState) {
-        is ProfileUiState.Success -> {
-            val feedScreenList = @Composable {
-                MyFeedListScreen(onReview = onReview)
-            }
-            _MyProfileScreen(onSetting           = onSetting,
-                             onEditProfile       = onEditProfile,
-                             uiState             = uiState as ProfileUiState.Success,
-                             onWrite             = onWrite,
-                             onFollowing         = onFollowing,
-                             onFollwer           = onFollwer,
-                             onClearErrorMessage = { myProfileViewModel.onClearErrorMessage() },
-                             onReview            = onReview,
-                             feedScreenList      = feedScreenList)
+        is MyProfileUiState.Success -> {
+            _MyProfileScreen(onSetting      = onSetting,
+                            onEditProfile  = onEditProfile,
+                            uiState        = uiState as MyProfileUiState.Success,
+                            onWrite        = onWrite,
+                            onFollowing    = onFollowing,
+                            onFollower     = onFollower,
+                            feedScreenList = { MyFeedListScreen(onReview = onReview) })
         }
 
-        is ProfileUiState.Loading -> {
+        is MyProfileUiState.Loading -> {
             Box(modifier = Modifier.fillMaxSize()) {
                 CircularProgressIndicator(Modifier.align(Alignment.Center))
             }
         }
 
-        is ProfileUiState.Error -> {}
-        is ProfileUiState.Login -> { Login(onEmailLogin) }
+        is MyProfileUiState.Error -> {}
+        is MyProfileUiState.Login -> { Login(onEmailLogin) }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 internal fun Login(onEmailLogin : () -> Unit = {}){
     Box(Modifier.fillMaxSize()) {
@@ -104,44 +86,40 @@ internal fun Login(onEmailLogin : () -> Unit = {}){
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
-internal fun _MyProfileScreen(uiState            : ProfileUiState.Success = ProfileUiState.Success(),
-                              onSetting          : () -> Unit             = {},
-                              onEditProfile      : () -> Unit             = {},
-                              onFollowing        : () -> Unit             = {},
-                              onFollwer          : () -> Unit             = {},
-                              onWrite            : () -> Unit             = {},
-                              onClearErrorMessage: () -> Unit             = {},
-                              onReview           : (Int) -> Unit          = {},
-                              feedScreenList     : @Composable () -> Unit = {}) {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = { TopAppBar( modifier = Modifier.height(40.dp),
-                              windowInsets = WindowInsets(0.dp, 8.dp, 0.dp, 0.dp),
-                              title = {},
-                              actions = { IconButton({onSetting.invoke()}) {
-                                            Icon(painter = painterResource(id = R.drawable.ic_settings),
-                                                 contentDescription = "",
-                                                 tint = MaterialTheme.colorScheme.primary) }
-                                        }
-                            )
-                 }
-    ) { padding ->
-        Box(modifier = Modifier.padding(padding))
-        {
+private fun _MyProfileScreen(uiState        : MyProfileUiState.Success = MyProfileUiState.Success(),
+                            onSetting       : () -> Unit               = {},
+                            onEditProfile   : () -> Unit               = {},
+                            onFollowing     : () -> Unit               = {},
+                            onFollower      : () -> Unit               = {},
+                            onWrite         : () -> Unit               = {},
+                            feedScreenList  : @Composable () -> Unit   = {}) {
+    val topBar = @Composable {
+        TopAppBar( modifier     = Modifier.height(40.dp),
+                   windowInsets = WindowInsets(0.dp, 8.dp, 0.dp, 0.dp),
+                   title        = {},
+                   actions      = { IconButton({onSetting.invoke()}) {
+                                        Icon(painter = painterResource(id = R.drawable.ic_settings),
+                                             contentDescription = "",
+                                             tint = MaterialTheme.colorScheme.primary)}})}
+
+    Scaffold(modifier = Modifier.fillMaxSize(),
+             topBar = topBar) { padding ->
+        Box(modifier = Modifier.padding(padding)) {
             Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
-                ProfileSummary(profileUrl = uiState.profileUrl,
-                               feedCount = uiState.feedCount,
-                               follower = uiState.follower,
-                               following = uiState.following,
-                               name = uiState.name,
-                               onFollwer = onFollwer,
-                               onFollowing = onFollowing,
-                               onWrite = onWrite)
-                Spacer(modifier = Modifier.height(30.dp))
+                ProfileSummary(profileUrl   = uiState.profileUrl,
+                               feedCount    = uiState.feedCount,
+                               follower     = uiState.follower,
+                               following    = uiState.following,
+                               name         = uiState.name,
+                               onFollower    = onFollower,
+                               onFollowing  = onFollowing,
+                               onWrite      = onWrite)
+                Spacer(modifier = Modifier.height(8.dp))
                 Row {
                     Button(onClick = { onEditProfile.invoke() },
-                           modifier = Modifier.weight(1f)
-                                              .height(40.dp),
+                           modifier = Modifier
+                               .weight(1f)
+                               .height(40.dp),
                     ) {
                         Text(text = "프로필 편집",
                              color = Color.White,
@@ -156,16 +134,6 @@ internal fun _MyProfileScreen(uiState            : ProfileUiState.Success = Prof
                     favorite  = { feedScreenList.invoke() }
                 )
             }
-
-                /*AlertDialog(onDismissRequest = { *//*TODO*//* },
-                    confirmButton = {
-                        Button(onClick = { onClearErrorMessage.invoke() }) {
-                            Text(text = "확인")
-                        }
-                    },
-                    text =
-                    { Text(text = it, fontSize = 14.sp) })*/
-
         }
     }
 }

@@ -39,7 +39,7 @@ internal fun ProfileSummary(
     follower    : String        = "0",
     following   : String        = "0",
     onFollowing : () -> Unit    = {},
-    onFollwer   : () -> Unit    = {},
+    onFollower  : () -> Unit    = {},
     onWrite     : () -> Unit    = {},
 ) {
     val profileImage = @Composable {
@@ -72,7 +72,7 @@ internal fun ProfileSummary(
                 Text(text = "게시물", fontSize = 14.sp)
             }
 
-            Column(modifier            = Modifier.clickable { onFollwer.invoke() },
+            Column(modifier            = Modifier.clickable { onFollower.invoke() },
                    horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text       = follower.toString(),
                      fontSize   = 14.sp,
@@ -80,18 +80,12 @@ internal fun ProfileSummary(
                 Text(text = "팔로워", fontSize = 14.sp)
             }
 
-            Column(
-                Modifier.clickable {
-                    onFollowing.invoke()
-                }, horizontalAlignment = Alignment.CenterHorizontally
-            )
-            {
-                Text(
-                    text = following.toString(),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1
-                )
+            Column(modifier = Modifier.clickable { onFollowing.invoke() },
+                   horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = following,
+                     fontSize = 14.sp,
+                     fontWeight = FontWeight.Bold,
+                     maxLines = 1)
                 Text(text = "팔로잉", fontSize = 14.sp)
             }
         }

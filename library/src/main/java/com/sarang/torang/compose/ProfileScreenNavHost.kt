@@ -1,6 +1,9 @@
 package com.sarang.torang.compose
 
 import android.util.Log
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Face
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,7 +27,9 @@ typealias ProfileImageType = @Composable (ProfileImageTypeData) -> Unit
 
 val LocalProfileImage : ProvidableCompositionLocal<ProfileImageType> = compositionLocalOf<ProfileImageType> {
     @Composable {
-
+        Icon(modifier = it.modifier,
+             imageVector = Icons.Rounded.Face,
+             contentDescription =  null)
     }
 }
 

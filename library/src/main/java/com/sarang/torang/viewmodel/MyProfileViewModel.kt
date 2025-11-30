@@ -2,6 +2,7 @@ package com.sarang.torang.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sarang.torang.MyProfileUiState
 import com.sarang.torang.ProfileUiState
 import com.sarang.torang.usecase.profile.FollowUseCase
 import com.sarang.torang.usecase.profile.GetMyProfileUseCase
@@ -18,47 +19,18 @@ import javax.inject.Inject
 @HiltViewModel
 class MyProfileViewModel @Inject constructor(
     isLoginUseCase: IsLoginUseCase,
-    private val followUseCase    : FollowUseCase,
-    private val unFollowUseCase  : UnFollowUseCase,
-                myProfileUseCase : GetMyProfileUseCase
+    myProfileUseCase : GetMyProfileUseCase
 ) : ViewModel() {
-    val uiState: StateFlow<ProfileUiState> = combine(isLoginUseCase.isLogin,
+    val uiState: StateFlow<MyProfileUiState> = combine(isLoginUseCase.isLogin,
                                                     myProfileUseCase.invoke()) {
         isLogin, myProfile ->
-        if(!isLogin) ProfileUiState.Loading
-        else ProfileUiState.Success(id = 0,
-                                    name = myProfile.name,
-                                    follower = myProfile.follower,
-                                    following = myProfile.following)
+        if(!isLogin) MyProfileUiState.Login
+        else myProfile
     }.stateIn(scope = viewModelScope,
               started = SharingStarted.WhileSubscribed(5000),
-              initialValue = ProfileUiState.Loading)
+              initialValue = MyProfileUiState.Loading)
 
     fun updateProfileImage(uri: String) {
 
     }
-
-    fun follow() {
-        viewModelScope.launch {
-            try {
-                followUseCase.invoke((uiState.value as ProfileUiState.Success).id)
-            } catch (e: Exception) {
-            }
-        }
-    }
-
-    fun unFollow() {
-        viewModelScope.launch {
-            try {
-                unFollowUseCase.invoke((uiState.value as ProfileUiState.Success).id)
-            } catch (e: Exception) {
-            }
-        }
-    }
-
-    fun onClearErrorMessage() {
-        viewModelScope.launch {
-        }
-    }
-
 }

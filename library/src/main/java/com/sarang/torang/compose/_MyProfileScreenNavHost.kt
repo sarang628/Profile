@@ -1,7 +1,9 @@
 package com.sarang.torang.compose
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,27 +15,23 @@ import com.sarang.torang.viewmodel.MyProfileViewModel
 
 @Composable
 fun _MyProfileScreenNavHost(
-    myProfileViewModel: MyProfileViewModel = hiltViewModel(),
-    onSetting: () -> Unit = {},
-    galleryScreen: @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit = {_,_->},
-    onClose: (() -> Unit)? = null,
-    onEmailLogin: () -> Unit = {},
-    onReview: (Int) -> Unit = {},
-    onMessage: (Int) -> Unit = {},
-    navController: NavHostController = rememberNavController(),
-) {
+    myProfileViewModel  : MyProfileViewModel    = hiltViewModel(),
+    onSetting           : () -> Unit            = { },
+    galleryScreen       : @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit = {_,_->},
+    onClose             : () -> Unit            = { },
+    onEmailLogin        : () -> Unit            = { },
+    onReview            : (Int) -> Unit         = { },
+    onMessage           : (Int) -> Unit         = { },
+    navController       : NavHostController     = rememberNavController()) {
     NavHost(
         navController = navController,
         startDestination = "myProfile"
     ) {
         composable("editProfile") {
-            EditProfileScreen(
-                profileViewModel = myProfileViewModel,
-                onBack = { navController.popBackStack() },
-                onEditImage = {
-                    navController.navigate("EditProfileImage")
-                }
-            )
+            val uiState by myProfileViewModel.uiState.collectAsStateWithLifecycle()
+            EditProfileScreen(uiState = uiState,
+                              onBack = { navController.popBackStack() },
+                              onEditImage = { navController.navigate("EditProfileImage") })
         }
         composable("myProfile") {
             MyProfileScreen(myProfileViewModel  = myProfileViewModel,
@@ -41,18 +39,15 @@ fun _MyProfileScreenNavHost(
                             onSetting           = onSetting,
                             onFollowing         = { navController.navigate("myFollow/1") },
                             onWrite             = { },
-                            onFollwer           = { navController.navigate("myFollow/0") },
-                            onClose             = { onClose?.invoke() },
+                            onFollower           = { navController.navigate("myFollow/0") },
                             onEmailLogin        = onEmailLogin,
                             onReview            = onReview)
         }
         composable("EditProfileImage") {
-            galleryScreen.invoke(onNext = {
+            galleryScreen.invoke({
                 myProfileViewModel.updateProfileImage(it[0])
-                navController.popBackStack()
-            }, onClose = {
-                navController.popBackStack()
-            })
+                navController.popBackStack() },
+        { navController.popBackStack() })
         }
 
         composable("myFollow/{page}") {

@@ -21,8 +21,8 @@ class MyFeedListViewModel @Inject constructor(
 ) : ViewModel() {
     val list : StateFlow<List<Feed>> = getMyFeedUseCase.invoke()
         .stateIn(scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = listOf<Feed>())
+                 started = SharingStarted.WhileSubscribed(5000),
+                 initialValue = listOf())
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage = _errorMessage.asStateFlow()
 
