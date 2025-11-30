@@ -49,7 +49,7 @@ fun MyProfileScreen(myProfileViewModel: MyProfileViewModel,
 
     when (uiState) {
         is MyProfileUiState.Success -> {
-            _MyProfileScreen(onSetting      = onSetting,
+            _MyProfileScreen(onSetting     = onSetting,
                             onEditProfile  = onEditProfile,
                             uiState        = uiState as MyProfileUiState.Success,
                             onWrite        = onWrite,

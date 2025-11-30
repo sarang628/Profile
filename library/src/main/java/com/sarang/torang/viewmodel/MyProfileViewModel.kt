@@ -22,7 +22,7 @@ class MyProfileViewModel @Inject constructor(
     myProfileUseCase : GetMyProfileUseCase
 ) : ViewModel() {
     val uiState: StateFlow<MyProfileUiState> = combine(isLoginUseCase.isLogin,
-                                                    myProfileUseCase.invoke()) {
+                                                      myProfileUseCase.invoke()) {
         isLogin, myProfile ->
         if(!isLogin) MyProfileUiState.Login
         else myProfile
