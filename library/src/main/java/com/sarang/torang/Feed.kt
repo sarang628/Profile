@@ -12,7 +12,10 @@ data class Feed(
     val likeAmount: Int,/* 9 */
     val commentAmount: Int,/* 10 */
     val createDate: String,/* 11 */
-    val reviewImage: List<String>,/* 12 */
+    val reviewImages: List<String>,/* 12 */
     val isLike: Boolean,/* 12 */
     val isFavorite: Boolean/* 12 */
 )
+
+val Feed.reviewImage: String get() = if (this.reviewImages.isEmpty()) ""
+                                     else this.reviewImages[0]

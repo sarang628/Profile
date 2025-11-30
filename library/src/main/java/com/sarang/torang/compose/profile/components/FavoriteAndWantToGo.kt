@@ -20,8 +20,9 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 internal fun FavoriteAndWantToGo(
-    favorite: @Composable () -> Unit,
-    wantToGo: @Composable () -> Unit
+    myReviews: @Composable () -> Unit = {},
+    favorite : @Composable () -> Unit = {},
+    wantToGo : @Composable () -> Unit = {},
 ) {
     var isFavorite by remember { mutableStateOf(true) }
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
@@ -33,8 +34,8 @@ internal fun FavoriteAndWantToGo(
         HorizontalPager(modifier = Modifier.padding(it) ,
                         state = pagerState ){
             when(it){
-                0 -> {favorite.invoke()}
-                1 -> {wantToGo.invoke()}
+                0 -> {myReviews.invoke()}
+                1 -> {favorite.invoke()}
                 2 -> {wantToGo.invoke()}
             }
         }

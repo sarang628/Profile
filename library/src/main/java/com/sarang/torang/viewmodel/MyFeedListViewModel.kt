@@ -1,39 +1,34 @@
 package com.sarang.torang.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.torang.Feed
 import com.sarang.torang.usecase.profile.GetMyFeedUseCase
+import com.sarang.torang.usecase.profile.LoadMyFeedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MyFeedListViewModel @Inject constructor(
-    private val getMyFeedUseCase: GetMyFeedUseCase
+    getMyFeedUseCase: GetMyFeedUseCase,
+    loadMyFeedUseCase: LoadMyFeedUseCase
 ) : ViewModel() {
-
-    private val _list = MutableStateFlow<List<Feed>>(arrayListOf())
-    val list = _list.asStateFlow()
+    val list : StateFlow<List<Feed>> = getMyFeedUseCase.invoke()
+        .stateIn(scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = listOf<Feed>())
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage = _errorMessage.asStateFlow()
 
-    fun load(userId: Int) {
+    init {
         viewModelScope.launch {
-            try {
-                _list.update {
-                    getMyFeedUseCase.invoke(userId)
-                }
-            } catch (e: Exception) {
-                Log.e("__FeedListViewModel", e.message.toString())
-                _errorMessage.update {
-                    e.message
-                }
-            }
+            loadMyFeedUseCase.invoke()
         }
     }
 }

@@ -18,9 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MyProfileViewModel @Inject constructor(
     isLoginUseCase: IsLoginUseCase,
-    private val followUseCase: FollowUseCase,
-    private val unFollowUseCase: UnFollowUseCase,
-    private val myProfileUseCase: GetMyProfileUseCase
+    private val followUseCase    : FollowUseCase,
+    private val unFollowUseCase  : UnFollowUseCase,
+                myProfileUseCase : GetMyProfileUseCase
 ) : ViewModel() {
     val uiState: StateFlow<ProfileUiState> = combine(isLoginUseCase.isLogin,
                                                     myProfileUseCase.invoke()) {

@@ -61,14 +61,14 @@ import kotlinx.coroutines.launch
 @Composable
 fun ProfileScreen(
     profileViewModel: ProfileViewModel = hiltViewModel(),
-    onFollowing: () -> Unit,
-    onFollwer: () -> Unit,
-    onWrite: () -> Unit,
-    onClose: () -> Unit,
-    onEmailLogin: () -> Unit,
-    onMessage: (Int) -> Unit,
+    onFollowing: () -> Unit = { },
+    onFollwer: () -> Unit = { },
+    onWrite: () -> Unit = { },
+    onClose: () -> Unit = { },
+    onEmailLogin: () -> Unit = { },
+    onMessage: (Int) -> Unit = { },
     id: Int? = null,
-    onReview: ((Int) -> Unit)? = null,
+    onReview: (Int) -> Unit = { },
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     val isLogin by profileViewModel.isLogin.collectAsState(initial = false)

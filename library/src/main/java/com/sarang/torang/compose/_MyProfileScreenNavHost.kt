@@ -1,11 +1,7 @@
 package com.sarang.torang.compose
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -40,16 +36,15 @@ fun _MyProfileScreenNavHost(
             )
         }
         composable("myProfile") {
-            MyProfileScreen(
-                profileViewModel = myProfileViewModel,
-                onEditProfile = { navController.navigate("editProfile") },
-                onSetting = onSetting,
-                onFollowing = { navController.navigate("myFollow/1") },
-                onWrite = { },
-                onFollwer = { navController.navigate("myFollow/0") },
-                onClose = { onClose?.invoke() },
-                onEmailLogin = onEmailLogin,
-                onReview = onReview)
+            MyProfileScreen(myProfileViewModel  = myProfileViewModel,
+                            onEditProfile       = { navController.navigate("editProfile") },
+                            onSetting           = onSetting,
+                            onFollowing         = { navController.navigate("myFollow/1") },
+                            onWrite             = { },
+                            onFollwer           = { navController.navigate("myFollow/0") },
+                            onClose             = { onClose?.invoke() },
+                            onEmailLogin        = onEmailLogin,
+                            onReview            = onReview)
         }
         composable("EditProfileImage") {
             galleryScreen.invoke(onNext = {

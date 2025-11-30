@@ -1,7 +1,5 @@
 package com.sarang.torang.compose.profile
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,7 +8,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,22 +18,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sarang.torang.ProfileUiState
 import com.sarang.torang.R
 import com.sarang.torang.compose.myfeed.FeedListScreen
+import com.sarang.torang.compose.myfeed.MyFeedListScreen
 import com.sarang.torang.compose.profile.components.FavoriteAndWantToGo
 import com.sarang.torang.compose.profile.components.ProfileSummary
 import com.sarang.torang.viewmodel.MyProfileViewModel
@@ -44,7 +39,7 @@ import com.sarang.torang.viewmodel.MyProfileViewModel
 
 /**
  * @param isMyProfile 내 프로필 여부
- * @param profileViewModel 프로필 뷰모델
+ * @param myProfileViewModel 프로필 뷰모델
  * @param onSetting 설정 클릭
  * @param favorite 즐겨찾기 컴포즈
  * @param wantToGo 가고싶다 컴포즈
@@ -54,7 +49,7 @@ import com.sarang.torang.viewmodel.MyProfileViewModel
  * @param onWrite 게시글 클릭
  */
 @Composable
-fun MyProfileScreen(profileViewModel: MyProfileViewModel,
+fun MyProfileScreen(myProfileViewModel: MyProfileViewModel,
                     onSetting: () -> Unit,
                     onEditProfile: () -> Unit,
                     onFollowing: () -> Unit,
@@ -63,24 +58,22 @@ fun MyProfileScreen(profileViewModel: MyProfileViewModel,
                     onClose: () -> Unit,
                     onEmailLogin: () -> Unit,
                     onReview: (Int) -> Unit = {}) {
-    val uiState by profileViewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by myProfileViewModel.uiState.collectAsStateWithLifecycle()
 
     when (uiState) {
         is ProfileUiState.Success -> {
             val feedScreenList = @Composable {
-                FeedListScreen(userId = (uiState as ProfileUiState.Success).id,
-                    onReview = onReview)
+                MyFeedListScreen(onReview = onReview)
             }
-            _MyProfileScreen(
-                onSetting = onSetting,
-                onEditProfile = onEditProfile,
-                uiState = uiState as ProfileUiState.Success,
-                onWrite = onWrite,
-                onFollowing = onFollowing,
-                onFollwer = onFollwer,
-                onClearErrorMessage = { profileViewModel.onClearErrorMessage() },
-                onReview = onReview,
-                feedScreenList = feedScreenList)
+            _MyProfileScreen(onSetting           = onSetting,
+                             onEditProfile       = onEditProfile,
+                             uiState             = uiState as ProfileUiState.Success,
+                             onWrite             = onWrite,
+                             onFollowing         = onFollowing,
+                             onFollwer           = onFollwer,
+                             onClearErrorMessage = { myProfileViewModel.onClearErrorMessage() },
+                             onReview            = onReview,
+                             feedScreenList      = feedScreenList)
         }
 
         is ProfileUiState.Loading -> {
@@ -98,10 +91,8 @@ fun MyProfileScreen(profileViewModel: MyProfileViewModel,
 @Composable
 internal fun Login(onEmailLogin : () -> Unit = {}){
     Box(Modifier.fillMaxSize()) {
-        Column(
-            Modifier.align(Alignment.Center),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Column(modifier = Modifier.align(Alignment.Center),
+               horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "로그인을 해주세요.")
             Button(onClick = { onEmailLogin.invoke() }) {
                 Text(text = "LOG IN WITH EMAIL")
@@ -113,39 +104,29 @@ internal fun Login(onEmailLogin : () -> Unit = {}){
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
-internal fun _MyProfileScreen(
-    onSetting: () -> Unit = {},
-    onEditProfile: () -> Unit = {},
-    uiState: ProfileUiState.Success = ProfileUiState.Success(),
-    onFollowing: () -> Unit = {},
-    onFollwer: () -> Unit = {},
-    onWrite: () -> Unit = {},
-    onClearErrorMessage: () -> Unit = {},
-    onReview: (Int) -> Unit = { },
-    feedScreenList : @Composable () -> Unit = {}
-    ) {
+internal fun _MyProfileScreen(uiState            : ProfileUiState.Success = ProfileUiState.Success(),
+                              onSetting          : () -> Unit             = {},
+                              onEditProfile      : () -> Unit             = {},
+                              onFollowing        : () -> Unit             = {},
+                              onFollwer          : () -> Unit             = {},
+                              onWrite            : () -> Unit             = {},
+                              onClearErrorMessage: () -> Unit             = {},
+                              onReview           : (Int) -> Unit          = {},
+                              feedScreenList     : @Composable () -> Unit = {}) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {
-            TopAppBar(
-                modifier = Modifier.height(40.dp),
-                windowInsets = WindowInsets(0.dp, 8.dp, 0.dp, 0.dp),
-                title = {},
-                actions = {
-                    IconButton({onSetting.invoke()}) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_settings),
-                            contentDescription = "",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                })
-        }
+        topBar = { TopAppBar( modifier = Modifier.height(40.dp),
+                              windowInsets = WindowInsets(0.dp, 8.dp, 0.dp, 0.dp),
+                              title = {},
+                              actions = { IconButton({onSetting.invoke()}) {
+                                            Icon(painter = painterResource(id = R.drawable.ic_settings),
+                                                 contentDescription = "",
+                                                 tint = MaterialTheme.colorScheme.primary) }
+                                        }
+                            )
+                 }
     ) { padding ->
-        Box(
-            modifier = Modifier
-                .padding(padding)
-        )
+        Box(modifier = Modifier.padding(padding))
         {
             Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
                 ProfileSummary(profileUrl = uiState.profileUrl,
@@ -158,30 +139,21 @@ internal fun _MyProfileScreen(
                                onWrite = onWrite)
                 Spacer(modifier = Modifier.height(30.dp))
                 Row {
-                    Button(
-                        onClick = {
-                            onEditProfile.invoke()
-                        },
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(40.dp),
+                    Button(onClick = { onEditProfile.invoke() },
+                           modifier = Modifier.weight(1f)
+                                              .height(40.dp),
                     ) {
-                        Text(
-                            text = "프로필 편집",
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 17.sp
-                        )
+                        Text(text = "프로필 편집",
+                             color = Color.White,
+                             fontWeight = FontWeight.Bold,
+                             fontSize = 17.sp)
                     }
                 }
                 Spacer(modifier = Modifier.height(5.dp))
                 FavoriteAndWantToGo(
-                    wantToGo = {
-                        feedScreenList.invoke()
-                    },
-                    favorite = {
-                        feedScreenList.invoke()
-                    }
+                    myReviews = { feedScreenList.invoke() },
+                    wantToGo  = { feedScreenList.invoke() },
+                    favorite  = { feedScreenList.invoke() }
                 )
             }
 
