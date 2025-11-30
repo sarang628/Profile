@@ -14,10 +14,10 @@ import javax.inject.Inject
 
 
 data class FollowUiState(
-    val name: String,
-    val following: Int,
-    val follower: Int,
-    val subscription: Int,
+    val name        : String = "",
+    val following   : String = "0",
+    val follower    : String = "0",
+    val subscription: String = "0",
 )
 
 @HiltViewModel
@@ -30,13 +30,10 @@ open class FollowViewModel @Inject constructor(
     val subscription = MutableStateFlow<List<Follow>>(ArrayList())
     val errorMessage = MutableStateFlow<String?>(null)
     val uiState = MutableStateFlow(
-        FollowUiState(
-            name = "",
-            follower = 0,
-            following = 0,
-            subscription = 0
-        )
-    )
+        FollowUiState(name = "",
+                             follower = "0",
+                             following = "0",
+                             subscription = "0"))
 
     fun clearErrorMessage() {
         viewModelScope.launch {

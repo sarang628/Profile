@@ -21,9 +21,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.api.ApiProfile
 import com.sarang.torang.compose.LocalProfileImage
+import com.sarang.torang.compose.feed.FeedScreenByReviewId
+import com.sarang.torang.compose.feed.type.FeedTypeData
 import com.sarang.torang.compose.follow.MyFollowScreen
 import com.sarang.torang.compose.follow.OtherFollowScreen
 import com.sarang.torang.compose.profile.Profile
+import com.sarang.torang.di.feed_di.provideFeed
 import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
 import com.sarang.torang.di.profile_di.ProvideProfileScreen
@@ -121,7 +124,12 @@ fun ProfileTestMenu(loginRepository : LoginRepository) {
             }
         }
         composable("myReview/{reviewId}"){
-            Text("${it.arguments?.getString("reviewId")?.toInt()}")
+            val reviewId = it.arguments?.getString("reviewId")?.toInt()
+            Text("$reviewId")
+            provideFeed().invoke(FeedTypeData())
+            reviewId?.let {
+                FeedScreenByReviewId(reviewId = it)
+            }
         }
     }
 }

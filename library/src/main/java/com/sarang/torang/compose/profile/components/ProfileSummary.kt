@@ -33,14 +33,14 @@ import com.sarang.torang.compose.ProfileImageTypeData
 @Preview(showBackground = true)
 @Composable
 internal fun ProfileSummary(
-    profileUrl: String = "",
-    name: String = "name",
-    feedCount: Int = 0,
-    follower: Int = 0,
-    following: Int = 0,
-    onFollowing: () -> Unit = {},
-    onFollwer: () -> Unit = {},
-    onWrite: () -> Unit = {},
+    profileUrl  : String        = "",
+    name        : String        = "name",
+    feedCount   : String        = "0",
+    follower    : String        = "0",
+    following   : String        = "0",
+    onFollowing : () -> Unit    = {},
+    onFollwer   : () -> Unit    = {},
+    onWrite     : () -> Unit    = {},
 ) {
     val profileImage = @Composable {
         Box(modifier = Modifier.layoutId("profileImg")) {

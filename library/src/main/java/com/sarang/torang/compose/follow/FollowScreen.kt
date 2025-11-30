@@ -43,9 +43,9 @@ import com.sarang.torang.viewmodel.MyFollowViewModel
 @Composable
 fun _FollowScreen(
     name                : String        = "",
-    following           : Int           = 0,
-    follower            : Int           = 0,
-    subscription        : Int           = 0,
+    following           : String        = "0",
+    follower            : String        = "0",
+    subscription        : String        = "0",
     followerList        : List<Follow>  = listOf(),
     followingList       : List<Follow>  = listOf(),
     subscriptionList    : List<Follow>  = listOf(),

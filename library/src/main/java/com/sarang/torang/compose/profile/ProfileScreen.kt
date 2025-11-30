@@ -105,7 +105,6 @@ fun ProfileScreen(
                 isFollow = (uiState as ProfileUiState.Success).isFollow,
                 onFollow = { profileViewModel.follow() },
                 onUnFollow = { profileViewModel.unFollow() },
-                onClearErrorMessage = { profileViewModel.onClearErrorMessage() },
                 onClose = onClose,
                 isLogin = isLogin,
                 onMessage = {
@@ -120,6 +119,7 @@ fun ProfileScreen(
         }
 
         is ProfileUiState.Error -> {}
+        is ProfileUiState.Login -> {}
     }
 }
 
@@ -182,13 +182,6 @@ fun Profile(
                 }, favorite = {
                     feedListScreen.invoke()
                 })
-            }
-            uiState.errorMessage?.let {
-                AlertDialog(onDismissRequest = { /*TODO*/ }, confirmButton = {
-                    Button(onClick = { onClearErrorMessage.invoke() }) {
-                        Text(text = "확인")
-                    }
-                }, text = { Text(text = it, fontSize = 14.sp) })
             }
         }
     }

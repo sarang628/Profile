@@ -47,11 +47,7 @@ fun EditProfileScreen(
 ) {
     val coroutine = rememberCoroutineScope()
     val uiState by profileViewModel.uiState.collectAsState()
-    LaunchedEffect(key1 = (uiState as ProfileUiState.Success).name, block = {
-        coroutine.launch {
-            profileViewModel.loadProfileByToken()
-        }
-    })
+
     _EditProfileScreen(
         onEditImage = onEditImage,
         onBack = onBack,
@@ -168,9 +164,9 @@ fun PreviewEditProfileScreen() {
         onBack = { /*TODO*/ },
         uiState = ProfileUiState.Success(
             profileUrl = "",
-            follower = 0,
-            following = 0,
-            feedCount = 0,
+            follower = "0",
+            following = "0",
+            feedCount = "0",
             name = "name",
             id = 0
         )

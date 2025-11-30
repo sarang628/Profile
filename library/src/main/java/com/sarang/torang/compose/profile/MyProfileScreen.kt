@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sarang.torang.ProfileUiState
 import com.sarang.torang.R
 import com.sarang.torang.compose.myfeed.FeedListScreen
@@ -53,33 +54,16 @@ import com.sarang.torang.viewmodel.MyProfileViewModel
  * @param onWrite 게시글 클릭
  */
 @Composable
-fun MyProfileScreen(
-    profileViewModel: MyProfileViewModel,
-    onSetting: () -> Unit,
-    onEditProfile: () -> Unit,
-    onFollowing: () -> Unit,
-    onFollwer: () -> Unit,
-    onWrite: () -> Unit,
-    onClose: () -> Unit,
-    onEmailLogin: () -> Unit,
-    onReview: (Int) -> Unit = {}
-) {
-    val uiState by profileViewModel.uiState.collectAsState()
-    val isLogin by profileViewModel.isLogin.collectAsState(initial = false)
-    if (!isLogin) {
-        Box(Modifier.fillMaxSize()) {
-            Column(
-                Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = "로그인을 해주세요.")
-                Button(onClick = { onEmailLogin.invoke() }) {
-                    Text(text = "LOG IN WITH EMAIL")
-                }
-            }
-        }
-        return;
-    }
+fun MyProfileScreen(profileViewModel: MyProfileViewModel,
+                    onSetting: () -> Unit,
+                    onEditProfile: () -> Unit,
+                    onFollowing: () -> Unit,
+                    onFollwer: () -> Unit,
+                    onWrite: () -> Unit,
+                    onClose: () -> Unit,
+                    onEmailLogin: () -> Unit,
+                    onReview: (Int) -> Unit = {}) {
+    val uiState by profileViewModel.uiState.collectAsStateWithLifecycle()
 
     when (uiState) {
         is ProfileUiState.Success -> {
@@ -106,6 +90,23 @@ fun MyProfileScreen(
         }
 
         is ProfileUiState.Error -> {}
+        is ProfileUiState.Login -> { Login(onEmailLogin) }
+    }
+}
+
+@Preview
+@Composable
+internal fun Login(onEmailLogin : () -> Unit = {}){
+    Box(Modifier.fillMaxSize()) {
+        Column(
+            Modifier.align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "로그인을 해주세요.")
+            Button(onClick = { onEmailLogin.invoke() }) {
+                Text(text = "LOG IN WITH EMAIL")
+            }
+        }
     }
 }
 
@@ -183,16 +184,16 @@ internal fun _MyProfileScreen(
                     }
                 )
             }
-            uiState.errorMessage?.let {
-                AlertDialog(onDismissRequest = { /*TODO*/ },
+
+                /*AlertDialog(onDismissRequest = { *//*TODO*//* },
                     confirmButton = {
                         Button(onClick = { onClearErrorMessage.invoke() }) {
                             Text(text = "확인")
                         }
                     },
                     text =
-                    { Text(text = it, fontSize = 14.sp) })
-            }
+                    { Text(text = it, fontSize = 14.sp) })*/
+
         }
     }
 }
