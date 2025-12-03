@@ -2,7 +2,7 @@ package com.sarang.torang
 
 sealed interface MyProfileUiState {
 
-    object Login : MyProfileUiState
+    object NeedLogin : MyProfileUiState
     object Loading : MyProfileUiState
 
     data class Success(val profileUrl  : String  = "",

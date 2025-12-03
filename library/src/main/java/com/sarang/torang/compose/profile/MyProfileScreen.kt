@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sarang.torang.MyProfileUiState
-import com.sarang.torang.ProfileUiState
 import com.sarang.torang.R
 import com.sarang.torang.compose.myfeed.MyFeedListScreen
 import com.sarang.torang.compose.profile.components.FavoriteAndWantToGo
@@ -65,7 +64,7 @@ fun MyProfileScreen(myProfileViewModel: MyProfileViewModel,
         }
 
         is MyProfileUiState.Error -> {}
-        is MyProfileUiState.Login -> { Login(onEmailLogin) }
+        is MyProfileUiState.NeedLogin -> { Login(onEmailLogin) }
     }
 }
 

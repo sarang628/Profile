@@ -15,10 +15,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyFeedListViewModel @Inject constructor(
-    getMyFeedUseCase: GetMyFeedUseCase,
-    loadMyFeedUseCase: LoadMyFeedUseCase
-) : ViewModel() {
+class MyFeedListViewModel @Inject constructor(getMyFeedUseCase: GetMyFeedUseCase,
+                                              loadMyFeedUseCase: LoadMyFeedUseCase) : ViewModel() {
     val list : StateFlow<List<Feed>> = getMyFeedUseCase.invoke()
         .stateIn(scope = viewModelScope,
                  started = SharingStarted.WhileSubscribed(5000),
