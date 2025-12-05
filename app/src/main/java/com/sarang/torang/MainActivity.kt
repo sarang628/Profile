@@ -32,7 +32,6 @@ import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
 import com.sarang.torang.di.profile_di.ProvideProfileScreen
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.LoginRepository
-import com.sarang.torang.repository.ProfileRepository
 import com.sarang.torang.repository.test.LoginRepositoryTest
 import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +40,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject lateinit var apiProfile: ApiProfile
-    @Inject lateinit var profileRepository: ProfileRepository
+
     @Inject lateinit var feedRepository: FeedRepository
     @Inject lateinit var loginRepository: LoginRepository
 
