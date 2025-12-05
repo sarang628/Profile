@@ -1,4 +1,4 @@
-package com.sarang.torang
+package com.sarang.torang.data.profile
 
 data class Feed(
     val reviewId        : Int           = -1,

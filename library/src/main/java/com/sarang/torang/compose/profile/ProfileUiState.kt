@@ -1,4 +1,4 @@
-package com.sarang.torang
+package com.sarang.torang.compose.profile
 
 sealed interface ProfileUiState {
 

@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sarang.torang.viewmodel.MyFollowViewModel
+import com.sarang.torang.viewmodel.profile.MyFollowViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)

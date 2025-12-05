@@ -1,7 +1,7 @@
 package com.sarang.torang.usecase.profile
 
-import com.sarang.torang.Feed
-import com.sarang.torang.ProfileUiState
+import com.sarang.torang.data.profile.Feed
+import com.sarang.torang.compose.profile.ProfileUiState
 import kotlinx.coroutines.flow.Flow
 
 

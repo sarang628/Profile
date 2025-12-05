@@ -1,8 +1,8 @@
-package com.sarang.torang.viewmodel
+package com.sarang.torang.viewmodel.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sarang.torang.MyProfileUiState
+import com.sarang.torang.compose.profile.MyProfileUiState
 import com.sarang.torang.usecase.profile.GetMyProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,7 +16,7 @@ class MyProfileViewModel @Inject constructor(
 ) : ViewModel() {
     val uiState: StateFlow<MyProfileUiState> = myProfileUseCase.invoke()
                                                                .stateIn(scope = viewModelScope,
-                                                                        started = SharingStarted.WhileSubscribed(5000),
+                                                                        started = SharingStarted.Companion.WhileSubscribed(5000),
                                                                         initialValue = MyProfileUiState.Loading)
 
     fun updateProfileImage(uri: String) {

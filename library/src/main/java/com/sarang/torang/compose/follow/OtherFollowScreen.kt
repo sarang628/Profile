@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sarang.torang.viewmodel.OtherFollowViewModel
+import com.sarang.torang.viewmodel.profile.OtherFollowViewModel
 
 @Composable
 fun OtherFollowScreen(

@@ -1,4 +1,4 @@
-package com.sarang.torang.compose
+package com.sarang.torang.compose.profile
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -10,8 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.edit.EditProfileScreen
 import com.sarang.torang.compose.follow.MyFollowScreen
-import com.sarang.torang.compose.profile.MyProfileScreen
-import com.sarang.torang.viewmodel.MyProfileViewModel
+import com.sarang.torang.viewmodel.profile.MyProfileViewModel
 
 @Composable
 fun _MyProfileScreenNavHost(

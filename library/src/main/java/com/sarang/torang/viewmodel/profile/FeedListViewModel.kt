@@ -1,9 +1,9 @@
-package com.sarang.torang.viewmodel
+package com.sarang.torang.viewmodel.profile
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sarang.torang.Feed
+import com.sarang.torang.data.profile.Feed
 import com.sarang.torang.usecase.profile.GetFeedByUserIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

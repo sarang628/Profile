@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sarang.torang.compose.LocalProfileImage
-import com.sarang.torang.compose.ProfileImageTypeData
-import com.sarang.torang.viewmodel.FeedListViewModel
+import com.sarang.torang.compose.profile.LocalProfileImage
+import com.sarang.torang.compose.profile.ProfileImageTypeData
+import com.sarang.torang.viewmodel.profile.FeedListViewModel
 
 @Composable
 fun FeedListScreen(feedListViewModel: FeedListViewModel = hiltViewModel(),

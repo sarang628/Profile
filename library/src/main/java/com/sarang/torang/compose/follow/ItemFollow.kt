@@ -15,13 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
-import com.sarang.torang.compose.LocalProfileImage
-import com.sarang.torang.compose.ProfileImageTypeData
+import com.sarang.torang.compose.profile.LocalProfileImage
+import com.sarang.torang.compose.profile.ProfileImageTypeData
 
 @Preview(showBackground = true)
 @Composable

@@ -27,8 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sarang.torang.compose.LocalProfileImage
-import com.sarang.torang.compose.ProfileImageTypeData
+import com.sarang.torang.compose.profile.LocalProfileImage
+import com.sarang.torang.compose.profile.ProfileImageTypeData
 
 @Preview(showBackground = true)
 @Composable

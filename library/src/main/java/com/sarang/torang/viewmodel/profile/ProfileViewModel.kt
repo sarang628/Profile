@@ -1,9 +1,9 @@
-package com.sarang.torang.viewmodel
+package com.sarang.torang.viewmodel.profile
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sarang.torang.ProfileUiState
+import com.sarang.torang.compose.profile.ProfileUiState
 import com.sarang.torang.usecase.profile.FindOrCreateChatRoomByUserIdUseCase
 import com.sarang.torang.usecase.profile.FollowUseCase
 import com.sarang.torang.usecase.profile.IsLoginUseCase

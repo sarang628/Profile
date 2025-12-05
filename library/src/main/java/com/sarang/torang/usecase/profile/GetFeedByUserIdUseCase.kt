@@ -1,6 +1,6 @@
 package com.sarang.torang.usecase.profile
 
-import com.sarang.torang.Feed
+import com.sarang.torang.data.profile.Feed
 
 interface GetFeedByUserIdUseCase {
     suspend fun invoke(userId : Int) : List<Feed>

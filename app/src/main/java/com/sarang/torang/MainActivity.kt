@@ -20,7 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.api.ApiProfile
-import com.sarang.torang.compose.LocalProfileImage
+import com.sarang.torang.compose.profile.LocalProfileImage
 import com.sarang.torang.compose.feed.FeedScreenByReviewId
 import com.sarang.torang.compose.feed.type.FeedTypeData
 import com.sarang.torang.compose.follow.MyFollowScreen

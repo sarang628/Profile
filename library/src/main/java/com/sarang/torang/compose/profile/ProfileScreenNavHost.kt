@@ -1,4 +1,4 @@
-package com.sarang.torang.compose
+package com.sarang.torang.compose.profile
 
 import android.util.Log
 import androidx.compose.material.icons.Icons
@@ -6,22 +6,17 @@ import androidx.compose.material.icons.rounded.Face
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.follow.OtherFollowScreen
-import com.sarang.torang.compose.profile.ProfileScreen
-import com.sarang.torang.viewmodel.ProfileViewModel
 
 typealias ProfileImageType = @Composable (ProfileImageTypeData) -> Unit
 
@@ -65,7 +60,7 @@ fun ProfileScreenNavHost(id             : Int? = null,
             ProfileScreen(
                 onFollowing = { navController.navigate("follow/${id}/1") },
                 onWrite = { },
-                onFollwer = { navController.navigate("follow/${id}/0") },
+                onFollower = { navController.navigate("follow/${id}/0") },
                 onClose = { onClose.invoke() },
                 onEmailLogin = onEmailLogin,
                 id = id,
@@ -110,7 +105,7 @@ fun ProfileScreenNavHost(id             : Int? = null,
                     )
                 },
                 onWrite = { },
-                onFollwer = {
+                onFollower = {
                     navController.navigate(
                         "follow/${
                             it.arguments?.getString("userId")?.toInt()

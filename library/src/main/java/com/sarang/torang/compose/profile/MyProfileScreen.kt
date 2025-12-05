@@ -28,12 +28,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sarang.torang.MyProfileUiState
+import com.sarang.torang.compose.profile.MyProfileUiState
 import com.sarang.torang.R
 import com.sarang.torang.compose.myfeed.MyFeedListScreen
 import com.sarang.torang.compose.profile.components.FavoriteAndWantToGo
 import com.sarang.torang.compose.profile.components.ProfileSummary
-import com.sarang.torang.viewmodel.MyProfileViewModel
+import com.sarang.torang.viewmodel.profile.MyProfileViewModel
 
 @Composable
 fun MyProfileScreen(myProfileViewModel: MyProfileViewModel,
