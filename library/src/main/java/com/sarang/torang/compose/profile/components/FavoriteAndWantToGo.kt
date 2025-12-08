@@ -35,8 +35,8 @@ internal fun FavoriteAndWantToGo(
                         state = pagerState ){
             when(it){
                 0 -> {myReviews.invoke()}
-                1 -> {favorite.invoke()}
-                2 -> {wantToGo.invoke()}
+                1 -> {wantToGo.invoke()}
+                2 -> {favorite.invoke()}
             }
         }
     }

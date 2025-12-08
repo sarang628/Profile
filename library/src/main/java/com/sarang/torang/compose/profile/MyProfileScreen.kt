@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sarang.torang.compose.profile.MyProfileUiState
 import com.sarang.torang.R
+import com.sarang.torang.compose.myfeed.MyFavoriteListScreen
 import com.sarang.torang.compose.myfeed.MyFeedListScreen
 import com.sarang.torang.compose.profile.components.FavoriteAndWantToGo
 import com.sarang.torang.compose.profile.components.ProfileSummary
@@ -54,7 +55,8 @@ fun MyProfileScreen(myProfileViewModel: MyProfileViewModel,
                             onWrite        = onWrite,
                             onFollowing    = onFollowing,
                             onFollower     = onFollower,
-                            feedScreenList = { MyFeedListScreen(onReview = onReview) })
+                            feedScreenList = { MyFeedListScreen(onReview = onReview) },
+                            favoriteList   = { MyFavoriteListScreen(onReview = onReview) })
         }
 
         is MyProfileUiState.Loading -> {
@@ -91,7 +93,8 @@ private fun _MyProfileScreen(uiState        : MyProfileUiState.Success = MyProfi
                             onFollowing     : () -> Unit               = {},
                             onFollower      : () -> Unit               = {},
                             onWrite         : () -> Unit               = {},
-                            feedScreenList  : @Composable () -> Unit   = {}) {
+                            feedScreenList  : @Composable () -> Unit   = {},
+                            favoriteList    : @Composable () -> Unit   = {}) {
     val topBar = @Composable {
         TopAppBar( modifier     = Modifier.height(40.dp),
                    windowInsets = WindowInsets(0.dp, 8.dp, 0.dp, 0.dp),
@@ -130,7 +133,7 @@ private fun _MyProfileScreen(uiState        : MyProfileUiState.Success = MyProfi
                 FavoriteAndWantToGo(
                     myReviews = { feedScreenList.invoke() },
                     wantToGo  = { feedScreenList.invoke() },
-                    favorite  = { feedScreenList.invoke() }
+                    favorite  = { favoriteList.invoke() }
                 )
             }
         }
