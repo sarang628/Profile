@@ -73,7 +73,9 @@ fun ProfileTestMenu(loginRepository : LoginRepository) {
                 Button(onClick = { navController.navigate("myProfile") }) {
                     Text(text = "myProfile")
                 }
-                Button(onClick = { navController.navigate("myFollow") }) {
+                Button(onClick = {
+                    //navController.navigate("myFollow")
+                }) {
                     Text(text = "myFollow")
                 }
                 Button(onClick = { navController.navigate("LoginRepositoryTest") }) {
@@ -101,12 +103,12 @@ fun ProfileTestMenu(loginRepository : LoginRepository) {
             )
         }
         composable("myFollow/{page}}") {
-            MyFollowScreen(onBack = { navController.popBackStack() },
+            /*MyFollowScreen(onBack = { navController.popBackStack() },
                            onProfile = { navController.navigate("profile/${it}") },
-                           page = it.arguments?.getString("page")?.toInt())
+                           page = it.arguments?.getString("page")?.toInt())*/
         }
         composable("follow/{userId}") {
-            val userId = it.arguments?.getString("id")?.toInt()
+            /*val userId = it.arguments?.getString("id")?.toInt()
 
             if (userId != null) {
                 CompositionLocalProvider(LocalProfileImage provides {
@@ -120,7 +122,7 @@ fun ProfileTestMenu(loginRepository : LoginRepository) {
                 }
             } else {
                 Text(text = "사용자 정보가 없습니다.")
-            }
+            }*/
         }
         composable("myReview/{reviewId}"){
             val reviewId = it.arguments?.getString("reviewId")?.toInt()
