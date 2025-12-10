@@ -14,17 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 
 @Composable
-internal fun FavoriteAndWantToGo(
-    myReviews: @Composable () -> Unit = {},
-    favorite : @Composable () -> Unit = {},
-    wantToGo : @Composable () -> Unit = {},
+internal fun MyFeedsLikesFavoritiesList(
+    myFeeds     : @Composable () -> Unit = {},
+    favorite    : @Composable () -> Unit = {},
+    like        : @Composable () -> Unit = {},
 ) {
-    var isFavorite by remember { mutableStateOf(true) }
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
 
     Scaffold(
@@ -34,8 +30,8 @@ internal fun FavoriteAndWantToGo(
         HorizontalPager(modifier = Modifier.padding(it) ,
                         state = pagerState ){
             when(it){
-                0 -> {myReviews.invoke()}
-                1 -> {wantToGo.invoke()}
+                0 -> {myFeeds.invoke()}
+                1 -> {like.invoke()}
                 2 -> {favorite.invoke()}
             }
         }
@@ -61,10 +57,10 @@ fun NavHostController.move(dest: String) {
 
 @Preview
 @Composable
-fun PreviewFavoriteAndWantToGo() {
-    FavoriteAndWantToGo(favorite = {
+fun PreviewMyFeedsLikesFavoritiesList() {
+    MyFeedsLikesFavoritiesList(favorite = {
         Text(text = "!!!")
-    }, wantToGo = {
+    }, like = {
         Text(text = "!!22")
     })
 }

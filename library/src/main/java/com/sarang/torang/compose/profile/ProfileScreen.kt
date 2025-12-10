@@ -37,9 +37,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sarang.torang.compose.profile.ProfileUiState
 import com.sarang.torang.compose.myfeed.FeedListScreen
-import com.sarang.torang.compose.profile.components.FavoriteAndWantToGo
+import com.sarang.torang.compose.profile.components.MyFeedsLikesFavoritiesList
 import com.sarang.torang.compose.profile.components.ProfileSummary
 import com.sarang.torang.viewmodel.profile.ProfileViewModel
 import kotlinx.coroutines.launch
@@ -151,9 +150,9 @@ fun Profile(uiState         : ProfileUiState.Success    = ProfileUiState.Success
                 }
             }
             Spacer(modifier = Modifier.height(5.dp))
-            FavoriteAndWantToGo(wantToGo  = { feedListScreen.invoke() },
+            MyFeedsLikesFavoritiesList(like  = { feedListScreen.invoke() },
                                 favorite  = { feedListScreen.invoke() },
-                                myReviews = { feedListScreen.invoke() })
+                                myFeeds = { feedListScreen.invoke() })
         }
     }
 }

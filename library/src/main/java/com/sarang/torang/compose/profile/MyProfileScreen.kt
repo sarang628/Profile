@@ -28,11 +28,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sarang.torang.compose.profile.MyProfileUiState
 import com.sarang.torang.R
 import com.sarang.torang.compose.myfeed.MyFavoriteListScreen
 import com.sarang.torang.compose.myfeed.MyFeedListScreen
-import com.sarang.torang.compose.profile.components.FavoriteAndWantToGo
+import com.sarang.torang.compose.myfeed.MyLikeListScreen
+import com.sarang.torang.compose.profile.components.MyFeedsLikesFavoritiesList
 import com.sarang.torang.compose.profile.components.ProfileSummary
 import com.sarang.torang.viewmodel.profile.MyProfileViewModel
 
@@ -56,7 +56,8 @@ fun MyProfileScreen(myProfileViewModel: MyProfileViewModel,
                             onFollowing    = onFollowing,
                             onFollower     = onFollower,
                             feedScreenList = { MyFeedListScreen(onReview = onReview) },
-                            favoriteList   = { MyFavoriteListScreen(onReview = onReview) })
+                            favoriteList   = { MyFavoriteListScreen(onReview = onReview) },
+                            likeList       = { MyLikeListScreen (onReview = onReview) })
         }
 
         is MyProfileUiState.Loading -> {
@@ -94,7 +95,8 @@ private fun _MyProfileScreen(uiState        : MyProfileUiState.Success = MyProfi
                             onFollower      : () -> Unit               = {},
                             onWrite         : () -> Unit               = {},
                             feedScreenList  : @Composable () -> Unit   = {},
-                            favoriteList    : @Composable () -> Unit   = {}) {
+                            favoriteList    : @Composable () -> Unit   = {},
+                            likeList        : @Composable () -> Unit   = {}) {
     val topBar = @Composable {
         TopAppBar( modifier     = Modifier.height(40.dp),
                    windowInsets = WindowInsets(0.dp, 8.dp, 0.dp, 0.dp),
@@ -130,9 +132,9 @@ private fun _MyProfileScreen(uiState        : MyProfileUiState.Success = MyProfi
                     }
                 }
                 Spacer(modifier = Modifier.height(5.dp))
-                FavoriteAndWantToGo(
-                    myReviews = { feedScreenList.invoke() },
-                    wantToGo  = { feedScreenList.invoke() },
+                MyFeedsLikesFavoritiesList(
+                    myFeeds = { feedScreenList.invoke() },
+                    like  = { likeList.invoke() },
                     favorite  = { favoriteList.invoke() }
                 )
             }
