@@ -23,6 +23,7 @@ import com.sarang.torang.viewmodel.profile.FeedListViewModel
 
 @Composable
 fun FeedListScreen(feedListViewModel: FeedListViewModel = hiltViewModel(),
+                   modifier: Modifier,
                    userId: Int,
                    onReview: (Int) -> Unit = { Log.w("_FeedListScreen", "onReview is null")  }) {
     LaunchedEffect(key1 = userId, block = {
@@ -31,7 +32,7 @@ fun FeedListScreen(feedListViewModel: FeedListViewModel = hiltViewModel(),
     val list : List<FeedListItemUIState> by feedListViewModel.list.collectAsState()
 
     LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         columns = GridCells.Fixed(3),
         content = {
             items(items = list) {

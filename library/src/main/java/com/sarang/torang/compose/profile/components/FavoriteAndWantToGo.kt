@@ -1,7 +1,9 @@
 package com.sarang.torang.compose.profile.components
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -17,23 +19,17 @@ import androidx.navigation.NavHostController
 
 @Composable
 internal fun MyFeedsLikesFavoritiesList(
+    modifier    : Modifier               = Modifier,
+    pagerState  : PagerState             = rememberPagerState(0, pageCount = { 0 }),
     myFeeds     : @Composable () -> Unit = {},
     favorite    : @Composable () -> Unit = {},
     like        : @Composable () -> Unit = {},
 ) {
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
-
-    Scaffold(
-        topBar = {
-            ProfileTabs(pagerState = pagerState)
-        }) {
-        HorizontalPager(modifier = Modifier.padding(it) ,
-                        state = pagerState ){
-            when(it){
-                0 -> {myFeeds.invoke()}
-                1 -> {like.invoke()}
-                2 -> {favorite.invoke()}
-            }
+    HorizontalPager(modifier = modifier, state = pagerState){
+        when(it){
+            0 -> {myFeeds.invoke()}
+            1 -> {like.invoke()}
+            2 -> {favorite.invoke()}
         }
     }
 }

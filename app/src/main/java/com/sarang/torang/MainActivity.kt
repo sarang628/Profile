@@ -51,9 +51,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)) {
-                        Column(Modifier.height(800.dp)) {
-                            ProfileTestMenu(loginRepository = loginRepository)
-                        }
+                        ProfileTestMenu(loginRepository = loginRepository)
                 }
             }
         }
@@ -97,7 +95,7 @@ fun ProfileTestMenu(loginRepository : LoginRepository) {
                 onSetting = {},
                 onEmailLogin = { },
                 onClose = { navController.popBackStack() },
-                onReview = {},
+                onReview = { },
                 navController = rememberNavController(),
                 onMessage = {}
             )

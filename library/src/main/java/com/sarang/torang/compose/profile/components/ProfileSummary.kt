@@ -33,6 +33,7 @@ import com.sarang.torang.compose.profile.ProfileImageTypeData
 @Preview(showBackground = true)
 @Composable
 internal fun ProfileSummary(
+    modifier    : Modifier      = Modifier,
     profileUrl  : String        = "",
     name        : String        = "name",
     feedCount   : String        = "0",
@@ -43,7 +44,7 @@ internal fun ProfileSummary(
     onWrite     : () -> Unit    = {},
 ) {
     val profileImage = @Composable {
-        Box(modifier = Modifier.layoutId("profileImg")) {
+        Box(modifier = modifier.layoutId("profileImg")) {
             if (profileUrl.isNotEmpty()) {
                 LocalProfileImage.current.invoke(
                     ProfileImageTypeData(modifier = Modifier.size(80.dp)
@@ -63,21 +64,28 @@ internal fun ProfileSummary(
 
     fun follow(modifier : Modifier = Modifier) = @Composable {
         Row(modifier              = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween) {
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically) {
             Column(modifier            = Modifier.clickable { onWrite.invoke() },
                    horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text       = feedCount.toString(),
+                Text(text       = feedCount,
                      fontSize   = 14.sp,
-                     fontWeight = FontWeight.Bold)
-                Text(text = "게시물", fontSize = 14.sp)
+                     fontWeight = FontWeight.Bold,
+                     lineHeight = 14.sp)
+                Text(text = "게시물",
+                     fontSize = 14.sp,
+                     lineHeight = 14.sp)
             }
 
             Column(modifier            = Modifier.clickable { onFollower.invoke() },
                    horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text       = follower.toString(),
+                Text(text       = follower,
                      fontSize   = 14.sp,
-                     fontWeight = FontWeight.Bold)
-                Text(text = "팔로워", fontSize = 14.sp)
+                     fontWeight = FontWeight.Bold,
+                     lineHeight = 14.sp)
+                Text(text = "팔로워",
+                     fontSize = 14.sp,
+                     lineHeight = 14.sp)
             }
 
             Column(modifier = Modifier.clickable { onFollowing.invoke() },
@@ -86,14 +94,16 @@ internal fun ProfileSummary(
                      fontSize = 14.sp,
                      fontWeight = FontWeight.Bold,
                      maxLines = 1)
-                Text(text = "팔로잉", fontSize = 14.sp)
+                Text(text = "팔로잉",
+                     fontSize = 14.sp,
+                     lineHeight = 14.sp)
             }
         }
     }
         Row(modifier = Modifier.fillMaxWidth().height(100.dp),
             verticalAlignment = Alignment.CenterVertically){
             profileImage()
-            Box(Modifier.fillMaxSize().padding(vertical = 4.dp, horizontal = 20.dp)) {
+            Box(Modifier.fillMaxSize().padding(vertical = 4.dp, horizontal = 25.dp)) {
                 Text(text       = name,
                     fontSize   = 12.sp,
                     fontWeight = FontWeight.Bold)

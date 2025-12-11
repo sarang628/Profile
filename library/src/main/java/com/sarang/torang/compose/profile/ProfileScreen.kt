@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -23,6 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,6 +34,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -76,8 +79,9 @@ fun ProfileScreen(profileViewModel    : ProfileViewModel  = hiltViewModel(),
         }
 
         is ProfileUiState.Success -> {
-            val feedListScreen = @Composable {
-                FeedListScreen(userId = (uiState as ProfileUiState.Success).id,
+            val feedListScreen : @Composable (Modifier) -> Unit = @Composable {
+                FeedListScreen(modifier = it,
+                               userId = (uiState as ProfileUiState.Success).id,
                                onReview = onReview)
             }
             Profile(
@@ -106,6 +110,7 @@ fun ProfileScreen(profileViewModel    : ProfileViewModel  = hiltViewModel(),
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
 fun Profile(uiState         : ProfileUiState.Success    = ProfileUiState.Success(),
@@ -118,41 +123,48 @@ fun Profile(uiState         : ProfileUiState.Success    = ProfileUiState.Success
             onMessage       : () -> Unit                = {},
             onClose         : () -> Unit                = {},
             isLogin         : Boolean                   = false,
-            feedListScreen  : @Composable () -> Unit    = {}) {
-    Scaffold(modifier = Modifier.fillMaxSize(),
+            feedListScreen  : @Composable (Modifier) -> Unit    = {}) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold(modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets(left = 8.dp, right = 8.dp, top = 10.dp),
-             topBar = { ProfileTopAppBar(name = uiState.name, onBack = onClose) }) { padding ->
-        Column(modifier = Modifier.padding(padding)) {
-            ProfileSummary(profileUrl   = uiState.profileUrl,
-                           feedCount    = uiState.feedCount,
-                           follower     = uiState.follower,
-                           following    = uiState.following,
-                           name         = uiState.name,
-                           onFollower   = onFollower,
-                           onFollowing  = onFollowing,
-                           onWrite      = onWrite)
+             topBar = { ProfileTopAppBar(name = uiState.name,
+                                         onBack = onClose,
+                                         scrollBehavior = scrollBehavior) }) { padding ->
+        LazyColumn(modifier = Modifier.padding(padding)) {
+            item {
+                ProfileSummary(profileUrl   = uiState.profileUrl,
+                    feedCount    = uiState.feedCount,
+                    follower     = uiState.follower,
+                    following    = uiState.following,
+                    name         = uiState.name,
+                    onFollower   = onFollower,
+                    onFollowing  = onFollowing,
+                    onWrite      = onWrite)
                 if (isLogin) {
                     Spacer(modifier = Modifier.height(10.dp))
                     Row(modifier = Modifier.height(35.dp)) {
                         Button(shape = RoundedCornerShape(8.dp),
-                               onClick = { if (isFollow) onUnFollow.invoke()
-                                           else onFollow.invoke() },
-                               modifier = Modifier.weight(1f),) {
-                        Text(text = if (!isFollow) "Follow" else "UnFollow",
-                             color = Color.White)
-                    }
-                    Spacer(modifier = Modifier.width(3.dp))
-                    Button(shape = RoundedCornerShape(8.dp),
-                           onClick = onMessage,
-                           modifier = Modifier.weight(1f)) {
-                        Text(text = "Message")
+                            onClick = { if (isFollow) onUnFollow.invoke()
+                            else onFollow.invoke() },
+                            modifier = Modifier.weight(1f),) {
+                            Text(text = if (!isFollow) "Follow" else "UnFollow",
+                                color = Color.White)
+                        }
+                        Spacer(modifier = Modifier.width(3.dp))
+                        Button(shape = RoundedCornerShape(8.dp),
+                            onClick = onMessage,
+                            modifier = Modifier.weight(1f)) {
+                            Text(text = "Message")
+                        }
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(5.dp))
-            MyFeedsLikesFavoritiesList(like  = { feedListScreen.invoke() },
-                                favorite  = { feedListScreen.invoke() },
-                                myFeeds = { feedListScreen.invoke() })
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+            item {
+                feedListScreen.invoke(Modifier.fillParentMaxHeight())
+            }
         }
     }
 }
@@ -161,14 +173,11 @@ fun Profile(uiState         : ProfileUiState.Success    = ProfileUiState.Success
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileTopAppBar(name: String = "",
-                     onBack: () -> Unit = {}) {
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    TopAppBar(
-        modifier = Modifier.height(50.dp),
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            titleContentColor = MaterialTheme.colorScheme.primary,
-        ),
+                     onBack: () -> Unit = {},
+                     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+) {
+    TopAppBar(colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background,
+                                                         titleContentColor = MaterialTheme.colorScheme.primary),
         title = {
             Box(modifier = Modifier.fillMaxHeight()) {
                 Text(

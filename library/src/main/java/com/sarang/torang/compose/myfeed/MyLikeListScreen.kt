@@ -22,13 +22,14 @@ import com.sarang.torang.viewmodel.profile.MyFeedListViewModel
 import com.sarang.torang.viewmodel.profile.MyLikeListViewModel
 
 @Composable
-fun MyLikeListScreen(myLikeListViewModel: MyLikeListViewModel = hiltViewModel(),
-                         onReview: (Int) -> Unit = { Log.w("_FeedListScreen", "onReview is null")  }) {
+fun MyLikeListScreen(modifier: Modifier = Modifier,
+                     myLikeListViewModel: MyLikeListViewModel = hiltViewModel(),
+                     onReview: (Int) -> Unit = { Log.w("_FeedListScreen", "onReview is null")  }) {
 
     val list by myLikeListViewModel.list.collectAsState()
 
     LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         columns = GridCells.Fixed(3),
         content = {
             items(list.size) {

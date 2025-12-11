@@ -1,5 +1,6 @@
 package com.sarang.torang.compose.profile
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,10 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,11 +22,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +41,7 @@ import com.sarang.torang.compose.myfeed.MyFeedListScreen
 import com.sarang.torang.compose.myfeed.MyLikeListScreen
 import com.sarang.torang.compose.profile.components.MyFeedsLikesFavoritiesList
 import com.sarang.torang.compose.profile.components.ProfileSummary
+import com.sarang.torang.compose.profile.components.ProfileTabs
 import com.sarang.torang.viewmodel.profile.MyProfileViewModel
 
 @Composable
@@ -55,9 +63,9 @@ fun MyProfileScreen(myProfileViewModel: MyProfileViewModel,
                             onWrite        = onWrite,
                             onFollowing    = onFollowing,
                             onFollower     = onFollower,
-                            feedScreenList = { MyFeedListScreen(onReview = onReview) },
-                            favoriteList   = { MyFavoriteListScreen(onReview = onReview) },
-                            likeList       = { MyLikeListScreen (onReview = onReview) })
+                            feedScreenList = { MyFeedListScreen(modifier = it, onReview = onReview) },
+                            favoriteList   = { MyFavoriteListScreen(modifier = it, onReview = onReview) },
+                            likeList       = { MyLikeListScreen (modifier = it, onReview = onReview) })
         }
 
         is MyProfileUiState.Loading -> {
@@ -85,7 +93,7 @@ internal fun Login(onEmailLogin : () -> Unit = {}){
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun _MyProfileScreen(uiState        : MyProfileUiState.Success = MyProfileUiState.Success(),
@@ -94,49 +102,80 @@ private fun _MyProfileScreen(uiState        : MyProfileUiState.Success = MyProfi
                             onFollowing     : () -> Unit               = {},
                             onFollower      : () -> Unit               = {},
                             onWrite         : () -> Unit               = {},
-                            feedScreenList  : @Composable () -> Unit   = {},
-                            favoriteList    : @Composable () -> Unit   = {},
-                            likeList        : @Composable () -> Unit   = {}) {
+                            feedScreenList  : @Composable (Modifier) -> Unit   = {},
+                            favoriteList    : @Composable (Modifier) -> Unit   = {},
+                            likeList        : @Composable (Modifier) -> Unit   = {}) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
     val topBar = @Composable {
-        TopAppBar( modifier     = Modifier.height(40.dp),
-                   windowInsets = WindowInsets(0.dp, 8.dp, 0.dp, 0.dp),
-                   title        = {},
-                   actions      = { IconButton({onSetting.invoke()}) {
+        TopAppBar( title          = { Text(text = uiState.name) },
+                   scrollBehavior = scrollBehavior,
+                   actions        = { IconButton({onSetting.invoke()}) {
                                         Icon(painter = painterResource(id = R.drawable.ic_settings),
                                              contentDescription = "",
                                              tint = MaterialTheme.colorScheme.primary)}})}
 
-    Scaffold(modifier = Modifier.fillMaxSize(),
+    Scaffold(modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
              topBar = topBar) { padding ->
-        Box(modifier = Modifier.padding(padding)) {
-            Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
-                ProfileSummary(profileUrl   = uiState.profileUrl,
-                               feedCount    = uiState.feedCount,
-                               follower     = uiState.follower,
-                               following    = uiState.following,
-                               name         = uiState.name,
-                               onFollower    = onFollower,
-                               onFollowing  = onFollowing,
-                               onWrite      = onWrite)
-                Spacer(modifier = Modifier.height(8.dp))
-                Row {
-                    Button(onClick = { onEditProfile.invoke() },
-                           modifier = Modifier
-                               .weight(1f)
-                               .height(40.dp),
-                    ) {
-                        Text(text = "프로필 편집",
-                             color = Color.White,
-                             fontWeight = FontWeight.Bold,
-                             fontSize = 17.sp)
+        Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+            LazyColumn(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
+                item {
+                    ProfileSummary(
+                                   profileUrl   = uiState.profileUrl,
+                                   feedCount    = uiState.feedCount,
+                                   follower     = uiState.follower,
+                                   following    = uiState.following,
+                                   name         = uiState.name,
+                                   onFollower    = onFollower,
+                                   onFollowing  = onFollowing,
+                                   onWrite      = onWrite)
+                }
+                item {
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                item {
+                    Row {
+                        Button(onClick = { onEditProfile.invoke() },
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(35.dp),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text(text = "프로필 편집",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 13.sp)
+                        }
+                        Spacer(Modifier.width(8.dp))
+                        Button(onClick = {  },
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(35.dp),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text(text = "프로필 공유",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 13.sp)
+                        }
                     }
                 }
-                Spacer(modifier = Modifier.height(5.dp))
-                MyFeedsLikesFavoritiesList(
-                    myFeeds = { feedScreenList.invoke() },
-                    like  = { likeList.invoke() },
-                    favorite  = { favoriteList.invoke() }
-                )
+                item {
+                    Spacer(modifier = Modifier.height(5.dp))
+                }
+                stickyHeader {
+                    ProfileTabs(pagerState = pagerState)
+                }
+                item {
+                    MyFeedsLikesFavoritiesList(
+                        modifier    = Modifier.fillParentMaxSize()
+                                              .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        pagerState  = pagerState,
+                        myFeeds     = { feedScreenList.invoke(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)) },
+                        like        = { likeList.invoke(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)) },
+                        favorite    = { favoriteList.invoke(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)) }
+                    )
+                }
             }
         }
     }

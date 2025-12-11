@@ -21,13 +21,14 @@ import com.sarang.torang.viewmodel.profile.MyFavoriteListViewModel
 import com.sarang.torang.viewmodel.profile.MyFeedListViewModel
 
 @Composable
-fun MyFavoriteListScreen(feedListViewModel: MyFavoriteListViewModel = hiltViewModel(),
+fun MyFavoriteListScreen(modifier: Modifier = Modifier,
+                         feedListViewModel: MyFavoriteListViewModel = hiltViewModel(),
                          onReview: (Int) -> Unit = { Log.w("_FeedListScreen", "onReview is null")  }) {
 
     val list by feedListViewModel.list.collectAsState()
 
     LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         columns = GridCells.Fixed(3),
         content = {
             items(list.size) {
