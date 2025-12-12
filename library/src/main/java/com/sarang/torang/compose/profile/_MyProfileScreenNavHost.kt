@@ -1,5 +1,7 @@
 package com.sarang.torang.compose.profile
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -23,6 +25,7 @@ fun _MyProfileScreenNavHost(
     onMessage                   : (Int) -> Unit         = { },
     navController               : NavHostController     = rememberNavController(),
     myProfileBackgroundColor    : Color                 = Color.Transparent,
+    contentWindowInsets         : WindowInsets          = ScaffoldDefaults.contentWindowInsets,
     galleryScreen               : @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit = {_,_->}) {
     NavHost(
         navController = navController,

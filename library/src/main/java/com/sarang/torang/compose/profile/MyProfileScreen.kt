@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -46,15 +47,16 @@ import com.sarang.torang.compose.profile.components.ProfileTabs
 import com.sarang.torang.viewmodel.profile.MyProfileViewModel
 
 @Composable
-fun MyProfileScreen(myProfileViewModel: MyProfileViewModel,
-                    onSetting         : () -> Unit      = {},
-                    onEditProfile     : () -> Unit      = {},
-                    onFollowing       : () -> Unit      = {},
-                    onFollower        : () -> Unit      = {},
-                    onWrite           : () -> Unit      = {},
-                    onEmailLogin      : () -> Unit      = {},
-                    onReview          : (Int) -> Unit   = {},
-                    backgroundColor   : Color           = Color.Transparent) {
+fun MyProfileScreen(myProfileViewModel  : MyProfileViewModel,
+                    onSetting           : () -> Unit      = {},
+                    onEditProfile       : () -> Unit      = {},
+                    onFollowing         : () -> Unit      = {},
+                    onFollower          : () -> Unit      = {},
+                    onWrite             : () -> Unit      = {},
+                    onEmailLogin        : () -> Unit      = {},
+                    onReview            : (Int) -> Unit   = {},
+                    backgroundColor     : Color           = Color.Transparent,
+                    contentWindowInsets : WindowInsets    = ScaffoldDefaults.contentWindowInsets) {
     val uiState by myProfileViewModel.uiState.collectAsStateWithLifecycle()
 
     when (uiState) {
@@ -99,16 +101,17 @@ internal fun Login(onEmailLogin : () -> Unit = {}){
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Preview(showBackground = true)
 @Composable
-private fun _MyProfileScreen(uiState        : MyProfileUiState.Success = MyProfileUiState.Success(),
-                            onSetting       : () -> Unit               = {},
-                            onEditProfile   : () -> Unit               = {},
-                            onFollowing     : () -> Unit               = {},
-                            onFollower      : () -> Unit               = {},
-                            onWrite         : () -> Unit               = {},
-                            feedScreenList  : @Composable (Modifier) -> Unit   = {},
-                            favoriteList    : @Composable (Modifier) -> Unit   = {},
-                            likeList        : @Composable (Modifier) -> Unit   = {},
-                            backgroundColor : Color                    = Color.Transparent) {
+private fun _MyProfileScreen(uiState            : MyProfileUiState.Success          = MyProfileUiState.Success(),
+                            onSetting           : () -> Unit                        = {},
+                            onEditProfile       : () -> Unit                        = {},
+                            onFollowing         : () -> Unit                        = {},
+                            onFollower          : () -> Unit                        = {},
+                            onWrite             : () -> Unit                        = {},
+                            feedScreenList      : @Composable (Modifier) -> Unit    = {},
+                            favoriteList        : @Composable (Modifier) -> Unit    = {},
+                            likeList            : @Composable (Modifier) -> Unit    = {},
+                            backgroundColor     : Color                             = Color.Transparent,
+                            contentWindowInsets : WindowInsets                      = ScaffoldDefaults.contentWindowInsets) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
     val topBar = @Composable {
@@ -121,6 +124,7 @@ private fun _MyProfileScreen(uiState        : MyProfileUiState.Success = MyProfi
 
     Scaffold(modifier = Modifier.fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
+             contentWindowInsets = contentWindowInsets,
              topBar = topBar) { padding ->
         Box(modifier = Modifier.fillMaxSize()
                                .background(backgroundColor)

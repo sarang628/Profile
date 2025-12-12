@@ -97,8 +97,7 @@ fun ProfileTestMenu(loginRepository : LoginRepository) {
                 onClose = { navController.popBackStack() },
                 onReview = { },
                 navController = rememberNavController(),
-                onMessage = {}
-            )
+                onMessage = {})
         }
         composable("myFollow/{page}}") {
             /*MyFollowScreen(onBack = { navController.popBackStack() },
