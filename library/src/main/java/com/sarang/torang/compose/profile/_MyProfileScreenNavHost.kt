@@ -2,6 +2,7 @@ package com.sarang.torang.compose.profile
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -14,14 +15,15 @@ import com.sarang.torang.viewmodel.profile.MyProfileViewModel
 
 @Composable
 fun _MyProfileScreenNavHost(
-    myProfileViewModel  : MyProfileViewModel    = hiltViewModel(),
-    onSetting           : () -> Unit            = { },
-    galleryScreen       : @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit = {_,_->},
-    onClose             : () -> Unit            = { },
-    onEmailLogin        : () -> Unit            = { },
-    onReview            : (Int) -> Unit         = { },
-    onMessage           : (Int) -> Unit         = { },
-    navController       : NavHostController     = rememberNavController()) {
+    myProfileViewModel          : MyProfileViewModel    = hiltViewModel(),
+    onSetting                   : () -> Unit            = { },
+    onClose                     : () -> Unit            = { },
+    onEmailLogin                : () -> Unit            = { },
+    onReview                    : (Int) -> Unit         = { },
+    onMessage                   : (Int) -> Unit         = { },
+    navController               : NavHostController     = rememberNavController(),
+    myProfileBackgroundColor    : Color                 = Color.Transparent,
+    galleryScreen               : @Composable (onNext: (List<String>) -> Unit, onClose: () -> Unit) -> Unit = {_,_->}) {
     NavHost(
         navController = navController,
         startDestination = "myProfile"
@@ -40,7 +42,8 @@ fun _MyProfileScreenNavHost(
                             onWrite             = { },
                             onFollower           = { navController.navigate("myFollow/0") },
                             onEmailLogin        = onEmailLogin,
-                            onReview            = onReview)
+                            onReview            = onReview,
+                            backgroundColor     = myProfileBackgroundColor )
         }
         composable("EditProfileImage") {
             galleryScreen.invoke({

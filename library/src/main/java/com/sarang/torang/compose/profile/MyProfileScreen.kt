@@ -1,6 +1,7 @@
 package com.sarang.torang.compose.profile
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -52,7 +53,8 @@ fun MyProfileScreen(myProfileViewModel: MyProfileViewModel,
                     onFollower        : () -> Unit      = {},
                     onWrite           : () -> Unit      = {},
                     onEmailLogin      : () -> Unit      = {},
-                    onReview          : (Int) -> Unit   = {}) {
+                    onReview          : (Int) -> Unit   = {},
+                    backgroundColor   : Color           = Color.Transparent) {
     val uiState by myProfileViewModel.uiState.collectAsStateWithLifecycle()
 
     when (uiState) {
@@ -65,7 +67,8 @@ fun MyProfileScreen(myProfileViewModel: MyProfileViewModel,
                             onFollower     = onFollower,
                             feedScreenList = { MyFeedListScreen(modifier = it, onReview = onReview) },
                             favoriteList   = { MyFavoriteListScreen(modifier = it, onReview = onReview) },
-                            likeList       = { MyLikeListScreen (modifier = it, onReview = onReview) })
+                            likeList       = { MyLikeListScreen (modifier = it, onReview = onReview) },
+                            backgroundColor= backgroundColor)
         }
 
         is MyProfileUiState.Loading -> {
@@ -104,7 +107,8 @@ private fun _MyProfileScreen(uiState        : MyProfileUiState.Success = MyProfi
                             onWrite         : () -> Unit               = {},
                             feedScreenList  : @Composable (Modifier) -> Unit   = {},
                             favoriteList    : @Composable (Modifier) -> Unit   = {},
-                            likeList        : @Composable (Modifier) -> Unit   = {}) {
+                            likeList        : @Composable (Modifier) -> Unit   = {},
+                            backgroundColor : Color                    = Color.Transparent) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
     val topBar = @Composable {
@@ -115,9 +119,12 @@ private fun _MyProfileScreen(uiState        : MyProfileUiState.Success = MyProfi
                                              contentDescription = "",
                                              tint = MaterialTheme.colorScheme.primary)}})}
 
-    Scaffold(modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
+    Scaffold(modifier = Modifier.fillMaxSize()
+                                .nestedScroll(scrollBehavior.nestedScrollConnection),
              topBar = topBar) { padding ->
-        Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+        Box(modifier = Modifier.fillMaxSize()
+                               .background(backgroundColor)
+                               .padding(padding)) {
             LazyColumn(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
                 item {
                     ProfileSummary(
