@@ -16,4 +16,8 @@ class RootNavController {
     fun myReview(it: Int) {
         navController?.navigate("myReview/${it}")
     }
+
+    fun review(it: Int) {
+
+    }
 }
