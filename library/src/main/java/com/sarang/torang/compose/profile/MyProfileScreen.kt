@@ -61,16 +61,17 @@ fun MyProfileScreen(myProfileViewModel  : MyProfileViewModel,
 
     when (uiState) {
         is MyProfileUiState.Success -> {
-            _MyProfileScreen(onSetting     = onSetting,
-                            onEditProfile  = onEditProfile,
-                            uiState        = uiState as MyProfileUiState.Success,
-                            onWrite        = onWrite,
-                            onFollowing    = onFollowing,
-                            onFollower     = onFollower,
-                            feedScreenList = { MyFeedListScreen(modifier = it, onReview = onReview) },
-                            favoriteList   = { MyFavoriteListScreen(modifier = it, onReview = onReview) },
-                            likeList       = { MyLikeListScreen (modifier = it, onReview = onReview) },
-                            backgroundColor= backgroundColor)
+            _MyProfileScreen(onSetting          = onSetting,
+                            onEditProfile       = onEditProfile,
+                            uiState             = uiState as MyProfileUiState.Success,
+                            onWrite             = onWrite,
+                            onFollowing         = onFollowing,
+                            onFollower          = onFollower,
+                            feedScreenList      = { MyFeedListScreen(modifier = it, onReview = onReview) },
+                            favoriteList        = { MyFavoriteListScreen(modifier = it, onReview = onReview) },
+                            likeList            = { MyLikeListScreen (modifier = it, onReview = onReview) },
+                            backgroundColor     = backgroundColor,
+                            contentWindowInsets = contentWindowInsets)
         }
 
         is MyProfileUiState.Loading -> {

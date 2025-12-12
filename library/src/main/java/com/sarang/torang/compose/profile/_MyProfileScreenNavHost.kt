@@ -46,7 +46,8 @@ fun _MyProfileScreenNavHost(
                             onFollower           = { navController.navigate("myFollow/0") },
                             onEmailLogin        = onEmailLogin,
                             onReview            = onReview,
-                            backgroundColor     = myProfileBackgroundColor )
+                            backgroundColor     = myProfileBackgroundColor,
+                            contentWindowInsets = contentWindowInsets)
         }
         composable("EditProfileImage") {
             galleryScreen.invoke({
@@ -68,7 +69,7 @@ fun _MyProfileScreenNavHost(
         composable("profile/{userId}") {
             ProfileScreenNavHost(
                 id = it.arguments?.getString("userId")?.toInt(),
-                onClose = { onClose?.invoke() },
+                onClose = { onClose.invoke() },
                 onEmailLogin = onEmailLogin,
                 onReview = onReview,
                 onMessage = onMessage
