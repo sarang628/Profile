@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
@@ -22,10 +23,16 @@ import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.api.ApiProfile
 import com.sarang.torang.compose.profile.LocalProfileImage
 import com.sarang.torang.compose.feed.FeedScreenByReviewId
+import com.sarang.torang.compose.feed.internal.components.LocalExpandableTextType
+import com.sarang.torang.compose.feed.internal.components.LocalFeedImageLoader
 import com.sarang.torang.compose.feed.type.FeedTypeData
+import com.sarang.torang.compose.feed.type.LocalFeedCompose
 import com.sarang.torang.compose.follow.MyFollowScreen
 import com.sarang.torang.compose.follow.OtherFollowScreen
 import com.sarang.torang.compose.profile.Profile
+import com.sarang.torang.di.basefeed_di.CustomExpandableTextType
+import com.sarang.torang.di.basefeed_di.CustomFeedImageLoader
+import com.sarang.torang.di.feed_di.CustomFeedCompose
 import com.sarang.torang.di.feed_di.provideFeed
 import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
@@ -92,12 +99,14 @@ fun ProfileTestMenu(loginRepository : LoginRepository) {
         }
         composable("myProfile") {
             MyProfileScreenNavHost(/*MainActivity*/
-                onSetting = {},
-                onEmailLogin = { },
-                onClose = { navController.popBackStack() },
-                onReview = { },
-                navController = rememberNavController(),
-                onMessage = {})
+                onSetting           = { },
+                onEmailLogin        = { },
+                onClose             = { navController.popBackStack() },
+                onReview            = { navController.navigate("myReview/$it") },
+                navController       = rememberNavController(),
+                onMessage           = { },
+                contentWindowInsets = WindowInsets(0)
+            )
         }
         composable("myFollow/{page}}") {
             /*MyFollowScreen(onBack = { navController.popBackStack() },
@@ -126,7 +135,11 @@ fun ProfileTestMenu(loginRepository : LoginRepository) {
             Text("$reviewId")
             provideFeed().invoke(FeedTypeData())
             reviewId?.let {
-                FeedScreenByReviewId(reviewId = it)
+                CompositionLocalProvider(LocalFeedImageLoader provides CustomFeedImageLoader(),
+                    LocalExpandableTextType provides CustomExpandableTextType,
+                    LocalFeedCompose provides CustomFeedCompose) {
+                    FeedScreenByReviewId(reviewId = it)
+                }
             }
         }
     }
