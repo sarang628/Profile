@@ -126,7 +126,7 @@ fun FollowTopAppBar(name: String = "",
         modifier = Modifier.height(50.dp),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.background,
-            titleContentColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.background,
         ),
         title = {
             Box(modifier = Modifier.fillMaxHeight()) {

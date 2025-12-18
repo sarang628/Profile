@@ -118,6 +118,10 @@ private fun _MyProfileScreen(uiState            : MyProfileUiState.Success      
     val topBar = @Composable {
         TopAppBar( title          = { Text(text = uiState.name) },
                    scrollBehavior = scrollBehavior,
+                   colors         = TopAppBarDefaults.topAppBarColors(
+                       containerColor = MaterialTheme.colorScheme.background,
+                       scrolledContainerColor = MaterialTheme.colorScheme.background,
+                   ),
                    actions        = { IconButton({onSetting.invoke()}) {
                                         Icon(painter = painterResource(id = R.drawable.ic_settings),
                                              contentDescription = "",
