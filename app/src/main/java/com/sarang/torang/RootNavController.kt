@@ -10,7 +10,7 @@ class RootNavController {
     }
 
     fun popBackStack() {
-
+        navController?.popBackStack()
     }
 
     fun myReview(it: Int) {

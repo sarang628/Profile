@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
@@ -22,21 +21,16 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.sarang.torang.viewmodel.profile.MyFollowViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,38 +55,30 @@ fun _FollowScreen(
     Scaffold(
         topBar = { FollowTopAppBar(name, onBack = onBack) },
     ) { innerPadding ->
-        Column(Modifier.padding(innerPadding)) {
-            var state by remember { mutableIntStateOf(page ?: 0) }
-            val titles =
-                listOf("$follower followers", "$following following", "$subscription subscription")
+        var selectedTab by remember { mutableIntStateOf(page ?: 0) }
+        val titles = listOf("$follower followers",
+                            "$following following",
+                            "$subscription subscription")
+        Box(modifier = Modifier.padding(innerPadding)) {
             Column {
-                PrimaryTabRow(selectedTabIndex = state) {
+                PrimaryTabRow(selectedTabIndex = selectedTab) {
                     titles.forEachIndexed { index, title ->
-                        Tab(
-                            selected = state == index,
-                            onClick = { state = index },
-                            text = {
-                                Text(
-                                    text = title,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-                            }
-                        )
-                    }
-                }
-                if (state == 0) {
+                        Tab(selected = selectedTab == index,
+                            onClick = { selectedTab = index },
+                            text = { Text(text = title,
+                                          maxLines = 1,
+                                          overflow = TextOverflow.Ellipsis)
+                })}}
+                if (selectedTab == 0) {
                     if (isMe) {
-                        MyFollowerList(
-                            list = followerList,
-                            onDelete = onDelete,
-                            onProfile = onProfile
-                        )
+                        MyFollowerList(list = followerList,
+                                       onDelete = onDelete,
+                                       onProfile = onProfile)
                     } else {
                         FollowerList(list = followerList,
                                      onProfile = onProfile)
                     }
-                } else if (state == 1) {
+                } else if (selectedTab == 1) {
                     if (isMe) {
                         MyFollowingList(list = followingList,
                                         onUnFollow = onUnFollow,
@@ -114,39 +100,4 @@ fun _FollowScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun FollowTopAppBar(name: String = "",
-                    onBack: () -> Unit = { }) {
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    TopAppBar(
-        modifier = Modifier.height(50.dp),
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            titleContentColor = MaterialTheme.colorScheme.background,
-        ),
-        title = {
-            Box(modifier = Modifier.fillMaxHeight()) {
-                Text(
-                    name,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.align(Alignment.CenterStart),
-                    fontSize = 20.sp
-                )
-            }
-        },
-        navigationIcon = {
-            IconButton(onClick = { onBack.invoke() }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = "Localized description"
-                )
-            }
-        },
-        scrollBehavior = scrollBehavior,
-    )
 }

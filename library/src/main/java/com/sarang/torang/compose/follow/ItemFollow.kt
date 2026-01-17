@@ -24,17 +24,17 @@ import com.sarang.torang.compose.profile.ProfileImageTypeData
 
 @Preview(showBackground = true)
 @Composable
-internal fun ItemFollow( url: String = "",
-                         id: String = "",
-                         name: String = "",
-                         isMe: Boolean = false,
-                         onButton: () -> Unit = { },
-                         btnText: String? = null,
-                         onProfile: () -> Unit = {} ) {
-    ConstraintLayout( modifier = Modifier.padding(start = 8.dp, end = 8.dp)
-                                         .fillMaxWidth()
-                                         .clickable { onProfile?.invoke() }
-                                         .height(60.dp),
+internal fun ItemFollow(url             : String        = "",
+                        id              : String        = "",
+                        name            : String        = "",
+                        showRightButton : Boolean       = false,
+                        onRightButton   : () -> Unit    = {},
+                        rightButtonText : String        = "",
+                        onProfile       : () -> Unit    = {} ) {
+    ConstraintLayout(modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+                                        .fillMaxWidth()
+                                        .clickable { onProfile.invoke() }
+                                        .height(60.dp),
                      constraintSet = itemFollowConstraintSet()) {
         LocalProfileImage.current.invoke(
             ProfileImageTypeData( modifier = Modifier.layoutId("profileImg")
@@ -52,11 +52,11 @@ internal fun ItemFollow( url: String = "",
              color = Color.Gray,
              modifier = Modifier.layoutId("name") )
 
-        if (isMe) {
-            Button(onClick = { onButton?.invoke() },
+        if (showRightButton) {
+            Button(onClick = { onRightButton.invoke() },
                    modifier = Modifier.height(35.dp)
                                       .layoutId("button")) {
-                Text(text = btnText ?: "")
+                Text(text = rightButtonText)
             }
         }
     }

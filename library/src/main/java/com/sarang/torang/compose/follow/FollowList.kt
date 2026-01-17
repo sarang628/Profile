@@ -3,24 +3,22 @@ package com.sarang.torang.compose.follow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 
 @Composable
-fun MyFollowerList( list: List<Follow>, onDelete: (Int) -> Unit,
-                    onProfile: ((Int) -> Unit)? = null) {
+fun MyFollowerList(list     : List<Follow>  = listOf(),
+                   onDelete : (Int) -> Unit = {},
+                   onProfile: (Int) -> Unit = {}) {
     Column {
         LazyColumn(content = {
                 items(list.size) {
-                    ItemFollow( url = list[it].url,
-                                id = list[it].nickname,
-                                name = list[it].name,
-                                onButton = { onDelete.invoke(list[it].id) },
-                                btnText = "Delete",
-                                isMe = true,
-                                onProfile = { onProfile?.invoke(list[it].id) } )
+                    ItemFollow(url = list[it].url,
+                               id = list[it].nickname,
+                               name = list[it].name,
+                               onRightButton = { onDelete.invoke(list[it].id) },
+                               rightButtonText = "Delete",
+                               showRightButton = true,
+                               onProfile = { onProfile.invoke(list[it].id) } )
                 }})
     }
 }
@@ -35,7 +33,7 @@ fun FollowerList(list: List<Follow> = listOf(),
                 ItemFollow(url = list[it].url,
                            id = list[it].nickname,
                            name = list[it].name,
-                           onProfile = { onProfile?.invoke(list[it].id) })
+                           onProfile = { onProfile.invoke(list[it].id) })
             }
         })
 }
@@ -52,9 +50,9 @@ fun MyFollowingList(list        : List<Follow>  = listOf(),
                     ItemFollow(url = list[it].url,
                                id = list[it].nickname,
                                name = list[it].name,
-                               onButton = { onUnFollow.invoke(list[it].id) },
-                               btnText = "Unfollow",
-                               isMe = true,
+                               onRightButton = { onUnFollow.invoke(list[it].id) },
+                               rightButtonText = "Unfollow",
+                               showRightButton = true,
                                onProfile = { onProfile.invoke(list[it].id) })
                 }
             })
@@ -71,7 +69,7 @@ fun FollowingList(list: List<Follow> = listOf(),
                     ItemFollow(url = list[it].url,
                                id = list[it].nickname,
                                name = list[it].name,
-                               onProfile = { onProfile?.invoke(list[it].id) })
+                               onProfile = { onProfile.invoke(list[it].id) })
                 }
             })
     }
