@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sarang.torang.R
 import com.sarang.torang.compose.myfeed.MyFavoriteListScreen
@@ -44,34 +45,38 @@ import com.sarang.torang.compose.myfeed.MyLikeListScreen
 import com.sarang.torang.compose.profile.components.MyFeedsLikesFavoritiesList
 import com.sarang.torang.compose.profile.components.ProfileSummary
 import com.sarang.torang.compose.profile.components.ProfileTabs
+import com.sarang.torang.viewmodel.profile.MyFeedListViewModel
 import com.sarang.torang.viewmodel.profile.MyProfileViewModel
 
 @Composable
-fun MyProfileScreen(myProfileViewModel  : MyProfileViewModel,
-                    onSetting           : () -> Unit      = {},
-                    onEditProfile       : () -> Unit      = {},
-                    onFollowing         : () -> Unit      = {},
-                    onFollower          : () -> Unit      = {},
-                    onWrite             : () -> Unit      = {},
-                    onEmailLogin        : () -> Unit      = {},
-                    onReview            : (Int) -> Unit   = {},
-                    backgroundColor     : Color           = Color.Transparent,
-                    contentWindowInsets : WindowInsets    = ScaffoldDefaults.contentWindowInsets) {
+fun MyProfileScreen(myProfileViewModel  : MyProfileViewModel    = hiltViewModel(),
+                    feedListViewModel   : MyFeedListViewModel   = hiltViewModel(),
+                    onSetting           : () -> Unit            = {},
+                    onEditProfile       : () -> Unit            = {},
+                    onFollowing         : () -> Unit            = {},
+                    onFollower          : () -> Unit            = {},
+                    onWrite             : () -> Unit            = {},
+                    onEmailLogin        : () -> Unit            = {},
+                    onReview            : (Int) -> Unit         = {},
+                    backgroundColor     : Color                 = Color.Transparent,
+                    contentWindowInsets : WindowInsets          = ScaffoldDefaults.contentWindowInsets) {
     val uiState by myProfileViewModel.uiState.collectAsStateWithLifecycle()
 
     when (uiState) {
         is MyProfileUiState.Success -> {
-            _MyProfileScreen(onSetting          = onSetting,
-                            onEditProfile       = onEditProfile,
-                            uiState             = uiState as MyProfileUiState.Success,
-                            onWrite             = onWrite,
-                            onFollowing         = onFollowing,
-                            onFollower          = onFollower,
-                            feedScreenList      = { MyFeedListScreen(modifier = it, onReview = onReview) },
-                            favoriteList        = { MyFavoriteListScreen(modifier = it, onReview = onReview) },
-                            likeList            = { MyLikeListScreen (modifier = it, onReview = onReview) },
-                            backgroundColor     = backgroundColor,
-                            contentWindowInsets = contentWindowInsets)
+            _MyProfileScreen(onSetting           = onSetting,
+                             onEditProfile       = onEditProfile,
+                             uiState             = uiState as MyProfileUiState.Success,
+                             onWrite             = onWrite,
+                             onFollowing         = onFollowing,
+                             onFollower          = onFollower,
+                             feedScreenList      = { MyFeedListScreen(modifier          = it,
+                                                                      feedListViewModel = feedListViewModel,
+                                                                      onReview          = onReview) },
+                             favoriteList        = { MyFavoriteListScreen(modifier = it, onReview = onReview) },
+                             likeList            = { MyLikeListScreen (modifier = it, onReview = onReview) },
+                             backgroundColor     = backgroundColor,
+                             contentWindowInsets = contentWindowInsets)
         }
 
         is MyProfileUiState.Loading -> {

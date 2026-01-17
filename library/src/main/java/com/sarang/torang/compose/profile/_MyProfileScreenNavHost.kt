@@ -13,11 +13,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.edit.EditProfileScreen
 import com.sarang.torang.compose.follow.MyFollowScreen
+import com.sarang.torang.viewmodel.profile.MyFeedListViewModel
 import com.sarang.torang.viewmodel.profile.MyProfileViewModel
 
 @Composable
 fun _MyProfileScreenNavHost(
     myProfileViewModel          : MyProfileViewModel    = hiltViewModel(),
+    feedListViewModel           : MyFeedListViewModel   = hiltViewModel(),
     onSetting                   : () -> Unit            = { },
     onClose                     : () -> Unit            = { },
     onEmailLogin                : () -> Unit            = { },
@@ -39,6 +41,7 @@ fun _MyProfileScreenNavHost(
         }
         composable("myProfile") {
             MyProfileScreen(myProfileViewModel  = myProfileViewModel,
+                            feedListViewModel = feedListViewModel,
                             onEditProfile       = { navController.navigate("editProfile") },
                             onSetting           = onSetting,
                             onFollowing         = { navController.navigate("myFollow/1") },

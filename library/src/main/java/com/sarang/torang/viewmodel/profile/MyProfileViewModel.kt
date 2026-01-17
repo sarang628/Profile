@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyProfileViewModel @Inject constructor(
-    myProfileUseCase : GetMyProfileUseCase
+    myProfileUseCase    : GetMyProfileUseCase
 ) : ViewModel() {
     val uiState: StateFlow<MyProfileUiState> = myProfileUseCase.invoke()
                                                                .stateIn(scope = viewModelScope,

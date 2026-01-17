@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyFeedListViewModel @Inject constructor(getMyFeedUseCase: GetMyFeedUseCase,
-                                              loadMyFeedUseCase: LoadMyFeedUseCase
+                                              val loadMyFeedUseCase: LoadMyFeedUseCase
 ) : ViewModel() {
     val list : StateFlow<List<Feed>> = getMyFeedUseCase.invoke()
         .stateIn(scope = viewModelScope,
@@ -29,5 +29,9 @@ class MyFeedListViewModel @Inject constructor(getMyFeedUseCase: GetMyFeedUseCase
         viewModelScope.launch {
             loadMyFeedUseCase.invoke()
         }
+    }
+
+    suspend fun reload(){
+        loadMyFeedUseCase.invoke()
     }
 }
