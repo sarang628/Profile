@@ -42,7 +42,7 @@ import com.sarang.torang.repository.feed.FeedFlowRepository
 import com.sarang.torang.repository.feed.FeedLoadRepository
 import com.sarang.torang.repository.feed.FeedRepository
 import com.sarang.torang.repository.test.LoginRepositoryTest
-import com.sarang.torang.repository.test.feed.FeedRepositoryTest
+import com.sarang.torang.repository.test.feed.FeedRepositoryTestScreen
 import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -139,9 +139,9 @@ class MainActivity : ComponentActivity() {
                 }
             }
             composable("FeedRepositoryTest") {
-                FeedRepositoryTest(feedRepository = feedRepository,
-                                   feedLoadRepository = feedLoadRepository,
-                                   feedFlowRepository = feedFlowRepository)
+                FeedRepositoryTestScreen(feedRepository = feedRepository,
+                                         feedLoadRepository = feedLoadRepository,
+                                         feedFlowRepository = feedFlowRepository)
             }
         }
     }

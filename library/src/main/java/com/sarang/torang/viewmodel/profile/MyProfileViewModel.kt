@@ -16,7 +16,7 @@ class MyProfileViewModel @Inject constructor(
 ) : ViewModel() {
     val uiState: StateFlow<MyProfileUiState> = myProfileUseCase.invoke()
                                                                .stateIn(scope = viewModelScope,
-                                                                        started = SharingStarted.Companion.WhileSubscribed(5000),
+                                                                        started = SharingStarted.WhileSubscribed(5000),
                                                                         initialValue = MyProfileUiState.Loading)
 
     fun updateProfileImage(uri: String) {

@@ -16,13 +16,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val tag = "__ProfileViewModel"
+
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val service: ProfileService,
-    private val isLoginUseCase: IsLoginUseCase,
-    private val followUseCase: FollowUseCase,
-    private val unFollowUseCase: UnFollowUseCase,
-    private val findOrCreateChatRoomByUserIdUseCase: FindOrCreateChatRoomByUserIdUseCase
+    private val service                             : ProfileService,
+    private val isLoginUseCase                      : IsLoginUseCase,
+    private val followUseCase                       : FollowUseCase,
+    private val unFollowUseCase                     : UnFollowUseCase,
+    private val findOrCreateChatRoomByUserIdUseCase : FindOrCreateChatRoomByUserIdUseCase
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<ProfileUiState> =
         MutableStateFlow(ProfileUiState.Loading)
@@ -30,13 +32,12 @@ class ProfileViewModel @Inject constructor(
     val isLogin = isLoginUseCase.isLogin
 
     fun loadProfile(id: Int) {
-        Log.d("__ProfileViewModel", "loadProfile : ${id}")
         viewModelScope.launch {
             try {
                 val result = service.loadProfile(id)
                 _uiState.emit((result as ProfileUiState.Success).copy(id = id))
             } catch (e: Exception) {
-                Log.e("__ProfileViewModel", e.toString())
+                Log.e(tag, e.toString())
                 _uiState.update {
                     ProfileUiState.Error(message = e.toString())
                 }
